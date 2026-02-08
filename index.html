@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <!-- ▼ ブラウザタブ用アイコン（favicon） -->
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <title>業務改善ツール | 面倒な作業をスマートに自動化</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)), url('img/background.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #222;
+    }
+    header {
+      background: #111;
+      color: #fff;
+      padding: 60px 20px;
+      text-align: center;
+      position: relative;
+    }
+    header h1 { margin-bottom: 10px; }
+    section {
+      max-width: 1000px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+    .tool {
+      border-bottom: 1px solid #eee;
+      padding: 15px 0;
+    }
+    .tool:last-child { border-bottom: none; }
+    .tool-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .tool-title h3 { margin: 0; }
+    .links a {
+      margin-left: 10px;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: #eee;
+      color: #333;
+    }
+    .links a.primary {
+      background: #4caf50;
+      color: #fff;
+    }
+    .links a.note {
+      background: #000;
+      color: #fff;
+    }
+    footer {
+      background: #111;
+      color: #ccc;
+      text-align: center;
+      padding: 30px 10px;
+      font-size: 14px;
+    }
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+    .logo img {
+      height: 40px;
+      width: auto;
+    }
+  </style>
+</head>
+<body>
+
+<header style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('img/header.png'); background-size: cover; background-position: center;">
+  <!-- ▼ 左上ロゴ -->
+  <div class="logo">
+    <img src="img/logo.png" alt="ロゴ">
+  </div>
+  <h1>業務改善ツール</h1>
+  <p>面倒な作業を、シンプルに・確実に減らします</p>
+</header>
+
+<section>
+  <div class="card">
+    <h2>提供中・開発中ツール</h2>
+
+    <!-- ▼ ツール①：青空文庫 ルビ削除ツール -->
+    <div class="tool">
+      <div class="tool-title">
+        <h3>青空文庫 ルビ削除ツール</h3>
+        <div class="links">
+          <!-- 無料 or 有料 のどちらか一方を使う -->
+          <a href="https://aozora-ruby-remover-n4dpzggyj553wsbnqpl7at.streamlit.app/" target="_blank" class="primary">無料ツール</a>
+          <!-- noteリンク -->
+          <a href="https://note.com/crisp_rue6588/n/n393222cfdec2" class="note" target="_blank" rel="noopener noreferrer">  note</a>
+        </div>
+      </div>
+      <p>
+        青空文庫テキストからルビ記法を削除し、
+        notebookLMで解析可能な形式に変換します。
+      </p>
+    </div>
+
+    <!-- ▼ ツール②：Kindle → PDF 変換ツール（予定） -->
+    <div class="tool">
+      <div class="tool-title">
+        <h3>Kindle → PDF 変換ツール（開発中）</h3>
+        <div class="links">
+          <!-- 将来ここにURLを貼る -->
+          <a href="#" class="primary">準備中</a>
+          <a href="#" class="note">note</a>
+        </div>
+      </div>
+      <p>
+        Kindle書籍をPDF化し、
+        検索・メモ・学習用途に使いやすくするツール。
+      </p>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h2>カスタム業務改善</h2>
+    <p>
+      市販ツールでは対応できない業務も、
+      目的に合わせて最適な方法で自動化します。
+    </p>
+    <ul>
+      <li>CSV / Excel 自動処理</li>
+      <li>定型レポート作成</li>
+      <li>データ変換・整形</li>
+    </ul>
+    <p>
+      <strong>料金目安：</strong><br>
+      5,000円〜 / 内容により個別見積
+    </p>
+    <!-- ▼ 将来：販売ページ or 問い合わせページ -->
+    <p>
+      <a href="#" class="links primary">販売・相談ページへ（準備中）</a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p>© 個人開発・副業用ツール</p>
+</footer>
+
+</body>
+</html>
