@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <title>Your Tools | 業務改善 & マーケット分析</title>
+  
+  <!-- Google Fonts: Inter (英数字用) & Noto Sans JP (日本語用) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --primary-gradient: linear-gradient(135deg, #2563eb, #1d4ed8);
+      --accent-color: #10b981;
+      --bg-overlay: rgba(255, 255, 255, 0.92);
+      --text-main: #1f2937;
+      --text-sub: #4b5563;
+      --card-bg: #ffffff;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      --card-hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
+    }
+
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('img/background.png') center/cover fixed;
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 背景オーバーレイ */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-overlay);
+      z-index: -1;
+      backdrop-filter: blur(5px);
+    }
+
+    header {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.5)), url('img/header.png') center/cover;
+      color: #fff;
+      padding: 80px 20px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      transition: transform 0.3s ease;
+    }
+    .logo:hover {
+      transform: scale(1.05);
+    }
+    .logo img {
+      height: 48px;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin: 0 0 15px 0;
+      letter-spacing: 0.05em;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    section {
+      max-width: 1000px;
+      margin: -40px auto 60px; /* ヘッダーに少し重ねる */
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--card-hover-shadow);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      color: var(--text-main);
+      border-left: 5px solid var(--primary-color);
+      padding-left: 15px;
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+    }
+
+    .tool {
+      border-bottom: 1px solid #f3f4f6;
+      padding: 20px 0;
+      transition: background-color 0.2s;
+    }
+    .tool:last-child { border-bottom: none; }
+    .tool:hover {
+      background-color: rgba(249, 250, 251, 0.5);
+      border-radius: 8px;
+      padding-left: 10px;
+      padding-right: 10px;
+      margin-left: -10px;
+      margin-right: -10px;
+    }
+
+    .tool-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .tool-title h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 0;
+      color: #111;
+    }
+
+    .tool p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--text-sub);
+    }
+
+    .links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .links a {
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 9999px; /* Pill shape */
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .links a.primary {
+      background: var(--primary-gradient);
+      color: #fff;
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+    }
+    .links a.primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 8px rgba(37, 99, 235, 0.3);
+      filter: brightness(1.1);
+    }
+
+    .links a.note {
+      background: #191919;
+      color: #fff;
+    }
+    .links a.note:hover {
+      background: #333;
+    }
+    
+    .links a.dashboard {
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9); /* Purple for dashboard */
+      color: #fff;
+      box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+    }
+    .links a.dashboard:hover {
+       transform: translateY(-1px);
+       box-shadow: 0 6px 8px rgba(139, 92, 246, 0.3);
+       filter: brightness(1.1);
+    }
+
+    /* 準備中ラベル */
+    .links a[href="#"] {
+      background: #e5e7eb;
+      color: #9ca3af;
+      box-shadow: none;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    .custom-section {
+      text-align: center;
+      background: linear-gradient(to right, #f8fafc, #fff, #f8fafc);
+    }
+    .custom-section ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+
+    footer {
+      background: #111;
+      color: #9ca3af;
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.8rem; }
+      .tool-title { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .links { align-self: flex-start; }
+      .custom-section ul { flex-direction: column; gap: 10px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <img src="img/logo.png" alt="ロゴ">
+  </div>
+  <h1>業務改善ツール & Lab</h1>
+  <p>小さく作って、大きく役立てる。個人開発ツール集</p>
+</header>
+
+<section>
+
+  <!-- ▼ マーケ・データ分析 (優先度高) -->
+  <div class="card">
+    <h2>マーケット & 分析</h2>
+
+    <!-- Market Dashboard (New!) -->
+    <div class="tool">
+      <div class="tool-title">
+        <h3>Market Dashboard</h3>
+        <div class="links">
+          <a href="https://oyajibuki.github.io/market-dashboard/" target="_blank" class="dashboard">NEW! Dashboard</a>
+        </div>
+      </div>
+      <p>リアルタイム市場動向を可視化するダッシュボード。</p>
+    </div>
+
+    <div class="tool">
+      <div class="tool-title">
+        <h3>X（旧Twitter）投稿収集ツール</h3>
+        <div class="links">
+          <a href="#" class="primary">準備中</a>
+        </div>
+      </div>
+      <p>キーワード別に投稿を収集・CSV化してトレンド分析。</p>
+    </div>
+
+    <div class="tool">
+      <div class="tool-title">
+        <h3>note売れ筋分析ツール</h3>
+        <div class="links">
+          <a href="#" class="primary">準備中</a>
+        </div>
+      </div>
+      <p>人気記事の価格帯・構成をざっくり把握。</p>
+    </div>
+  </div>
+
+  <!-- ▼ 実用ツール -->
+  <div class="card">
+    <h2>実用・テキスト処理</h2>
+
+    <div class="tool">
+      <div class="tool-title">
+        <h3>青空文庫 ルビ削除ツール</h3>
+        <div class="links">
+          <a href="https://aozora-ruby-remover-n4dpzggyj553wsbnqpl7at.streamlit.app/" target="_blank" class="primary">無料ツール</a>
+          <a href="https://note.com/crisp_rue6588/n/n393222cfdec2" class="note" target="_blank" rel="noopener noreferrer">note</a>
+        </div>
+      </div>
+      <p>青空文庫形式のテキストからルビを一括削除し、機械学習用に最適化。</p>
+    </div>
+
+    <div class="tool">
+      <div class="tool-title">
+        <h3>CSV / Excel 自動整形ツール</h3>
+        <div class="links">
+          <a href="#" class="primary">準備中</a>
+          <a href="#" class="note">note</a>
+        </div>
+      </div>
+      <p>列揃え・不要行削除・文字変換などの定型処理を自動化。</p>
+    </div>
+  </div>
+
+  <!-- ▼ せどり・物販 -->
+  <div class="card">
+    <h2>せどり・物販</h2>
+
+    <div class="tool">
+      <div class="tool-title">
+        <h3>Amazon価格差チェックツール</h3>
+        <div class="links">
+          <a href="#" class="primary">準備中</a>
+        </div>
+      </div>
+      <p>仕入れ価格と販売価格をCSVで一括比較し、利益商品を抽出。</p>
+    </div>
+
+    <div class="tool">
+      <div class="tool-title">
+        <h3>Keepa CSV 簡易分析ツール</h3>
+        <div class="links">
+          <a href="#" class="primary">準備中</a>
+        </div>
+      </div>
+      <p>Keepaの価格推移データを見やすくグラフ化・整理。</p>
+    </div>
+  </div>
+
+  <!-- ▼ 投資・不動産 -->
+  <div class="card">
+    <h2>投資・不動産</h2>
+
+    <div class="tool">
+      <div class="tool-title">
+        <h3>株価CSV 指標自動計算</h3>
+        <div class="links">
+          <a href="#" class="primary">準備中</a>
+        </div>
+      </div>
+      <p>株価データからPER・利回りなどを自動算出。</p>
+    </div>
+
+    <div class="tool">
+      <div class="tool-title">
+        <h3>不動産利回り即計算ツール</h3>
+        <div class="links">
+          <a href="#" class="primary">準備中</a>
+        </div>
+      </div>
+      <p>物件価格と家賃から表面／実質利回りをシミュレーション。</p>
+    </div>
+  </div>
+
+  <!-- ▼ カスタム -->
+  <div class="card custom-section">
+    <h2>開発依頼・カスタマイズ</h2>
+    <p>あなたの業務に合わせて、一番ラクな形を作ります。</p>
+    <ul>
+      <li>💻 個人・小規模開発</li>
+      <li>🐍 Python / GAS</li>
+      <li>💰 5,000円〜</li>
+    </ul>
+    <p>
+      <a href="https://oyajibuki.github.io/form/" class="links primary" style="font-size: 1rem; padding: 12px 30px;">
+        お問い合わせ・相談はこちら
+      </a>
+    </p>
+  </div>
+
+</section>
+
+<footer>
+  <p>© 2024 個人開発・副業業務改善ツール Lab</p>
+</footer>
+
+</body>
+</html>
+
+
