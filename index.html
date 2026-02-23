@@ -471,6 +471,18 @@
     <p>© 2026 個人開発・副業業務改善ツール Lab</p>
   </footer>
 
+  <script>
+    (function() {
+      try {
+        const url = "https://script.google.com/macros/s/AKfycbznxYkj5ixnK_pHkGR8LUYhEYdvSYpaiF3x4LaZy964wlu068oak1X1uuIiyqCEtGWF/exec?page=tool"
+          + "&ref=" + encodeURIComponent(document.referrer)
+          + "&ua=" + encodeURIComponent(navigator.userAgent)
+          + "&lang=" + encodeURIComponent(navigator.language)
+          + "&w=" + screen.width + "&h=" + screen.height;
+        fetch(url, { method: "GET", mode: "no-cors" }).catch(() => {});
+      } catch(e) {}
+    })();
+  </script>
 </body>
 
 </html>
