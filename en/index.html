@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../img/favicon.png">
+    <title>AutoCraft | Productivity Tools & Lab</title>
+    <meta name="description"
+        content="AutoCraft — A collection of indie-built productivity tools. AI subtitles, image resizers, CSV formatters, and more.">
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@700;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-gradient: linear-gradient(135deg, #2563eb, #1d4ed8);
+            --accent-color: #10b981;
+            --bg-overlay: rgba(255, 255, 255, 0.92);
+            --text-main: #1f2937;
+            --text-sub: #4b5563;
+            --card-bg: #ffffff;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            --card-hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('../img/background.png') center/cover fixed;
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Background overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-overlay);
+            z-index: -1;
+            backdrop-filter: blur(5px);
+        }
+
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('../img/header.png') center/cover;
+            color: #fff;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            height: 48px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .brand-title {
+            font-family: 'Orbitron', 'Inter', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 0 0 4px 0;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6, #60a5fa);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 6s ease infinite;
+            filter: drop-shadow(0 2px 8px rgba(96, 165, 250, 0.4));
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .brand-sub {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            margin: 0 0 18px 0;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        section {
+            max-width: 1000px;
+            margin: -40px auto 60px;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tool {
+            border-bottom: 1px solid #f3f4f6;
+            padding: 20px 0;
+            transition: background-color 0.2s;
+        }
+
+        .tool:last-child {
+            border-bottom: none;
+        }
+
+        .tool:hover {
+            background-color: rgba(249, 250, 251, 0.5);
+            border-radius: 8px;
+            padding-left: 10px;
+            padding-right: 10px;
+            margin-left: -10px;
+            margin-right: -10px;
+        }
+
+        .tool-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .tool-title h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 0;
+            color: #111;
+        }
+
+        .tool p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text-sub);
+        }
+
+        .links {
+            display: grid;
+            grid-template-columns: 140px 100px;
+            gap: 10px;
+            justify-content: start;
+        }
+
+        .link-row {
+            display: contents;
+        }
+
+        .links a {
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 8px 0;
+            border-radius: 9999px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .links a.primary {
+            background: var(--primary-gradient);
+            color: #fff;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+        }
+
+        .links a.primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 8px rgba(37, 99, 235, 0.3);
+            filter: brightness(1.1);
+        }
+
+        .links a.note {
+            background: #191919;
+            color: #fff;
+        }
+
+        .links a.note:hover {
+            background: #333;
+        }
+
+        .links a.youtube {
+            background: #ff0000;
+            color: #fff;
+            box-shadow: 0 4px 6px rgba(255, 0, 0, 0.2);
+        }
+
+        .links a.youtube:hover {
+            background: #dd0000;
+            box-shadow: 0 6px 8px rgba(255, 0, 0, 0.3);
+        }
+
+        .links a.pro {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            color: #fff;
+            box-shadow: 0 4px 6px rgba(234, 88, 12, 0.2);
+        }
+
+        .links a.pro:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 8px rgba(234, 88, 12, 0.3);
+            filter: brightness(1.1);
+        }
+
+        .links a.dashboard {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            color: #fff;
+            box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+        }
+
+        .links a.dashboard:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 8px rgba(139, 92, 246, 0.3);
+            filter: brightness(1.1);
+        }
+
+        /* Coming soon label */
+        .links a[href="#"] {
+            background: #e5e7eb;
+            color: #9ca3af;
+            box-shadow: none;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .custom-section {
+            text-align: center;
+            background: linear-gradient(to right, #f8fafc, #fff, #f8fafc);
+        }
+
+        .custom-section ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            font-weight: 600;
+            color: var(--text-sub);
+        }
+
+        .badge-new {
+            display: inline-block;
+            background: #ef4444;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+            vertical-align: middle;
+            transform: translateY(-1px);
+        }
+
+        .custom-section .btn-contact {
+            display: inline-block;
+            background: var(--primary-gradient);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 12px 32px;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .custom-section .btn-contact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+            filter: brightness(1.1);
+        }
+
+        footer {
+            background: #111;
+            color: #9ca3af;
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .brand-title {
+                font-size: 2rem;
+            }
+
+            .tool-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .links {
+                align-self: flex-start;
+            }
+
+            .custom-section ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="../img/logo.png" alt="Logo">
+        </div>
+        <h1 class="brand-title">AutoCraft</h1>
+        <p class="brand-sub">— Productivity Tools & Lab —</p>
+        <p>Build small. Impact big. Indie tools that get things done.</p>
+    </header>
+
+    <section>
+
+        <!-- ▼ Productivity & Text Processing -->
+        <div class="card">
+            <h2>Productivity & Text Processing</h2>
+
+            <div class="tool">
+                <div class="tool-title">
+                    <h3>AI Subtitle Generator</h3>
+                    <div class="links">
+                        <div class="link-row">
+                            <a href="https://subtitle-ai-free-aen8v76jncxmxzrwxqdumz.streamlit.app/" target="_blank"
+                                class="primary">Free Tool</a>
+                            <a href="https://note.com/crisp_rue6588/n/nb2f04e865555?sub_rt=share_pb" class="note"
+                                target="_blank" rel="noopener noreferrer">note</a>
+                        </div>
+                        <div class="link-row">
+                            <a href="https://oyajibuki.booth.pm/" target="_blank" class="pro">Pro Version</a>
+                            <a href="https://www.youtube.com/watch?v=cBqGlkcqztM" class="youtube" target="_blank"
+                                rel="noopener noreferrer">YouTube</a>
+                        </div>
+                    </div>
+                </div>
+                <p>Upload a video or audio file and let AI (Whisper) automatically transcribe and generate subtitle
+                    files.</p>
+            </div>
+
+            <div class="tool">
+                <div class="tool-title">
+                    <h3>Image & Video Resizer <span class="badge-new">2/23 NEW!</span></h3>
+                    <div class="links">
+                        <div class="link-row">
+                            <a href="https://oyajibuki.github.io/resize-tool/" target="_blank" class="primary">Free
+                                Tool</a>
+                            <a href="https://note.com/crisp_rue6588/n/n0c08e76c5ca0?app_launch=false" class="note"
+                                target="_blank" rel="noopener noreferrer">note</a>
+                        </div>
+                    </div>
+                </div>
+                <p>Quickly resize images and videos in your browser for social media and blogs.</p>
+            </div>
+
+            <div class="tool">
+                <div class="tool-title">
+                    <h3>Word Ruby (Furigana) Tool</h3>
+                    <div class="links">
+                        <div class="link-row">
+                            <a href="https://github.com/oyajibuki/ruby-word/releases/" target="_blank"
+                                class="primary">Free Tool</a>
+                            <a href="https://note.com/crisp_rue6588/n/nd16fef46c287" class="note" target="_blank"
+                                rel="noopener noreferrer">note</a>
+                        </div>
+                    </div>
+                </div>
+                <p>Batch-apply furigana (ruby text) to kanji and English words in Word documents for improved
+                    readability.</p>
+            </div>
+
+            <div class="tool">
+                <div class="tool-title">
+                    <h3>Aozora Bunko Ruby Remover</h3>
+                    <div class="links">
+                        <div class="link-row">
+                            <a href="https://aozora-ruby-remover-n4dpzggyj553wsbnqpl7at.streamlit.app/" target="_blank"
+                                class="primary">Free Tool</a>
+                            <a href="https://note.com/crisp_rue6588/n/n393222cfdec2" class="note" target="_blank"
+                                rel="noopener noreferrer">note</a>
+                        </div>
+                    </div>
+                </div>
+                <p>Strip ruby annotations from Aozora Bunko-formatted text, optimized for machine learning datasets.</p>
+            </div>
+
+            <div class="tool">
+                <div class="tool-title">
+                    <h3>CSV / Excel Auto-Formatter</h3>
+                    <div class="links">
+                        <div class="link-row">
+                            <a href="https://oyajibuki.github.io/csv-app/" target="_blank" class="primary">Free Tool</a>
+                            <a href="https://note.com/crisp_rue6588/n/n23575f4dfdd1" class="note" target="_blank"
+                                rel="noopener noreferrer">note</a>
+                        </div>
+                    </div>
+                </div>
+                <p>Automate column alignment, row cleanup, and character conversion for CSV and Excel files.</p>
+            </div>
+        </div>
+
+        <!-- ▼ Market & Analytics -->
+        <div class="card">
+            <h2>Market & Analytics</h2>
+
+            <div class="tool">
+                <div class="tool-title">
+                    <h3>Market Dashboard</h3>
+                    <div class="links">
+                        <div class="link-row">
+                            <a href="https://oyajibuki.github.io/market-dashboard/" target="_blank"
+                                class="dashboard">Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+                <p>A real-time dashboard for visualizing market trends and analytics.</p>
+            </div>
+        </div>
+
+        <!-- ▼ Games -->
+        <div class="card">
+            <h2>🎮 GAME</h2>
+
+            <div class="tool">
+                <div class="tool-title">
+                    <h3>❄️ Powa Survival <span class="badge-new">2/23 NEW!</span></h3>
+                    <div class="links">
+                        <div class="link-row">
+                            <a href="https://oyajibuki.github.io/whiteout-survival/" target="_blank"
+                                class="primary">Play Free</a>
+                            <a href="https://note.com/preview/n9d2bfd20bb7b?prev_access_key=89c06d80603fde6082ed5b5c635c0d0c"
+                                class="note" target="_blank" rel="noopener noreferrer">note</a>
+                        </div>
+                    </div>
+                </div>
+                <p>A survival action game set in a frozen tundra. Hunt bears, gather resources, and fortify your base.
+                </p>
+            </div>
+
+            <div class="tool">
+                <div class="tool-title">
+                    <h3>🪖 Army Rush <span class="badge-new">2/24 NEW!</span></h3>
+                    <div class="links">
+                        <div class="link-row">
+                            <a href="https://oyajibuki.github.io/Army/" target="_blank" class="primary">Play Free</a>
+                            <a href="#" class="note" target="_blank" rel="noopener noreferrer">note</a>
+                        </div>
+                    </div>
+                </div>
+                <p>Grow your army, upgrade weapons, and defeat waves of incoming enemies.</p>
+            </div>
+
+        </div>
+
+        <!-- ▼ Custom Development -->
+        <div class="card custom-section">
+            <h2>Custom Development</h2>
+            <p>Tailored solutions built around your workflow — simple, effective, and ready to use.</p>
+            <ul>
+                <li>💻 Solo & Small-Scale Dev</li>
+                <li>🐍 Python / GAS / AI Integrations</li>
+                <li>💰 Starting at $50</li>
+            </ul>
+            <p style="text-align: center;">
+                <a href="https://oyajibuki.github.io/form/" target="_blank" rel="noopener noreferrer"
+                    class="btn-contact">
+                    Get in Touch
+                </a>
+            </p>
+        </div>
+
+    </section>
+
+    <footer>
+        <p>&copy; 2026 AutoCraft &mdash; Indie Dev Tools</p>
+    </footer>
+
+    <script>
+        (function () {
+            try {
+                const url = "https://script.google.com/macros/s/AKfycbznxYkj5ixnK_pHkGR8LUYhEYdvSYpaiF3x4LaZy964wlu068oak1X1uuIiyqCEtGWF/exec?page=home-en"
+                    + "&ref=" + encodeURIComponent(document.referrer)
+                    + "&ua=" + encodeURIComponent(navigator.userAgent)
+                    + "&lang=" + encodeURIComponent(navigator.language)
+                    + "&w=" + screen.width + "&h=" + screen.height;
+                fetch(url, { method: "GET", mode: "no-cors" }).catch(() => { });
+            } catch (e) { }
+        })();
+    </script>
+</body>
+
+</html>
