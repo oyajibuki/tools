@@ -5,9 +5,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="img/favicon.png">
-  <title>AutoCraft | 業務改善ツール & Productivity Tools</title>
-  <meta name="description"
-    content="AutoCraft — 個人開発ツール集。AI字幕、画像リサイズ、CSV整形など。A collection of indie-built productivity tools.">
+  <title>無料AI・自動化ツール集｜仕事効率化・動画字幕・画像処理【個人開発】</title>
+  <meta name="description" content="仕事効率化・AI活用・動画字幕生成・PDF変換など、実用的な無料Webツールをまとめた個人開発サイト。インストール不要・登録不要ですぐ使えます。">
+
+  <!-- OGP Tags -->
+  <meta property="og:title" content="無料AI・自動化ツール集">
+  <meta property="og:description" content="仕事効率化・字幕生成・画像処理など実用ツール集">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oyajibuki.github.io/tools/">
+  <meta property="og:image" content="https://oyajibuki.github.io/tools/og.png">
 
   <!-- Google Fonts: Inter & Noto Sans JP -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -482,9 +488,9 @@
     </div>
 
     <h1 class="brand-title">AutoCraft</h1>
-    <p class="brand-sub">— Productivity Tools & Lab —</p>
     <div id="header-text-container">
-      <!-- Populated by JS -->
+      <p class="subtitle-ja">無料で使えるAI・自動化ツール集</p>
+      <p class="subtitle-en">Build small. Impact big. Indie tools that get things done.</p>
     </div>
   </header>
 
@@ -496,11 +502,10 @@
 
       <div class="tool">
         <div class="tool-title">
-          <h3><span data-i18n="tool_subtitle_title">AIテロップ自動生成ツール</span></h3>
+          <h3><span data-i18n="tool_subtitle_title">AI字幕自動生成ツール｜動画から一発で日本語テロップ作成</span></h3>
           <div class="links">
             <div class="link-row">
-              <a href="https://subtitle-ai-free-aen8v76jncxmxzrwxqdumz.streamlit.app/" target="_blank" class="primary"
-                data-i18n="btn_free">Free / 無料</a>
+              <a href="./subtitle/" class="primary" data-i18n="btn_free">Free / 無料</a>
               <a href="https://note.com/crisp_rue6588/n/nb2f04e865555?sub_rt=share_pb" class="note" target="_blank"
                 rel="noopener noreferrer">note</a>
             </div>
@@ -516,11 +521,11 @@
 
       <div class="tool">
         <div class="tool-title">
-          <h3><span data-i18n="tool_clearcut_title">ClearCut</span> <span class="badge-new">2/27 NEW!</span></h3>
+          <h3><span data-i18n="tool_clearcut_title">ClearCut 画像切り抜きツール｜ブラウザで簡単背景透過</span> <span class="badge-new">2/27
+              NEW!</span></h3>
           <div class="links">
             <div class="link-row">
-              <a href="https://huggingface.co/spaces/AutoCraft502/clearcut" target="_blank" class="primary"
-                data-i18n="btn_free">Free / 無料</a>
+              <a href="./clearcut/" class="primary" data-i18n="btn_free">Free / 無料</a>
               <a href="https://note.com/crisp_rue6588/n/n2b3e0f019c83" class="note" target="_blank"
                 rel="noopener noreferrer">note</a>
             </div>
@@ -531,11 +536,11 @@
 
       <div class="tool">
         <div class="tool-title">
-          <h3><span data-i18n="tool_resize_title">画像・動画 リサイズツール</span> <span class="badge-new">2/23 NEW!</span></h3>
+          <h3><span data-i18n="tool_resize_title">画像・動画リサイズツール｜SNS・ブログ用にブラウザで一括リサイズ</span> <span class="badge-new">2/23
+              NEW!</span></h3>
           <div class="links">
             <div class="link-row">
-              <a href="https://oyajibuki.github.io/resize-tool/" target="_blank" class="primary"
-                data-i18n="btn_free">Free / 無料</a>
+              <a href="./resize/" class="primary" data-i18n="btn_free">Free / 無料</a>
               <a href="https://note.com/crisp_rue6588/n/n0c08e76c5ca0?app_launch=false" class="note" target="_blank"
                 rel="noopener noreferrer">note</a>
             </div>
@@ -546,11 +551,10 @@
 
       <div class="tool">
         <div class="tool-title">
-          <h3><span data-i18n="tool_wordruby_title">Word ルビ一括付与ツール</span></h3>
+          <h3><span data-i18n="tool_wordruby_title">Word自動ルビ振りツール｜漢字・英語に一括フリガナ付与</span></h3>
           <div class="links">
             <div class="link-row">
-              <a href="https://github.com/oyajibuki/ruby-word/releases/" target="_blank" class="primary"
-                data-i18n="btn_free">Free / 無料</a>
+              <a href="./ruby-word/" class="primary" data-i18n="btn_free">Free / 無料</a>
               <a href="https://note.com/crisp_rue6588/n/nd16fef46c287" class="note" target="_blank"
                 rel="noopener noreferrer">note</a>
             </div>
@@ -561,11 +565,10 @@
 
       <div class="tool">
         <div class="tool-title">
-          <h3><span data-i18n="tool_aozora_title">青空文庫 ルビ削除ツール</span></h3>
+          <h3><span data-i18n="tool_aozora_title">青空文庫ルビ削除ツール｜機械学習向けテキスト整形データセット作成</span></h3>
           <div class="links">
             <div class="link-row">
-              <a href="https://aozora-ruby-remover-n4dpzggyj553wsbnqpl7at.streamlit.app/" target="_blank"
-                class="primary" data-i18n="btn_free">Free / 無料</a>
+              <a href="./aozora/" class="primary" data-i18n="btn_free">Free / 無料</a>
               <a href="https://note.com/crisp_rue6588/n/n393222cfdec2" class="note" target="_blank"
                 rel="noopener noreferrer">note</a>
             </div>
@@ -576,11 +579,10 @@
 
       <div class="tool">
         <div class="tool-title">
-          <h3><span data-i18n="tool_csv_title">CSV / Excel 自動整形ツール</span></h3>
+          <h3><span data-i18n="tool_csv_title">CSV・Excel自動整形ツール｜列揃え・不要行削除・文字変換</span></h3>
           <div class="links">
             <div class="link-row">
-              <a href="https://oyajibuki.github.io/csv-app/" target="_blank" class="primary" data-i18n="btn_free">Free /
-                無料</a>
+              <a href="./csv/" class="primary" data-i18n="btn_free">Free / 無料</a>
               <a href="https://note.com/crisp_rue6588/n/n23575f4dfdd1" class="note" target="_blank"
                 rel="noopener noreferrer">note</a>
             </div>
@@ -596,11 +598,10 @@
       <div id="header-sub_market"></div>
       <div class="tool">
         <div class="tool-title">
-          <h3><span data-i18n="tool_dashboard_title">Market Dashboard</span></h3>
+          <h3><span data-i18n="tool_dashboard_title">Market Dashboard｜市場動向・金融データリアルタイム分析</span></h3>
           <div class="links">
             <div class="link-row">
-              <a href="https://oyajibuki.github.io/market-dashboard/" target="_blank" class="dashboard"
-                data-i18n="btn_dashboard">Dashboard</a>
+              <a href="./market/" class="dashboard" data-i18n="btn_dashboard">Dashboard</a>
             </div>
           </div>
         </div>
@@ -614,11 +615,11 @@
       <div id="header-sub_games"></div>
       <div class="tool">
         <div class="tool-title">
-          <h3>❄️ <span data-i18n="tool_powa_title">ポワ・サバ</span> <span class="badge-new">2/23 NEW!</span></h3>
+          <h3>❄️ <span data-i18n="tool_powa_title">ポワ・サバ (Powa Survival)｜ブラウザで遊べる無料サバイバルゲーム</span> <span
+              class="badge-new">2/23 NEW!</span></h3>
           <div class="links">
             <div class="link-row">
-              <a href="https://oyajibuki.github.io/whiteout-survival/" target="_blank" class="primary"
-                data-i18n="btn_play">Play / 無料</a>
+              <a href="./powa/" class="primary" data-i18n="btn_play">Play / 無料</a>
               <a href="https://note.com/preview/n9d2bfd20bb7b?prev_access_key=89c06d80603fde6082ed5b5c635c0d0c"
                 class="note" target="_blank" rel="noopener noreferrer">note</a>
             </div>
@@ -629,11 +630,11 @@
 
       <div class="tool">
         <div class="tool-title">
-          <h3>🪖 <span data-i18n="tool_army_title">Army・Rush</span> <span class="badge-new">2/24 NEW!</span></h3>
+          <h3>🪖 <span data-i18n="tool_army_title">Army・Rush (アーミーラッシュ)｜無料タワーディフェンス・アクション兵士育成ゲーム</span> <span
+              class="badge-new">2/24 NEW!</span></h3>
           <div class="links">
             <div class="link-row">
-              <a href="https://oyajibuki.github.io/Army/" target="_blank" class="primary" data-i18n="btn_play">Play /
-                無料</a>
+              <a href="./army/" class="primary" data-i18n="btn_play">Play / 無料</a>
               <a href="#" class="note" target="_blank" rel="noopener noreferrer">note</a>
             </div>
           </div>
