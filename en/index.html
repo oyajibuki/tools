@@ -9,14 +9,15 @@
     <meta name="description"
         content="AutoCraft — A collection of indie-built productivity tools. AI subtitles, image resizers, CSV formatters, and more.">
 
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts: Inter & Noto Sans JP -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@700;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&family=Orbitron:wght@700;900&display=swap"
         rel="stylesheet">
 
     <style>
+        /* CSS identical to root but adjusting relative paths if any (none in variables) */
         :root {
             --primary-color: #2563eb;
             --primary-gradient: linear-gradient(135deg, #2563eb, #1d4ed8);
@@ -24,13 +25,14 @@
             --bg-overlay: rgba(255, 255, 255, 0.92);
             --text-main: #1f2937;
             --text-sub: #4b5563;
+            --text-en: #6b7280;
             --card-bg: #ffffff;
             --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
             --card-hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
             margin: 0;
             padding: 0;
             background: url('../img/background.png') center/cover fixed;
@@ -39,7 +41,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Background overlay */
         body::before {
             content: "";
             position: fixed;
@@ -75,6 +76,58 @@
         .logo img {
             height: 48px;
             filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 9999px;
+            padding: 4px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(4px);
+            transition: all 0.2s ease;
+        }
+
+        .lang-switcher:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .lang-switcher span {
+            margin-right: 6px;
+            font-size: 0.9rem;
+        }
+
+        .lang-switcher select {
+            background: transparent;
+            color: #fff;
+            border: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding-right: 15px;
+        }
+
+        .lang-switcher select option {
+            background: #1f2937;
+            color: #fff;
+        }
+
+        .lang-switcher::after {
+            content: '▼';
+            font-size: 0.6rem;
+            color: white;
+            position: absolute;
+            right: 12px;
+            pointer-events: none;
         }
 
         .brand-title {
@@ -117,11 +170,19 @@
             margin: 0 0 18px 0;
         }
 
-        header p {
+        header .subtitle-ja {
             font-size: 1.1rem;
-            opacity: 0.9;
-            margin: 0;
+            opacity: 0.95;
+            margin: 0 0 6px 0;
             font-weight: 500;
+        }
+
+        header .subtitle-en {
+            font-size: 0.95rem;
+            opacity: 0.65;
+            margin: 0;
+            font-weight: 400;
+            font-style: italic;
         }
 
         section {
@@ -152,9 +213,16 @@
             color: var(--text-main);
             border-left: 5px solid var(--primary-color);
             padding-left: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 5px;
             display: flex;
             align-items: center;
+        }
+
+        .card .section-en {
+            font-size: 0.85rem;
+            color: var(--text-en);
+            margin: 0 0 25px 20px;
+            font-style: italic;
         }
 
         .tool {
@@ -170,10 +238,6 @@
         .tool:hover {
             background-color: rgba(249, 250, 251, 0.5);
             border-radius: 8px;
-            padding-left: 10px;
-            padding-right: 10px;
-            margin-left: -10px;
-            margin-right: -10px;
         }
 
         .tool-title {
@@ -189,12 +253,6 @@
             font-weight: 700;
             margin: 0;
             color: #111;
-        }
-
-        .tool p {
-            margin: 0;
-            font-size: 0.95rem;
-            color: var(--text-sub);
         }
 
         .links {
@@ -278,7 +336,6 @@
             filter: brightness(1.1);
         }
 
-        /* Coming soon label */
         .links a[href="#"] {
             background: #e5e7eb;
             color: #9ca3af;
@@ -343,6 +400,12 @@
             font-size: 0.9rem;
         }
 
+        footer .footer-en {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
         @media (max-width: 600px) {
             .brand-title {
                 font-size: 2rem;
@@ -362,203 +425,539 @@
                 flex-direction: column;
                 gap: 10px;
             }
+
+            .lang-switcher {
+                top: 15px;
+                right: 15px;
+            }
         }
     </style>
 </head>
 
 <body>
-
     <header>
         <div class="logo">
             <img src="../img/logo.png" alt="Logo">
         </div>
+
+        <div class="lang-switcher">
+            <span>🌐</span>
+            <select id="lang-select" onchange="changeLanguage(this.value)">
+                <option value="hy">Hybrid (Ja+En)</option>
+                <option value="en">English</option>
+                <option value="ja">日本語</option>
+                <option value="ko">한국어</option>
+                <option value="pt">Português</option>
+                <option value="zh">中文</option>
+                <option value="hi">हिन्दी</option>
+            </select>
+        </div>
+
         <h1 class="brand-title">AutoCraft</h1>
         <p class="brand-sub">— Productivity Tools & Lab —</p>
-        <p>Build small. Impact big. Indie tools that get things done.</p>
+        <div id="header-text-container"></div>
     </header>
 
     <section>
-
-        <!-- ▼ Productivity & Text Processing -->
         <div class="card">
-            <h2>Productivity & Text Processing</h2>
+            <h2 data-i18n="header_productivity">Productivity & Text Processing</h2>
+            <div id="header-sub_productivity"></div>
 
             <div class="tool">
                 <div class="tool-title">
-                    <h3>AI Subtitle Generator</h3>
+                    <h3><span data-i18n="tool_subtitle_title">AI Subtitle Generator</span></h3>
                     <div class="links">
                         <div class="link-row">
                             <a href="https://subtitle-ai-free-aen8v76jncxmxzrwxqdumz.streamlit.app/" target="_blank"
-                                class="primary">Free Tool</a>
+                                class="primary" data-i18n="btn_free">Free Tool</a>
                             <a href="https://note.com/crisp_rue6588/n/nb2f04e865555?sub_rt=share_pb" class="note"
                                 target="_blank" rel="noopener noreferrer">note</a>
                         </div>
                         <div class="link-row">
-                            <a href="https://oyajibuki.booth.pm/" target="_blank" class="pro">Pro Version</a>
+                            <a href="https://oyajibuki.booth.pm/" target="_blank" class="pro" data-i18n="btn_pro">Pro
+                                Version</a>
                             <a href="https://www.youtube.com/watch?v=cBqGlkcqztM" class="youtube" target="_blank"
                                 rel="noopener noreferrer">YouTube</a>
                         </div>
                     </div>
                 </div>
-                <p>Upload a video or audio file and let AI (Whisper) automatically transcribe and generate subtitle
-                    files.</p>
+                <div id="desc_subtitle"></div>
             </div>
 
             <div class="tool">
                 <div class="tool-title">
-                    <h3>ClearCut <span class="badge-new">2/27 NEW!</span></h3>
+                    <h3><span data-i18n="tool_clearcut_title">ClearCut</span> <span class="badge-new">2/27 NEW!</span>
+                    </h3>
                     <div class="links">
                         <div class="link-row">
                             <a href="https://huggingface.co/spaces/AutoCraft502/clearcut" target="_blank"
-                                class="primary">Free Tool</a>
-                            <a href="#" class="note" target="_blank" rel="noopener noreferrer">note</a>
+                                class="primary" data-i18n="btn_free">Free Tool</a>
+                            <a href="https://note.com/crisp_rue6588/n/n2b3e0f019c83" class="note" target="_blank"
+                                rel="noopener noreferrer">note</a>
                         </div>
                     </div>
                 </div>
-                <p>An image background removal and cutout tool.</p>
+                <div id="desc_clearcut"></div>
             </div>
 
             <div class="tool">
                 <div class="tool-title">
-                    <h3>Image & Video Resizer <span class="badge-new">2/23 NEW!</span></h3>
+                    <h3><span data-i18n="tool_resize_title">Image & Video Resizer</span> <span class="badge-new">2/23
+                            NEW!</span></h3>
                     <div class="links">
                         <div class="link-row">
-                            <a href="https://oyajibuki.github.io/resize-tool/" target="_blank" class="primary">Free
-                                Tool</a>
+                            <a href="https://oyajibuki.github.io/resize-tool/" target="_blank" class="primary"
+                                data-i18n="btn_free">Free Tool</a>
                             <a href="https://note.com/crisp_rue6588/n/n0c08e76c5ca0?app_launch=false" class="note"
                                 target="_blank" rel="noopener noreferrer">note</a>
                         </div>
                     </div>
                 </div>
-                <p>Quickly resize images and videos in your browser for social media and blogs.</p>
+                <div id="desc_resize"></div>
             </div>
 
             <div class="tool">
                 <div class="tool-title">
-                    <h3>Word Ruby (Furigana) Tool</h3>
+                    <h3><span data-i18n="tool_wordruby_title">Word Ruby Tool</span></h3>
                     <div class="links">
                         <div class="link-row">
-                            <a href="https://github.com/oyajibuki/ruby-word/releases/" target="_blank"
-                                class="primary">Free Tool</a>
+                            <a href="https://github.com/oyajibuki/ruby-word/releases/" target="_blank" class="primary"
+                                data-i18n="btn_free">Free Tool</a>
                             <a href="https://note.com/crisp_rue6588/n/nd16fef46c287" class="note" target="_blank"
                                 rel="noopener noreferrer">note</a>
                         </div>
                     </div>
                 </div>
-                <p>Batch-apply furigana (ruby text) to kanji and English words in Word documents for improved
-                    readability.</p>
+                <div id="desc_wordruby"></div>
             </div>
 
             <div class="tool">
                 <div class="tool-title">
-                    <h3>Aozora Bunko Ruby Remover</h3>
+                    <h3><span data-i18n="tool_aozora_title">Aozora Bunko Ruby Remover</span></h3>
                     <div class="links">
                         <div class="link-row">
                             <a href="https://aozora-ruby-remover-n4dpzggyj553wsbnqpl7at.streamlit.app/" target="_blank"
-                                class="primary">Free Tool</a>
+                                class="primary" data-i18n="btn_free">Free Tool</a>
                             <a href="https://note.com/crisp_rue6588/n/n393222cfdec2" class="note" target="_blank"
                                 rel="noopener noreferrer">note</a>
                         </div>
                     </div>
                 </div>
-                <p>Strip ruby annotations from Aozora Bunko-formatted text, optimized for machine learning datasets.</p>
+                <div id="desc_aozora"></div>
             </div>
 
             <div class="tool">
                 <div class="tool-title">
-                    <h3>CSV / Excel Auto-Formatter</h3>
+                    <h3><span data-i18n="tool_csv_title">CSV / Excel Auto-Formatter</span></h3>
                     <div class="links">
                         <div class="link-row">
-                            <a href="https://oyajibuki.github.io/csv-app/" target="_blank" class="primary">Free Tool</a>
+                            <a href="https://oyajibuki.github.io/csv-app/" target="_blank" class="primary"
+                                data-i18n="btn_free">Free Tool</a>
                             <a href="https://note.com/crisp_rue6588/n/n23575f4dfdd1" class="note" target="_blank"
                                 rel="noopener noreferrer">note</a>
                         </div>
                     </div>
                 </div>
-                <p>Automate column alignment, row cleanup, and character conversion for CSV and Excel files.</p>
+                <div id="desc_csv"></div>
             </div>
         </div>
 
-        <!-- ▼ Market & Analytics -->
         <div class="card">
-            <h2>Market & Analytics</h2>
-
+            <h2 data-i18n="header_market">Market & Analytics</h2>
+            <div id="header-sub_market"></div>
             <div class="tool">
                 <div class="tool-title">
-                    <h3>Market Dashboard</h3>
+                    <h3><span data-i18n="tool_dashboard_title">Market Dashboard</span></h3>
                     <div class="links">
                         <div class="link-row">
-                            <a href="https://oyajibuki.github.io/market-dashboard/" target="_blank"
-                                class="dashboard">Dashboard</a>
+                            <a href="https://oyajibuki.github.io/market-dashboard/" target="_blank" class="dashboard"
+                                data-i18n="btn_dashboard">Dashboard</a>
                         </div>
                     </div>
                 </div>
-                <p>A real-time dashboard for visualizing market trends and analytics.</p>
+                <div id="desc_dashboard"></div>
             </div>
         </div>
 
-        <!-- ▼ Games -->
         <div class="card">
-            <h2>🎮 GAME</h2>
-
+            <h2 data-i18n="header_games">🎮 Games</h2>
+            <div id="header-sub_games"></div>
             <div class="tool">
                 <div class="tool-title">
-                    <h3>❄️ Powa Survival <span class="badge-new">2/23 NEW!</span></h3>
+                    <h3>❄️ <span data-i18n="tool_powa_title">Powa Survival</span> <span class="badge-new">2/23
+                            NEW!</span></h3>
                     <div class="links">
                         <div class="link-row">
-                            <a href="https://oyajibuki.github.io/whiteout-survival/" target="_blank"
-                                class="primary">Play Free</a>
+                            <a href="https://oyajibuki.github.io/whiteout-survival/" target="_blank" class="primary"
+                                data-i18n="btn_play">Play Free</a>
                             <a href="https://note.com/preview/n9d2bfd20bb7b?prev_access_key=89c06d80603fde6082ed5b5c635c0d0c"
                                 class="note" target="_blank" rel="noopener noreferrer">note</a>
                         </div>
                     </div>
                 </div>
-                <p>A survival action game set in a frozen tundra. Hunt bears, gather resources, and fortify your base.
-                </p>
+                <div id="desc_powa"></div>
             </div>
 
             <div class="tool">
                 <div class="tool-title">
-                    <h3>🪖 Army Rush <span class="badge-new">2/24 NEW!</span></h3>
+                    <h3>🪖 <span data-i18n="tool_army_title">Army Rush</span> <span class="badge-new">2/24 NEW!</span>
+                    </h3>
                     <div class="links">
                         <div class="link-row">
-                            <a href="https://oyajibuki.github.io/Army/" target="_blank" class="primary">Play Free</a>
+                            <a href="https://oyajibuki.github.io/Army/" target="_blank" class="primary"
+                                data-i18n="btn_play">Play Free</a>
                             <a href="#" class="note" target="_blank" rel="noopener noreferrer">note</a>
                         </div>
                     </div>
                 </div>
-                <p>Grow your army, upgrade weapons, and defeat waves of incoming enemies.</p>
+                <div id="desc_army"></div>
             </div>
-
         </div>
 
-        <!-- ▼ Custom Development -->
         <div class="card custom-section">
-            <h2>Custom Development</h2>
-            <p>Tailored solutions built around your workflow — simple, effective, and ready to use.</p>
+            <h2 data-i18n="header_custom">Custom Development</h2>
+            <div id="desc_custom"></div>
             <ul>
-                <li>💻 Solo & Small-Scale Dev</li>
-                <li>🐍 Python / GAS / AI Integrations</li>
-                <li>💰 Starting at $50</li>
+                <li data-i18n="custom_point1">💻 Solo & Small-Scale Dev</li>
+                <li data-i18n="custom_point2">🐍 Python / GAS / AI Integrations</li>
+                <li data-i18n="custom_point3">💰 Starting at $50</li>
             </ul>
             <p style="text-align: center;">
                 <a href="https://oyajibuki.github.io/form/" target="_blank" rel="noopener noreferrer"
-                    class="btn-contact">
+                    class="btn-contact" data-i18n="btn_contact">
                     Get in Touch
                 </a>
             </p>
         </div>
-
     </section>
 
     <footer>
-        <p>&copy; 2026 AutoCraft &mdash; Indie Dev Tools</p>
+        <div id="footer-text-container"></div>
     </footer>
+
+    <script>
+        // PORTED FROM ROOT index.html (Updated with ko/pt)
+        const translations = {
+            hy: {
+                langDir: "ja",
+                header_productivity: "実用・テキスト処理",
+                header_sub_productivity: "Productivity & Text Processing",
+                tool_subtitle_title: "AIテロップ自動生成ツール (AI Subtitle)",
+                btn_free: "Free / 無料",
+                btn_pro: "Pro / 有料版",
+                desc_subtitle_ja: "動画や音声をアップロードするだけで、AI(Whisper)が自動で文字起こしを行い字幕ファイルを生成します。",
+                desc_subtitle_en: "Upload a video or audio file and let AI (Whisper) automatically transcribe and generate subtitle files.",
+                tool_clearcut_title: "ClearCut",
+                desc_clearcut_ja: "画像の切り抜きをするツール",
+                desc_clearcut_en: "An image background removal and cutout tool.",
+                tool_resize_title: "画像・動画 リサイズツール",
+                desc_resize_ja: "SNSやブログ用に画像・動画をブラウザ上で素早くリサイズ。",
+                desc_resize_en: "Quickly resize images and videos in your browser for social media and blogs.",
+                tool_wordruby_title: "Word ルビ一括付与ツール",
+                desc_wordruby_ja: "Word文書内の漢字や英語に対してルビを一括付与し、文書の可読性向上を自動化。",
+                desc_wordruby_en: "Batch-apply furigana (ruby text) to kanji and English words in Word documents for improved readability.",
+                tool_aozora_title: "青空文庫 ルビ削除ツール",
+                desc_aozora_ja: "青空文庫形式のテキストからルビを一括削除し、機械学習用に最適化。",
+                desc_aozora_en: "Strip ruby annotations from Aozora Bunko-formatted text, optimized for machine learning datasets.",
+                tool_csv_title: "CSV / Excel 自動整形ツール",
+                desc_csv_ja: "列揃え・不要行削除・文字変換などの定型処理を自動化。",
+                desc_csv_en: "Automate column alignment, row cleanup, and character conversion for CSV and Excel files.",
+                header_market: "マーケット & 分析",
+                header_sub_market: "Market & Analytics",
+                tool_dashboard_title: "Market Dashboard",
+                btn_dashboard: "Dashboard",
+                desc_dashboard_ja: "リアルタイム市場動向を可視化するダッシュボード。",
+                desc_dashboard_en: "A real-time dashboard for visualizing market trends and analytics.",
+                header_games: "🎮 GAME",
+                header_sub_games: "Free to Play",
+                tool_powa_title: "ポワ・サバ",
+                btn_play: "Play / 無料",
+                desc_powa_ja: "極寒の雪原を舞台にしたサバイバルアクションゲーム。クマを倒して資源を集め、拠点を強化しよう。",
+                desc_powa_en: "A survival action game set in a frozen tundra. Hunt bears, gather resources, and fortify your base.",
+                tool_army_title: "Army・Rush",
+                desc_army_ja: "兵士を増やしたり武器を強化して向かってくる敵を倒そう。",
+                desc_army_en: "Grow your army, upgrade weapons, and defeat waves of incoming enemies.",
+                header_custom: "開発依頼・カスタマイズ",
+                header_sub_custom: "Custom Development",
+                desc_custom_ja: "あなたの業務に合わせて、一番ラクな形を作ります。",
+                desc_custom_en: "Tailored solutions built around your workflow — simple, effective, and ready to use.",
+                custom_point1: "💻 個人・小規模開発",
+                custom_point2: "🐍 Python / GAS / AI",
+                custom_point3: "💰 ¥5,000〜 / $50〜",
+                btn_contact: "お問い合わせ / Get in Touch",
+                catchphrase_ja: "小さく作って、大きく役立てる。個人開発ツール集",
+                catchphrase_en: "Build small. Impact big. Indie tools that get things done.",
+                footer_copy_ja: "© 2026 AutoCraft — 個人開発・業務改善ツール Lab",
+                footer_copy_en: "AutoCraft — Indie Dev Tools"
+            },
+            en: {
+                langDir: "en",
+                header_productivity: "Productivity & Text Processing",
+                tool_subtitle_title: "AI Subtitle Generator",
+                btn_free: "Free Tool",
+                btn_pro: "Pro Version",
+                desc_subtitle: "Upload a video or audio file and let AI (Whisper) automatically transcribe and generate subtitle files.",
+                tool_clearcut_title: "ClearCut",
+                desc_clearcut: "An image background removal and cutout tool.",
+                tool_resize_title: "Image & Video Resizer",
+                desc_resize: "Quickly resize images and videos in your browser for social media and blogs.",
+                tool_wordruby_title: "Word Ruby Tool",
+                desc_wordruby: "Batch-apply furigana (ruby text) to kanji and English words in Word documents for improved readability.",
+                tool_aozora_title: "Aozora Bunko Ruby Remover",
+                desc_aozora: "Strip ruby annotations from Aozora Bunko-formatted text, optimized for machine learning datasets.",
+                tool_csv_title: "CSV / Excel Auto-Formatter",
+                desc_csv: "Automate column alignment, row cleanup, and character conversion for CSV and Excel files.",
+                header_market: "Market & Analytics",
+                tool_dashboard_title: "Market Dashboard",
+                btn_dashboard: "Dashboard",
+                desc_dashboard: "A real-time dashboard for visualizing market trends and analytics.",
+                header_games: "🎮 Games",
+                tool_powa_title: "Powa Survival",
+                btn_play: "Play Free",
+                desc_powa: "A survival action game set in a frozen tundra. Hunt bears, gather resources, and fortify your base.",
+                tool_army_title: "Army Rush",
+                desc_army: "Grow your army, upgrade weapons, and defeat waves of incoming enemies.",
+                header_custom: "Custom Development",
+                desc_custom: "Tailored solutions built around your workflow — simple, effective, and ready to use.",
+                custom_point1: "💻 Solo & Small-Scale Dev",
+                custom_point2: "🐍 Python / GAS / AI Integrations",
+                custom_point3: "💰 Starting at $50",
+                btn_contact: "Get in Touch",
+                catchphrase: "Build small. Impact big. Indie tools that get things done.",
+                footer_copy: "© 2026 AutoCraft — Indie Dev Tools"
+            },
+            ja: {
+                langDir: "ja",
+                header_productivity: "実用・テキスト処理",
+                tool_subtitle_title: "AIテロップ自動生成ツール",
+                btn_free: "Free / 無料",
+                btn_pro: "Pro / 有料版",
+                desc_subtitle: "動画や音声をアップロードするだけで、AI(Whisper)が自動で文字起こしを行い字幕ファイルを生成します。",
+                tool_clearcut_title: "ClearCut",
+                desc_clearcut: "画像の切り抜きをするツール",
+                tool_resize_title: "画像・動画 リサイズツール",
+                desc_resize: "SNSやブログ用に画像・動画をブラウザ上で素早くリサイズ。",
+                tool_wordruby_title: "Word ルビ一括付与ツール",
+                desc_wordruby: "Word文書内の漢字や英語に対してルビを一括付与し、文書の可読性向上を自動化。",
+                tool_aozora_title: "青空文庫 ルビ削除ツール",
+                desc_aozora: "青空文庫形式のテキストからルビを一括削除し、機械学習用に最適化。",
+                tool_csv_title: "CSV / Excel 自動整形ツール",
+                desc_csv: "列揃え・不要行削除・文字変換などの定型処理を自動化。",
+                header_market: "マーケット & 分析",
+                tool_dashboard_title: "Market Dashboard",
+                btn_dashboard: "Dashboard",
+                desc_dashboard: "リアルタイム市場動向を可視化するダッシュボード。",
+                header_games: "🎮 ゲーム",
+                tool_powa_title: "ポワ・サバ",
+                btn_play: "Play / 無料",
+                desc_powa: "極寒의 雪原을 무대로 한 서바이벌 액션 게임. 곰을 물리치고 자원을 모아 기지를 강화하자.",
+                tool_army_title: "Army・Rush",
+                desc_army: "병사를 늘리거나 무기를 강화하여 다가오는 적을 쓰러뜨리자.",
+                header_custom: "개발 의뢰・커스터마이징",
+                desc_custom: "당신의 업무에 맞춰 가장 편한 형태를 만듭니다.",
+                custom_point1: "💻 개인・소규모 개발",
+                custom_point2: "🐍 Python / GAS / AI",
+                custom_point3: "💰 ¥5,000〜 / $50〜",
+                btn_contact: "문의하기 / Get in Touch",
+                catchphrase: "작게 만들어 크게 유용하게. 개인 개발 도구 모음",
+                footer_copy: "© 2026 AutoCraft — 개인 개발・업무 개선 도구 Lab"
+            },
+            ko: {
+                langDir: "ko",
+                header_productivity: "생산성 및 텍스트 처리",
+                tool_subtitle_title: "AI 자막 자동 생성 도구",
+                btn_free: "무료 도구",
+                btn_pro: "프로 버전",
+                desc_subtitle: "비디오 또는 오디오 파일을 업로드하면 AI(Whisper)가 자동으로 전사하고 자막 파일을 생성합니다.",
+                tool_clearcut_title: "ClearCut (이미지 누끼 따기)",
+                desc_clearcut: "이미지 배경 제거 및 누끼 따기 도구입니다.",
+                tool_resize_title: "이미지 및 비디오 리사이저",
+                desc_resize: "소셜 미디어 및 블로그용 이미지와 비디오의 크기를 브라우저에서 빠르게 조정하세요.",
+                tool_wordruby_title: "Word 루비(후리가나) 도구",
+                desc_wordruby: "가독성 향상을 위해 Word 문서의 한자와 영어 단어에 루비(후리가나)를 일괄 적용합니다.",
+                tool_aozora_title: "아오조라 문고 루비 제거기",
+                desc_aozora: "머신러닝을 위해 아오조라 문고 형식의 텍스트에서 루비 주석을 제거합니다.",
+                tool_csv_title: "CSV / Excel 자동 포맷터",
+                desc_csv: "CSV 및 Excel 파일의 열 정렬, 행 정리 및 문자 변환을 자동화합니다.",
+                header_market: "마켓 및 분석",
+                tool_dashboard_title: "마켓 대시보드",
+                btn_dashboard: "대시보드",
+                desc_dashboard: "마켓 트렌드와 분석을 시각화하는 실시간 대시보드입니다.",
+                header_games: "🎮 게임",
+                tool_powa_title: "포와 서바이벌",
+                btn_play: "무료 플레이",
+                desc_powa: "얼어붙은 툰드라를 배경으로 한 서바이벌 액션 게임입니다. 곰을 사냥하고 자원을 모아 기지를 강화하세요.",
+                tool_army_title: "아미 러시",
+                desc_army: "군대를 키우고 무기를 업그레이드하여 몰려오는 적들을 물리치세요.",
+                header_custom: "주문 제작 서비스",
+                desc_custom: "워크플로우에 맞춘 최적의 솔루션을 제공합니다.",
+                custom_point1: "💻 개인 및 소규모 개발",
+                custom_point2: "🐍 Python / GAS / AI 연동",
+                custom_point3: "💰 $50부터",
+                btn_contact: "문의하기",
+                catchphrase: "작게 만들어 크게 사용하다. 인디 개발 툴 컬렉션.",
+                footer_copy: "© 2026 AutoCraft — 인디 개발 툴 연구소"
+            },
+            pt: {
+                langDir: "pt",
+                header_productivity: "Produtividade e Texto",
+                tool_subtitle_title: "Gerador de Legendas AI",
+                btn_free: "Ferramenta Grátis",
+                btn_pro: "Versão Pro",
+                desc_subtitle: "Faça upload de vídeo ou áudio e deixe a AI (Whisper) transcrever e gerar legendas automaticamente.",
+                tool_clearcut_title: "ClearCut (Remover Fundo)",
+                desc_clearcut: "Uma ferramenta de remoção de fundo e recorte de imagem.",
+                tool_resize_title: "Redimensionador de Imagem e Vídeo",
+                desc_resize: "Redimensione rapidamente fotos e vídeos para redes sociais e blogs direto no navegador.",
+                tool_wordruby_title: "Ferramenta de Ruby (Furigana) para Word",
+                desc_wordruby: "Aplique furigana (texto ruby) em massa para kanji e palavras em inglês em documentos Word.",
+                tool_aozora_title: "Removedor de Ruby Aozora Bunko",
+                desc_aozora: "Remova anotações ruby de textos no formato Aozora Bunko para uso em machine learning.",
+                tool_csv_title: "Formatador Automático CSV / Excel",
+                desc_csv: "Automatize alinhamento de colunas, limpeza de linhas e conversão de caracteres para arquivos CSV e Excel.",
+                header_market: "Mercado e Análise",
+                tool_dashboard_title: "Market Dashboard",
+                btn_dashboard: "Dashboard",
+                desc_dashboard: "Um painel em tempo real para visualizar tendências de mercado e análises.",
+                header_games: "🎮 Jogos",
+                tool_powa_title: "Powa Survival",
+                btn_play: "Jogar Grátis",
+                desc_powa: "Um jogo de ação e sobrevivência na tundra congelada. Cace ursos, colete recursos e fortifique sua base.",
+                tool_army_title: "Army Rush",
+                desc_army: "Aumente seu exército, melhore as armas e derrote ondas de inimigos.",
+                header_custom: "Desenvolvimento Personalizado",
+                desc_custom: "Soluções sob medida para o seu fluxo de trabalho.",
+                custom_point1: "💻 Solo & Pequeno Porte",
+                custom_point2: "🐍 Python / GAS / Integrações AI",
+                custom_point3: "💰 A partir de $50",
+                btn_contact: "Entre em Contato",
+                catchphrase: "Construa pequeno. Impacte grande. Ferramentas indie para resolver problemas.",
+                footer_copy: "© 2026 AutoCraft — Ferramentas e Lab"
+            },
+            zh: {
+                langDir: "zh",
+                header_productivity: "效率与文本处理",
+                tool_subtitle_title: "AI 字幕自动生成工具",
+                btn_free: "免费工具",
+                btn_pro: "专业版",
+                desc_subtitle: "上传视频或音频文件，让人工智能（Whisper）自动转录并生成字幕文件。",
+                tool_clearcut_title: "ClearCut 抠图工具",
+                desc_clearcut: "一款基于AI的图像背景去除和抠图工具。",
+                tool_resize_title: "图片与视频批量缩放",
+                desc_resize: "在浏览器中快速调整图像和视频大小，适用于社交媒体和博客。",
+                tool_wordruby_title: "Word 拼音注音工具",
+                desc_wordruby: "为 Word 文档中的汉字和英语单词批量添加拼音（注音），以提高可读性。",
+                tool_aozora_title: "青空文库注音删除器",
+                desc_aozora: "从青空文库格式的文本中剥离注音注释，针对机器学习数据集进行了优化。",
+                tool_csv_title: "CSV / Excel 自动格式化工具",
+                desc_csv: "自动化列对齐、行清理和 CSV/Excel 文件中的字符转换。",
+                header_market: "市场与数据分析",
+                tool_dashboard_title: "市场数据看板",
+                btn_dashboard: "查看看板",
+                desc_dashboard: "用于实时可视化市场趋势 and 分析的仪表板。",
+                header_games: "🎮 免费游戏",
+                tool_powa_title: "极寒生存 (Powa Survival)",
+                btn_play: "免费游玩",
+                desc_powa: "以冰冻苔原为背景的生存动作游戏。狩猎熊，收集资源并加固你的基地。",
+                tool_army_title: "军队突击 (Army Rush)",
+                desc_army: "壮大您的军队，升级武器，击败一波又一波来袭的敌人。",
+                header_custom: "定制开发服务",
+                desc_custom: "围绕您的工作流程量身定制解决方案——简单、有效且随时可用。",
+                custom_point1: "💻 个人及小型开发",
+                custom_point2: "🐍 Python / GAS / AI 整合",
+                custom_point3: "💰 50美元起",
+                btn_contact: "联系我们",
+                catchphrase: "小而美，大有可为。独立开发者的效率工具箱。",
+                footer_copy: "© 2026 AutoCraft — 独立开发者工具"
+            },
+            hi: {
+                langDir: "hi",
+                header_productivity: "उत्पादकता और पाठ प्रसंस्करण",
+                tool_subtitle_title: "एआई उपशीर्षक (Subtitle) जनरेटर",
+                btn_free: "मुफ़्त टूल",
+                btn_pro: "प्रो संस्करण",
+                desc_subtitle: "एक वीडियो या ऑडियो फ़ाइल अपलोड करें और एआई (विस्पर) को स्वचालित रूप से ट्रांसक्राइब करने और उपशीर्षक फ़ाइलें बनाने दें।",
+                tool_clearcut_title: "ClearCut (छवि कटआउट)",
+                desc_clearcut: "एक छवि पृष्ठभूमि हटाने और कटआउट उपकरण।",
+                tool_resize_title: "छवि और वीडियो रिसाइज़र",
+                desc_resize: "सोशल मीडिया और ब्लॉग के लिए अपने ब्राउज़र में छवियों और वीडियो का त्वरित रूप से आकार बदलें।",
+                tool_wordruby_title: "Word Ruby Tool",
+                desc_wordruby: "बेहतर पठनीयता के लिए वर्ड दस्तावेज़ों में कांजी और अंग्रेजी शब्दों पर फुरिगाना (रूबी टेक्स्ट) बैच-लागू करें।",
+                tool_aozora_title: "आओज़ोरा बंको रूबी रिमूवर",
+                desc_aozora: "मशीन लर्निंग के लिए आओज़ोरा बंको-स्वरूपित पाठ से रूबी एनोटेशन हटाएं।",
+                tool_csv_title: "सीएसवी / एक्सेल ऑटो-फॉर्मेटर",
+                desc_csv: "CSV और Excel फ़ाइलों के लिए कॉलम संरेखण, पंक्ति सफाई और वर्ण रूपांतरण को स्वचालित करें।",
+                header_market: "बाज़ार और विश्लेषिकी",
+                tool_dashboard_title: "मार्केट डैशबोर्ड",
+                btn_dashboard: "डैशबोर्ड",
+                desc_dashboard: "Real-time dashboard for market trends/analytics.",
+                header_games: "🎮 गेम",
+                tool_powa_title: "पोवा सर्वाइवल",
+                btn_play: "मुफ़्त खेलें",
+                desc_powa: "जमे हुए टुंड्रा में सेट किया गया एक सर्वाइवल एक्शन गेम। भालुओं का शिकार करें, संसाधन जुटाएं और अपने आधार को मजबूत करें।",
+                tool_army_title: "आर्मी रश",
+                desc_army: "अपनी सेना बढ़ाएं, अपग्रेड करें और आने वाले दुश्मनों को हराएं।",
+                header_custom: "कस्टम विकास",
+                desc_custom: "आपके वर्कफ़्लो के लिए तैयार किए गए समाधान — सरल और प्रभावी।",
+                custom_point1: "💻 सोलो और लघु-स्तरीय देव",
+                custom_point2: "🐍 पायथन / GAS / AI एकीकरण",
+                custom_point3: "💰 $50 से शुरू",
+                btn_contact: "संपर्क में रहें",
+                catchphrase: "छोटा बनाएं। बड़ा प्रभाव डालें। इंडी टूल्स जो काम पूरा करते हैं।",
+                footer_copy: "© 2026 AutoCraft — इंडी देव उपकरण"
+            }
+        };
+
+        const descriptiveSections = ['subtitle', 'clearcut', 'resize', 'wordruby', 'aozora', 'csv', 'dashboard', 'powa', 'army', 'custom'];
+        const sectionHeaders = ['productivity', 'market', 'games'];
+
+        function changeLanguage(langcode) {
+            if (!translations[langcode]) return;
+            const dict = translations[langcode];
+            document.documentElement.lang = dict.langDir;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key]) el.textContent = dict[key];
+            });
+
+            if (langcode === 'hy') {
+                document.getElementById('header-text-container').innerHTML = `<p class="subtitle-ja">${dict.catchphrase_ja}</p><p class="subtitle-en">${dict.catchphrase_en}</p>`;
+                sectionHeaders.forEach(key => {
+                    const el = document.getElementById(`header-sub_${key}`);
+                    if (el) el.innerHTML = `<p class="section-en">${dict[`header_sub_${key}`] || ''}</p>`;
+                });
+                descriptiveSections.forEach(key => {
+                    const el = document.getElementById(`desc_${key}`);
+                    if (el) el.innerHTML = `<p class="desc-ja">${dict[`desc_${key}_ja`]}</p><p class="desc-en">${dict[`desc_${key}_en`]}</p>`;
+                });
+                document.getElementById('footer-text-container').innerHTML = `<p>${dict.footer_copy_ja}</p><p class="footer-en">${dict.footer_copy_en}</p>`;
+            } else {
+                document.getElementById('header-text-container').innerHTML = `<p class="subtitle-en" style="font-style:normal; opacity:1;">${dict.catchphrase}</p>`;
+                sectionHeaders.forEach(key => {
+                    const el = document.getElementById(`header-sub_${key}`);
+                    if (el) el.innerHTML = '';
+                });
+                descriptiveSections.forEach(key => {
+                    const el = document.getElementById(`desc_${key}`);
+                    if (el) el.innerHTML = `<p class="desc-en" style="font-style:normal; opacity:1;">${dict[`desc_${key}`]}</p>`;
+                });
+                document.getElementById('footer-text-container').innerHTML = `<p>${dict.footer_copy}</p>`;
+            }
+            localStorage.setItem('preferredLanguage', langcode);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // FOR en/index.html, DEFAULT TO 'en'
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('lang-select').value = savedLang;
+            changeLanguage(savedLang);
+        });
+    </script>
 
     <script>
         (function () {
             try {
-                const url = "https://script.google.com/macros/s/AKfycbznxYkj5ixnK_pHkGR8LUYhEYdvSYpaiF3x4LaZy964wlu068oak1X1uuIiyqCEtGWF/exec?page=home-en"
+                const url = "https://script.google.com/macros/s/AKfycbznxYkj5ixnK_pHkGR8LUYhEYdvSYpaiF3x4LaZy964wlu068oak1X1uuIiyqCEtGWF/exec?page=en"
                     + "&ref=" + encodeURIComponent(document.referrer)
                     + "&ua=" + encodeURIComponent(navigator.userAgent)
                     + "&lang=" + encodeURIComponent(navigator.language)
