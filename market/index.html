@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Market Dashboard｜市場動向・金融データリアルタイム分析【無料アプリ】</title>
+    <title data-i18n="head_title">Market Dashboard｜市場動向・金融データリアルタイム分析【無料アプリ】</title>
     <meta name="description"
         content="金融市場のリアルタイム動向、株価、経済指標を一目で把握できるMarket Dashboard（マーケットダッシュボード）。投資家やリサーチャー向けの無料市場分析ツールです。">
     <!-- OGP -->
@@ -161,50 +161,52 @@
 
 <body>
 
-    <header><a href="../">← 無料AI・自動化ツール集 トップへ戻る</a></header>
+    <header><a href="../" data-i18n="nav_back">← 無料AI・自動化ツール集 トップへ戻る</a></header>
 
     <div class="container">
-        <h1>Market Dashboard（市場動向分析ダッシュボード）</h1>
+        <h1 data-i18n="h1_title">Market Dashboard（市場動向分析ダッシュボード）</h1>
 
-        <p>
+        <p data-i18n="desc_main">
             現在の複雑な金融市場における株価指数や為替、各種経済指標を複数のサイトを巡回してチェックするのは非効率です。<br>
             Market Dashboardは、最新の市場データやトレンド、主要な金融指標を1つの画面でリアルタイムに可視化（ビジュアライズ）する分析Webアプリです。<br>
             ブラウザを開くだけで、投資判断やリサーチに必要な情報を瞬時に把握できます。
         </p>
 
         <div class="cta-area">
-            <a href="https://oyajibuki.github.io/market-dashboard/" target="_blank" class="btn-dashboard">ダッシュボードを開く</a>
+            <a href="https://oyajibuki.github.io/market-dashboard/" target="_blank" class="btn-dashboard"
+                data-i18n="btn_open">ダッシュボードを開く</a>
         </div>
 
-        <h2>このツールでできること</h2>
-        <ul>
+        <h2 data-i18n="h2_features">このツールでできること</h2>
+        <ul id="list_features">
             <li>主要な株式市場（日経・NYダウなど）や為替データの一覧表示</li>
             <li>直感的にトレンドを把握できる各種チャートの可視化</li>
             <li>市場のボラティリティやセンチメントの分析指標へのアクセス</li>
             <li>レスポンシブ対応による、PC・スマホからの快適な閲覧</li>
         </ul>
 
-        <h2>使い方</h2>
-        <ol>
+        <h2 data-i18n="h2_how">使い方</h2>
+        <ol id="list_how">
             <li>「ダッシュボードを開く」ボタンからアプリにアクセスします（登録不要）。</li>
             <li>画面に表示されるウィジェット形式のチャート・数値を閲覧します。</li>
             <li>必要に応じて表示期間や対象の指標を切り替えて、市場の全体像を分析します。</li>
         </ol>
 
-        <h2>こんな人におすすめ</h2>
-        <ul>
+        <h2 data-i18n="h2_target">こんな人におすすめ</h2>
+        <ul id="list_target">
             <li>日々のマーケット動向を短時間で俯瞰したい個人投資家・デイトレーダー</li>
             <li>経済や金融のニュースを読み解くため、基礎データを確認したいリサーチャー</li>
             <li>朝の通勤時間やスキマ時間にスマホで市況をチェックしたいビジネスマン</li>
         </ul>
 
-        <h2>よくある質問</h2>
-        <p><strong>Q. 利用は無料ですか？</strong><br>
-            はい、どなたでも無料で閲覧できます。口座開設や面倒な登録も一切ありません。</p>
+        <h2 data-i18n="h2_faq">よくある質問</h2>
+        <p><strong data-i18n="faq1_q">Q. 利用は無料ですか？</strong><br>
+            <span data-i18n="faq1_a">はい、どなたでも無料で閲覧できます。口座開設や面倒な登録も一切ありません。</span>
+        </p>
 
         <div class="related-links">
-            <h2>関連ツール</h2>
-            <ul>
+            <h2 data-i18n="h2_related">関連ツール</h2>
+            <ul id="list_related">
                 <li><a href="../csv/">CSV・Excel自動整形ツール</a></li>
                 <li><a href="../powa/">ポワ・サバ（ブラウザゲーム）</a></li>
                 <li><a href="../army/">Army・Rush（タワーディフェンス）</a></li>
@@ -213,9 +215,153 @@
     </div>
 
     <footer>
-        <p>© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
+        <p data-i18n="footer">© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
     </footer>
 
+    <!-- Dynamic Translation Script -->
+    <script>
+        const translations = {
+            en: {
+                head_title: "Market Dashboard | Real-time Finance Data App",
+                nav_back: "← Back to Tools",
+                h1_title: "Market Dashboard",
+                desc_main: "Checking complex financial markets, stock indices, FX, and economic indicators by iterating through multiple sites is inefficient. Market Dashboard is a web app that visualizes the latest market data, trends, and key financial indicators in real-time on a single screen. Just open your browser and instantly grasp the information needed for trading decisions or research.",
+                btn_open: "Open Dashboard",
+                h2_features: "Features",
+                list_features: "<li>List major stock markets (Nikkei, NY Dow, etc.) and FX data</li><li>Visualize intuitive charts to grasp overall trends</li><li>Access metrics analyzing market volatility and sentiment</li><li>Fully responsive for comfortable viewing on both PC and mobile</li>",
+                h2_how: "How to use",
+                list_how: "<li>Click 'Open Dashboard' to access the app (no registration required).</li><li>View the widget-style charts and numbers displayed on the screen.</li><li>Switch the display period or target indicator as needed to analyze the big picture.</li>",
+                h2_target: "Recommended for",
+                list_target: "<li>Retail investors and day traders who want a quick bird's-eye view of daily markets</li><li>Researchers needing to check fundamental data to decode economic news</li><li>Business people wanting to check the market on their smartphone during daily commutes</li>",
+                h2_faq: "FAQ",
+                faq1_q: "Q. Is it free to use?",
+                faq1_a: "Yes, anyone can view it for free. There is zero account setup or registration required.",
+                h2_related: "Related Tools",
+                list_related: "<li><a href='../csv/?lang=en'>CSV/Excel Auto-formatter</a></li><li><a href='../powa/?lang=en'>Powa Surva (Web Game)</a></li><li><a href='../army/?lang=en'>Army Rush (Tower Defense)</a></li>",
+                footer: "© 2026 AutoCraft — Indie Dev Tool Lab"
+            },
+            ko: {
+                head_title: "마켓 대시보드 | 실시간 금융 시장 동향 분석",
+                nav_back: "← 도구 목록으로 돌아가기",
+                h1_title: "Market Dashboard (시장 동향 분석)",
+                desc_main: "복잡한 금융 시장의 주가지수나 환율, 각종 경제 지표를 여러 사이트를 돌아다니며 일일이 확인하는 것은 비효율적입니다. Market Dashboard는 최신 시장 데이터와 트렌드, 주요 금융 지표를 하나의 화면에서 실시간으로 시각화(비주얼라이즈)해 주는 웹 분석 앱입니다. 브라우저를 열기만 하면 투자 판단이나 리서치에 필요한 정보를 한눈에 파악할 수 있습니다.",
+                btn_open: "대시보드 열기",
+                h2_features: "주요 기능",
+                list_features: "<li>주요 주식 시장(나스닥, S&P 500, 닛케이 등) 및 환율 데이터 모아보기</li><li>직관적으로 시장 트렌드를 파악할 수 있는 차트 시각화</li><li>시장의 변동성(Volatility) 및 투자자 심리(Sentiment)를 보여주는 지표 제공</li><li>PC 및 스마트폰 환경에 모두 최적화된 반응형 웹 디자인</li>",
+                h2_how: "사용 방법",
+                list_how: "<li>'대시보드 열기' 버튼을 클릭해 앱에 접속합니다 (가입 필요 없음).</li><li>화면에 표시되는 위젯 형태의 차트와 수치들을 확인합니다.</li><li>필요에 따라 조회 기간이나 대상 지표를 변경하며 전체 시장의 흐름을 분석합니다.</li>",
+                h2_target: "추천 대상",
+                list_target: "<li>매일 시장 동향을 짧은 시간 안에 한눈에 살피고 싶은 개인 투자자 및 데이 트레이더</li><li>경제·금융 뉴스를 분석하기 위해 기초 팩트 체크가 필요한 리서처</li><li>출퇴근 시간이나 자투리 시간에 폰으로 시황을 점검하는 직장인</li>",
+                h2_faq: "자주 묻는 질문",
+                faq1_q: "Q. 이용은 무료인가요?",
+                faq1_a: "네, 누구나 무료로 이용할 수 있습니다. 계좌 개설이나 번거로운 회원가입 절차도 전혀 없습니다.",
+                h2_related: "관련 도구",
+                list_related: "<li><a href='../csv/?lang=ko'>CSV·Excel 자동 정렬</a></li><li><a href='../powa/?lang=ko'>포와 사바 (웹 게임)</a></li><li><a href='../army/?lang=ko'>Army·Rush (타워 디펜스)</a></li>",
+                footer: "© 2026 AutoCraft — 인디 개발 툴 컬렉션"
+            },
+            pt: {
+                head_title: "Dashboard de Mercado | Finanças em Tempo Real",
+                nav_back: "← Voltar aos Ferramentas",
+                h1_title: "Market Dashboard (Análise de Mercado)",
+                desc_main: "Verificar índices de ações, câmbio e indicadores econômicos de mercados financeiros complexos visitando vários sites é ineficiente. O Market Dashboard é um web app que visualiza os dados, tendências e principais indicadores financeiros mais recentes em tempo real, em uma única tela. Basta abrir o navegador e você verá instantaneamente as informações necessárias para pesquisas e decisões de investimento.",
+                btn_open: "Abrir Dashboard",
+                h2_features: "O que a ferramenta faz",
+                list_features: "<li>Lista os principais mercados de ações (Dow Jones, S&P, etc.) e dados de câmbio (FX)</li><li>Visualiza gráficos intuitivos para fácil compreensão das tendências globais</li><li>Acesso a métricas que analisam a volatilidade e o sentimento do mercado</li><li>Totalmente responsivo para visualização confortável em PCs e smartphones</li>",
+                h2_how: "Como usar",
+                list_how: "<li>Clique em 'Abrir Dashboard' para acessar o aplicativo (sem precisar de registro).</li><li>Veja os gráficos em estilo de widget e os números exibidos na tela.</li><li>Altere o período de exibição ou o indicador alvo conforme necessário.</li>",
+                h2_target: "Recomendado para",
+                list_target: "<li>Investidores focados no varejo e day traders que querem uma visão panorâmica rápida do mercado</li><li>Pesquisadores que precisam verificar dados básicos para entender notícias econômicas</li><li>Profissionais que querem verificar o mercado pelo smartphone durante o trajeto casa-trabalho</li>",
+                h2_faq: "Perguntas Frequentes",
+                faq1_q: "Q. É de graça?",
+                faq1_a: "Sim, qualquer pessoa pode visualizar gratuitamente. Não há criação de conta ou qualquer exigência de registro.",
+                h2_related: "Ferramentas Relacionadas",
+                list_related: "<li><a href='../csv/?lang=pt'>Formatador Automático CSV</a></li><li><a href='../powa/?lang=pt'>Powa Surva (Jogo Web)</a></li><li><a href='../army/?lang=pt'>Army Rush (Tower Defense)</a></li>",
+                footer: "© 2026 AutoCraft — Ferramentas e Lab"
+            },
+            zh: {
+                head_title: "市场监控看板 | 实时金融与股市数据大屏",
+                nav_back: "← 返回主页",
+                h1_title: "Market Dashboard（全球市场动向看板）",
+                desc_main: "还在每天打开十几个网页分别查看美股、日经指数、汇率和经济数据吗？这太低效了。Market Dashboard 是一款金融追踪 Web 应用，它能在一个干净的屏幕上实时可视化最新的股市数据、宏观趋势以及主要金融指标。打开浏览器，投资决策和尽职调查所需的全景信息便一目了然。",
+                btn_open: "打开数据看板",
+                h2_features: "功能特点",
+                list_features: "<li>集中展示全球核心股市（道琼斯、日经等）及外汇牌价</li><li>直观的 K线图与折线图，让你一秒看清大盘趋势</li><li>涵盖市场恐慌指数（波动率）和投资者情绪等专业级指标</li><li>采用响应式设计，完美适配电脑大屏和手机移动端</li>",
+                h2_how: "使用方法",
+                list_how: "<li>点击“打开数据看板”免费直接进入系统（免去繁琐的账号注册）。</li><li>浏览屏幕上以卡片小组件形式呈现的各项市场追踪数据。</li><li>按需切换时间范围（例如一月、一年）或各项指标来深入分析市场走势。</li>",
+                h2_target: "推荐人群",
+                list_target: "<li>希望每天用最短时间俯瞰市场全局的个人投资者、日内交易员及炒股玩家</li><li>为了解读财经新闻而需要快速核对底层宏观经济数据的研究员/分析师</li><li>习惯在早上通勤挤地铁时用手机检视隔夜美股行情的上班族</li>",
+                h2_faq: "常见问题",
+                faq1_q: "Q. 看板里的数据是可以免费查看的吗？",
+                faq1_a: "是的，所有人均可完全免费浏览。不强制要求开户，也无需填写任何注册信息。",
+                h2_related: "相关工具",
+                list_related: "<li><a href='../csv/?lang=zh'>CSV/Excel 自动排版</a></li><li><a href='../powa/?lang=zh'>波瓦·生存（网页小游戏）</a></li><li><a href='../army/?lang=zh'>Army Rush（塔防游戏）</a></li>",
+                footer: "© 2026 AutoCraft — 个人开发工具集合"
+            },
+            hi: {
+                head_title: "Market Dashboard | Finance Data App",
+                nav_back: "← Back to Home",
+                h1_title: "मार्केट डैशबोर्ड (Market Dashboard)",
+                desc_main: "स्टॉक इंडेक्स, FX और आर्थिक संकेतकों को अलग-अलग वेबसाइट्स पर जाकर चेक करना बहुत समय बर्बाद करता है। हमारा 'मार्केट डैशबोर्ड' एक सिंगल स्क्रीन पर सारे ताज़ा मार्केट डेटा, ट्रेंड्स और मुख्य फाइनेंस मेट्रिक्स को रियल-टाइम में दिखाता है। बस अपना ब्राउज़र खोलें और ट्रेडिंग का फैसला लेने के लिए ज़रूरी जानकारी पल भर में पाएं।",
+                btn_open: "डैशबोर्ड खोलें",
+                h2_features: "सुविधाएँ",
+                list_features: "<li>प्रमुख शेयर बाजारों (Nikkei, NY Dow) और FX डेटा की सूची</li><li>कुल ट्रेंड (overall trends) समझने के लिए आसान चार्ट्स</li><li>मार्केट की वोलैटिलिटी (volatility) और सेंटिमेंट जानने के लिए मेट्रिक्स</li><li>मोबाइल और पीसी (PC) दोनों से देखने के लिए बेहतर रिस्पॉन्सिव डिज़ाइन</li>",
+                h2_how: "कैसे उपयोग करें",
+                list_how: "<li>ऐप ऐक्सेस करने के लिए 'डैशबोर्ड खोलें' पर क्लिक करें (किसी रजिस्ट्रेशन की ज़रूरत नहीं)।</li><li>स्क्रीन पर विजेट-स्टाइल (widget-style) वाले चार्ट्स और नंबर्स देखें।</li><li>बड़ी तस्वीर देखने के लिए समय या इंडिकेटर को अपनी ज़रूरत के हिसाब से बदलें।</li>",
+                h2_target: "किनके लिए है?",
+                list_target: "<li>छोटे निवेशक और डे ट्रेडर्स जो रोज़ के बाज़ार पर तुरंत नज़र डालना चाहते हैं</li><li>आर्थिक समाचारों को समझने के लिए डेटा देखने वाले रिसर्चर्स</li><li>वो लोग जो सफर के दौरान स्मार्टफोन पर मार्केट चेक करना चाहते हैं</li>",
+                h2_faq: "सामान्य प्रश्न",
+                faq1_q: "Q. क्या यह उपयोग करने के लिए मुफ्त है?",
+                faq1_a: "हाँ, कोई भी इसे मुफ्त में देख सकता है। इसके लिए कोई भी अकाउंट बनाना या रजिस्ट्रेशन करना ज़रूरी नहीं है।",
+                h2_related: "और टूल्स",
+                list_related: "<li><a href='../csv/?lang=hi'>CSV Auto-formatter</a></li><li><a href='../powa/?lang=hi'>Powa Surva (Web Game)</a></li><li><a href='../army/?lang=hi'>Army Rush (Tower Defense)</a></li>",
+                footer: "© 2026 AutoCraft — Indie Innovation Lab"
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const lang = params.get('lang');
+
+            // Apply translation if valid language parameter exists
+            if (lang && translations[lang]) {
+                const dict = translations[lang];
+                document.documentElement.lang = lang;
+
+                // Replace text contents
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (dict[key]) {
+                        el.textContent = dict[key];
+                    }
+                });
+
+                // Replace HTML structures (lists)
+                document.querySelectorAll('[id^="list_"]').forEach(el => {
+                    const id = el.getAttribute('id');
+                    if (dict[id]) {
+                        el.innerHTML = dict[id];
+                    }
+                });
+            } else if (lang === 'hy') {
+                // For hybrid mode, we map to english for subpages to avoid screen clutter
+                const dict = translations['en'];
+                document.documentElement.lang = 'en';
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (dict[key]) el.textContent = dict[key];
+                });
+                document.querySelectorAll('[id^="list_"]').forEach(el => {
+                    const id = el.getAttribute('id');
+                    if (dict[id]) el.innerHTML = dict[id];
+                });
+                // Ensure internal links pass the hybrid param back
+                document.querySelectorAll('.related-links a').forEach(a => {
+                    const href = a.getAttribute('href').split('?')[0];
+                    a.setAttribute('href', href + '?lang=hy');
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

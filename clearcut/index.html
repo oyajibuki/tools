@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>ClearCut 画像切り抜き｜ブラウザで簡単背景透過【無料ツール】</title>
+    <title data-i18n="head_title">ClearCut 画像切り抜き｜ブラウザで簡単背景透過【無料ツール】</title>
     <meta name="description" content="画像の背景を一瞬で透過・切り抜きできるAIツール「ClearCut」。インストール不要でブラウザから直接利用可能。ECサイトの物撮りやサムネイル作成に最適です。">
     <!-- OGP -->
     <meta property="og:title" content="ClearCut 画像切り抜きツール">
@@ -171,57 +171,59 @@
 <body>
 
     <header>
-        <a href="../">← 無料AI・自動化ツール集 トップへ戻る</a>
+        <a href="../" data-i18n="nav_back">← 無料AI・自動化ツール集 トップへ戻る</a>
     </header>
 
     <div class="container">
-        <h1>ClearCut 画像切り抜きツール（無料）</h1>
+        <h1 data-i18n="h1_title">ClearCut 画像切り抜きツール（無料）</h1>
 
-        <p>
+        <p data-i18n="desc_main">
             ECサイトの商品画像、YouTubeのサムネイル、プレゼン資料などを作成する際、画像の背景を消す（透過させる）作業は面倒です。<br>
             「ClearCut」は、AIが被写体を瞬時に認識し、複雑な輪郭でも綺麗に背景を切り抜いて透過画像（PNG形式）を作成する無料Webツールです。<br>
             Photoshopなどの専用ソフトは不要。ブラウザから画像をアップロードするだけで一瞬で切り抜きが完了します。
         </p>
 
         <div class="cta-area">
-            <a href="https://huggingface.co/spaces/AutoCraft502/clearcut" target="_blank"
-                class="btn-primary">ツールを開く（無料）</a>
+            <a href="https://huggingface.co/spaces/AutoCraft502/clearcut" target="_blank" class="btn-primary"
+                data-i18n="btn_open">ツールを開く（無料）</a>
         </div>
 
-        <h2>このツールでできること</h2>
-        <ul>
+        <h2 data-i18n="h2_features">このツールでできること</h2>
+        <ul id="list_features">
             <li>AIによる全自動の高精度な背景透過</li>
             <li>人物の髪の毛や、商品の細かいフチなどの境界線を自然に切り抜き</li>
             <li>背景が透明になったPNG画像のダウンロード</li>
             <li>ワンクリックでの即時プレビューと処理</li>
         </ul>
 
-        <h2>使い方</h2>
-        <ol>
+        <h2 data-i18n="h2_how">使い方</h2>
+        <ol id="list_how">
             <li>上記の「ツールを開く」ボタンをクリックし、ClearCutにアクセスします。</li>
             <li>背景を消したい画像を画面にドラッグ＆ドロップ、または選択してアップロードします。</li>
             <li>AIが自動的に被写体を検出し、数秒で背景を削除（透過）します。</li>
             <li>透過された画像（PNG形式）を保存・ダウンロードして利用します。</li>
         </ol>
 
-        <h2>こんな人におすすめ</h2>
-        <ul>
+        <h2 data-i18n="h2_target">こんな人におすすめ</h2>
+        <ul id="list_target">
             <li>フリマアプリ（メルカリ等）やECサイトに綺麗な商品画像を出品したい方</li>
             <li>ブログのアイキャッチやYouTubeサムネイルを手軽に作成したい方</li>
             <li>プレゼン資料（PowerPoint等）に使う画像の背景を消したいビジネスパーソン</li>
             <li>画像編集ソフトを持っていない、または操作が苦手な方</li>
         </ul>
 
-        <h2>よくある質問</h2>
-        <p><strong>Q. 利用に料金はかかりますか？</strong><br>
-            基本無料でご利用いただけます。</p>
+        <h2 data-i18n="h2_faq">よくある質問</h2>
+        <p><strong data-i18n="faq1_q">Q. 利用に料金はかかりますか？</strong><br>
+            <span data-i18n="faq1_a">基本無料でご利用いただけます。</span>
+        </p>
 
-        <p><strong>Q. アップロードした画像は公開されますか？</strong><br>
-            画像は背景処理のためだけに使用され、全体公開されることはありません。</p>
+        <p><strong data-i18n="faq2_q">Q. アップロードした画像は公開されますか？</strong><br>
+            <span data-i18n="faq2_a">画像は背景処理のためだけに使用され、全体公開されることはありません。</span>
+        </p>
 
         <div class="related-links">
-            <h2>関連ツール</h2>
-            <ul>
+            <h2 data-i18n="h2_related">関連ツール</h2>
+            <ul id="list_related">
                 <li><a href="../resize/">画像・動画リサイズツール</a></li>
                 <li><a href="../subtitle/">AI字幕自動生成ツール</a></li>
                 <li><a href="../csv/">CSV自動整形ツール</a></li>
@@ -230,9 +232,163 @@
     </div>
 
     <footer>
-        <p>© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
+        <p data-i18n="footer">© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
     </footer>
 
+    <!-- Dynamic Translation Script -->
+    <script>
+        const translations = {
+            en: {
+                head_title: "ClearCut Background Remover | Free Web Tool",
+                nav_back: "← Back to Tools",
+                h1_title: "ClearCut Background Remover (Free)",
+                desc_main: "Removing backgrounds for e-commerce products, YouTube thumbnails, or presentations is tedious. 'ClearCut' is a free web tool where AI instantly recognizes the subject and cuts out the background neatly (as a PNG), even around complex edges. No Photoshop needed. Just upload and remove backgrounds instantly in your browser.",
+                btn_open: "Open Tool (Free)",
+                h2_features: "Features",
+                list_features: "<li>Fully automatic, high-precision background removal by AI</li><li>Natural cutout of complex borders like hair or fine product edges</li><li>Instant download of transparent PNG images</li><li>One-click processing and instant preview</li>",
+                h2_how: "How to use",
+                list_how: "<li>Click 'Open Tool' above.</li><li>Drag and drop or select the image you want to edit.</li><li>The AI will automatically detect the subject and remove the background in seconds.</li><li>Save or download the transparent PNG image.</li>",
+                h2_target: "Recommended for",
+                list_target: "<li>People selling items on marketplace apps or e-commerce sites</li><li>Creators making blog headers or YouTube thumbnails</li><li>Business people needing transparent images for presentations</li><li>Anyone who doesn't own or know how to use complex photo editing software</li>",
+                h2_faq: "FAQ",
+                faq1_q: "Q. Is there any fee to use this?",
+                faq1_a: "No, you can use the basic features completely for free.",
+                faq2_q: "Q. Will my uploaded images be published?",
+                faq2_a: "No. Images are only used for processing and are never published or shared publicly.",
+                h2_related: "Related Tools",
+                list_related: "<li><a href='../resize/?lang=en'>Image/Video Resizer</a></li><li><a href='../subtitle/?lang=en'>AI Subtitle Generator</a></li><li><a href='../csv/?lang=en'>CSV Auto-formatter</a></li>",
+                footer: "© 2026 AutoCraft — Indie Dev Tool Lab"
+            },
+            ko: {
+                head_title: "ClearCut 배경 제거 | 누끼 따기 무료 웹 도구",
+                nav_back: "← 도구 목록으로 돌아가기",
+                h1_title: "ClearCut 배경 제거 툴 (무료)",
+                desc_main: "쇼핑몰 상품 이미지, 유튜브 썸네일 등을 만들 때 배경을 지우는(누끼를 따는) 작업은 귀찮습니다. 'ClearCut'은 AI가 피사체를 즉시 인식하여 복잡한 윤곽선도 깔끔하게 배경을 투명하게(PNG 형식) 만들어 주는 무료 웹 도구입니다. 포토샵이 필요 없습니다. 브라우저에서 바로 사용하세요.",
+                btn_open: "툴 열기 (무료)",
+                h2_features: "주요 기능",
+                list_features: "<li>AI 기반 완전 자동 고정밀 배경 투명화</li><li>머리카락, 상품 테두리 등 복잡한 경계선 자연스러운 처리</li><li>배경이 투명한 PNG 이미지 다운로드</li><li>원클릭 즉시 프리뷰 및 처리</li>",
+                h2_how: "사용 방법",
+                list_how: "<li>위의 '툴 열기' 버튼을 클릭합니다.</li><li>배경을 지울 이미지를 드래그 앤 드롭하거나 선택합니다.</li><li>AI가 몇 초 만에 피사체를 감지하고 배경을 삭제합니다.</li><li>완성된 투명 이미지(PNG)를 다운로드합니다.</li>",
+                h2_target: "추천 대상",
+                list_target: "<li>중고거래 앱이나 쇼핑몰에 깔끔한 상품 사진을 올리고 싶은 분</li><li>블로그 썸네일이나 유튜브 썸네일을 간편하게 만들고 싶은 분</li><li>프레젠테이션(PPT 등) 자료에 쓸 투명 이미지가 필요한 직장인</li><li>이미지 편집 프로그램이 없거나 다루기 어려운 분</li>",
+                h2_faq: "자주 묻는 질문",
+                faq1_q: "Q. 이용 요금이 있나요?",
+                faq1_a: "기본적으로 무료로 이용하실 수 있습니다.",
+                faq2_q: "Q. 업로드한 사진이 공개되나요?",
+                faq2_a: "이미지는 배경 처리용으로만 사용되며 공개되지 않습니다.",
+                h2_related: "관련 도구",
+                list_related: "<li><a href='../resize/?lang=ko'>이미지·동영상 리사이즈</a></li><li><a href='../subtitle/?lang=ko'>AI 자막 자동 생성기</a></li><li><a href='../csv/?lang=ko'>CSV 자동 정렬</a></li>",
+                footer: "© 2026 AutoCraft — 인디 개발 툴 컬렉션"
+            },
+            pt: {
+                head_title: "ClearCut - Removedor de Fundo Grátis Online",
+                nav_back: "← Voltar aos Ferramentas",
+                h1_title: "ClearCut - Removedor de Fundo Inteligente (Grátis)",
+                desc_main: "Remover o fundo de fotos de produtos, miniaturas de YouTube ou apresentações é chato. O 'ClearCut' é uma ferramenta web gratuita onde a AI reconhece instantaneamente o objeto e recorta o fundo de forma limpa, criando uma imagem transparente (PNG). Não precisa de Photoshop. Sem instalação, tudo no navegador.",
+                btn_open: "Abrir Ferramenta (Grátis)",
+                h2_features: "O que a ferramenta faz",
+                list_features: "<li>Remoção de fundo 100% automática e precisa com AI</li><li>Recorte natural de bordas complexas (cabelos, pelos, detalhes de produtos)</li><li>Download imediato do resultado em PNG transparente</li><li>Processamento com um clique</li>",
+                h2_how: "Como usar",
+                list_how: "<li>Clique no botão 'Abrir Ferramenta'.</li><li>Arraste e solte a imagem que deseja editar.</li><li>A AI detectará automaticamente o objeto e removerá o fundo em segundos.</li><li>Faça o download da foto com fundo transparente.</li>",
+                h2_target: "Recomendado para",
+                list_target: "<li>Vendedores de e-commerce e apps de desapego que querem fotos profissionais</li><li>Criadores de conteúdo e youtubers para miniaturas</li><li>Profissionais que precisam de imagens sem fundo para relatórios e slides</li><li>Pessoas que não sabem ou não querem usar o Photoshop</li>",
+                h2_faq: "Perguntas Frequentes",
+                faq1_q: "Q. Custa alguma coisa para usar?",
+                faq1_a: "Não, as funções básicas são totalmente gratuitas.",
+                faq2_q: "Q. A foto que eu enviei vai ficar pública?",
+                faq2_a: "De forma alguma. O envio serve apenas para o processamento e a imagem não é divulgada.",
+                h2_related: "Ferramentas Relacionadas",
+                list_related: "<li><a href='../resize/?lang=pt'>Redimensionador de Mídia</a></li><li><a href='../subtitle/?lang=pt'>Gerador de Legendas AI</a></li><li><a href='../csv/?lang=pt'>Formatador Automático CSV</a></li>",
+                footer: "© 2026 AutoCraft — Ferramentas e Lab"
+            },
+            zh: {
+                head_title: "ClearCut 智能抠图 | 免费去背景工具",
+                nav_back: "← 返回主页",
+                h1_title: "ClearCut 智能抠图（免费）",
+                desc_main: "制作电商商品图、YouTube 封面图和演示文档附件时，去除背景（抠图）是一项繁琐的工作。“ClearCut”是一款免费在线工具，AI瞬间识别主体，完美去除杂乱背景并保存为透明底（PNG图片）。无需下载 Photoshop 等软件，直接在浏览器中上传即可一键完成抠图。",
+                btn_open: "打开工具（免费）",
+                h2_features: "功能特点",
+                list_features: "<li>AI 全自动高精准去除背景</li><li>自然处理发丝、复杂的商品边缘等精细部位</li><li>生成透明的 PNG 格式图像</li><li>一键即刻处理及预览</li>",
+                h2_how: "使用方法",
+                list_how: "<li>点击“打开工具”按钮进入 ClearCut。</li><li>拖拽上传或选择您想要去背景的图片。</li><li>AI 将在数秒内自动识别出人物或商品主体并删去背景。</li><li>将生成的透明图片（PNG格式）下载保存即可。</li>",
+                h2_target: "推荐人群",
+                list_target: "<li>二手交易平台或电商平台卖家，需要干净商品图</li><li>希望快速制作精美博文标题图或视频封面的创作者</li><li>需要为 PPT 等演示材料配透明底图片的商务人士</li><li>没有或者不会使用修图软件的用户</li>",
+                h2_faq: "常见问题",
+                faq1_q: "Q. 需要付费吗？",
+                faq1_a: "基础功能完全免费使用。",
+                faq2_q: "Q. 我上传的照片会被公开吗？",
+                faq2_a: "图片仅用于抠图处理，绝对不会向公众发布或泄露。",
+                h2_related: "相关工具",
+                list_related: "<li><a href='../resize/?lang=zh'>图片·视频尺寸调整</a></li><li><a href='../subtitle/?lang=zh'>AI 字幕自动生成</a></li><li><a href='../csv/?lang=zh'>CSV/Excel 自动排版</a></li>",
+                footer: "© 2026 AutoCraft — 个人开发工具集合"
+            },
+            hi: {
+                head_title: "ClearCut Background Remover | Free Web Tool",
+                nav_back: "← Back to Home",
+                h1_title: "ClearCut Background Remover (मुफ्त)",
+                desc_main: "ई-कॉमर्स उत्पादों, YouTube थंबनेल या प्रेजेंटेशन के लिए बैकग्राउंड हटाना एक थका देने वाला काम है। 'ClearCut' एक मुफ्त वेब टूल है जहाँ AI तुरंत सब्जेक्ट को पहचानता है और बैकग्राउंड को साफ तौर पर हटा देता है, जिससे एक पारदर्शी इमेज (PNG) बन जाती है। कोई फोटोशॉप की जरूरत नहीं। बस ब्राउज़र में अपलोड करें।",
+                btn_open: "टूल खोलें (मुफ्त)",
+                h2_features: "सुविधाएँ",
+                list_features: "<li>AI द्वारा पूरी तरह से स्वचालित, सटीक बैकग्राउंड रिमूवल</li><li>बालों या प्रोडक्ट के बारीक किनारों (borders) की नेचुरल कटिंग</li><li>पारदर्शी PNG इमेजिस का तुरंत डाउनलोड</li><li>वन-क्लिक प्रोसेसिंग</li>",
+                h2_how: "कैसे उपयोग करें",
+                list_how: "<li>ऊपर दिए गए 'टूल खोलें' पर क्लिक करें।</li><li>जिस फोटो का बैकग्राउंड हटाना है उसे ड्रॉप करें।</li><li>AI कुछ ही सेकंड में सब्जेक्ट को डिटेक्ट करेगा और बैकग्राउंड को हटा देगा।</li><li>पारदर्शी PNG इमेज को सेव करें।</li>",
+                h2_target: "किनके लिए है?",
+                list_target: "<li>मार्केटप्लेस ऐप या ई-कॉमर्स साइटों पर सामान बेचने वाले</li><li>ब्लॉग या यूट्यूब के लिए थंबनेल बनाने वाले क्रिएटर्स</li><li>प्रेजेंटेशन के लिए पारदर्शी इमेजिस की चाहत रखने वाले व्यवसायी</li><li>जिन्हें फोटो एडिटिंग ऐप्स का कोई अनुभव नहीं है</li>",
+                h2_faq: "सामान्य प्रश्न",
+                faq1_q: "Q. क्या इसे उपयोग करने के लिए कोई चार्ज है?",
+                faq1_a: "नहीं, इसके बुनियादी फीचर्स पूरी तरह मुफ्त हैं।",
+                faq2_q: "Q. क्या मेरी अपलोड की गई इमेजिस को पब्लिश किया जाएगा?",
+                faq2_a: "बिल्कुल नहीं। इमेजिस का उपयोग सिर्फ प्रोसेसिंग के लिए होता है।",
+                h2_related: "और टूल्स",
+                list_related: "<li><a href='../resize/?lang=hi'>Image Re-Sizer</a></li><li><a href='../subtitle/?lang=hi'>AI Subtitle Maker</a></li><li><a href='../csv/?lang=hi'>CSV Auto-formatter</a></li>",
+                footer: "© 2026 AutoCraft — Indie Innovation Lab"
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const lang = params.get('lang');
+
+            // Apply translation if valid language parameter exists
+            if (lang && translations[lang]) {
+                const dict = translations[lang];
+                document.documentElement.lang = lang;
+
+                // Replace text contents
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (dict[key]) {
+                        el.textContent = dict[key];
+                    }
+                });
+
+                // Replace HTML structures (lists)
+                document.querySelectorAll('[id^="list_"]').forEach(el => {
+                    const id = el.getAttribute('id');
+                    if (dict[id]) {
+                        el.innerHTML = dict[id];
+                    }
+                });
+            } else if (lang === 'hy') {
+                // For hybrid mode, we map to english for subpages to avoid screen clutter
+                const dict = translations['en'];
+                document.documentElement.lang = 'en';
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (dict[key]) el.textContent = dict[key];
+                });
+                document.querySelectorAll('[id^="list_"]').forEach(el => {
+                    const id = el.getAttribute('id');
+                    if (dict[id]) el.innerHTML = dict[id];
+                });
+                // Ensure internal links pass the hybrid param back
+                document.querySelectorAll('.related-links a').forEach(a => {
+                    const href = a.getAttribute('href').split('?')[0];
+                    a.setAttribute('href', href + '?lang=hy');
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

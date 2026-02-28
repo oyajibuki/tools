@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>CSV・Excel自動整形ツール｜列揃え・不要行削除・文字変換【無料】</title>
+    <title data-i18n="head_title">CSV・Excel自動整形ツール｜列揃え・不要行削除・文字変換【無料】</title>
     <meta name="description"
         content="乱れたCSVデータやExcel出力シートの書式を自動的にクリーンアップ・整形する無料Webツール。列のズレ修正、不要な改行や半角・全角の文字変換などデータプレパレーション作業をワンクリックで効率化します。">
     <!-- OGP -->
@@ -161,52 +161,54 @@
 
 <body>
 
-    <header><a href="../">← 無料AI・自動化ツール集 トップへ戻る</a></header>
+    <header><a href="../" data-i18n="nav_back">← 無料AI・自動化ツール集 トップへ戻る</a></header>
 
     <div class="container">
-        <h1>CSV・Excel自動整形ツール（無料）</h1>
+        <h1 data-i18n="h1_title">CSV・Excel自動整形ツール（無料）</h1>
 
-        <p>
+        <p data-i18n="desc_main">
             システムから出力（エクスポート）されたCSVファイルや、複数の人が編集したExcelシートにおいて、「列がズレている」「不要な空白行が混ざっている」「全角カナと半角カナが混在している」等の問題でデータの取り込み・集計が進まないことはありませんか？<br>
             本ツールは、ルールに沿ったデータクリーニング・整形作業をブラウザ上でワンクリックで自動処理する完全無料のWebアプリです。<br>
             手作業による置換やExcelのマクロ（VBA）構築の手間を省き、バックオフィス業務を劇的に効率化します。
         </p>
 
         <div class="cta-area">
-            <a href="https://oyajibuki.github.io/csv-app/" target="_blank" class="btn-primary">ツールを開く（ブラウザ上で安全に処理）</a>
+            <a href="https://oyajibuki.github.io/csv-app/" target="_blank" class="btn-primary"
+                data-i18n="btn_open">ツールを開く（ブラウザ上で安全に処理）</a>
         </div>
 
-        <h2>このツールでできること</h2>
-        <ul>
+        <h2 data-i18n="h2_features">このツールでできること</h2>
+        <ul id="list_features">
             <li>崩れたCSV列やカンマ区切りの自動フォーマット・整列</li>
             <li>空行・不要行、あるいは重複データの一括削除</li>
             <li>半角/全角文字の統一、日付フォーマットの変換などのクリンネス</li>
             <li>処理結果の新規CSV・Excelファイルへの即時エクスポート機能</li>
         </ul>
 
-        <h2>使い方</h2>
-        <ol>
+        <h2 data-i18n="h2_how">使い方</h2>
+        <ol id="list_how">
             <li>「ツールを開く」ボタンからアプリへアクセスします。</li>
             <li>お手元のCSVまたはExcelファイルを画面にドラッグ＆ドロップします。</li>
             <li>画面上で実行したい「自動整形ルール」（文字種の統一、空白行削除など）を選択します。</li>
             <li>処理を実行し、画面上でプレビューを確認後、綺麗な表データとしてダウンロードします。</li>
         </ol>
 
-        <h2>こんな人におすすめ</h2>
-        <ul>
+        <h2 data-i18n="h2_target">こんな人におすすめ</h2>
+        <ul id="list_target">
             <li>データ入力・集計に関わる事務担当者、経理・バックオフィス業務の方</li>
             <li>顧客リスト(CRM)や名刺管理ソフトへとデータをインポートする営業担当者</li>
             <li>ECサイトやWebシステムから出力した生データを分析用に加工したいマーケター</li>
             <li>プログラム(Python等)を書かずに素早くデータクレンジングをしたい方</li>
         </ul>
 
-        <h2>よくある質問</h2>
-        <p><strong>Q. 利用は完全無料ですか？</strong><br>
-            はい、会員登録なども不要で完全無料で使い放題です。</p>
+        <h2 data-i18n="h2_faq">よくある質問</h2>
+        <p><strong data-i18n="faq1_q">Q. 利用は完全無料ですか？</strong><br>
+            <span data-i18n="faq1_a">はい、会員登録なども不要で完全無料で使い放題です。</span>
+        </p>
 
         <div class="related-links">
-            <h2>関連ツール</h2>
-            <ul>
+            <h2 data-i18n="h2_related">関連ツール</h2>
+            <ul id="list_related">
                 <li><a href="../ruby-word/">Word自動ルビ振りツール</a></li>
                 <li><a href="../market/">Market Dashboard（市場動向分析）</a></li>
                 <li><a href="../clearcut/">ClearCut 画像切り抜きツール</a></li>
@@ -215,9 +217,153 @@
     </div>
 
     <footer>
-        <p>© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
+        <p data-i18n="footer">© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
     </footer>
 
+    <!-- Dynamic Translation Script -->
+    <script>
+        const translations = {
+            en: {
+                head_title: "CSV/Excel Auto Formatter | Clean Data Instantly",
+                nav_back: "← Back to Tools",
+                h1_title: "CSV/Excel Auto Formatter (Free)",
+                desc_main: "Do you struggle with importing or analyzing messy CSV files exported from systems, or Excel sheets edited by multiple people with misaligned columns, blank rows, or mixed character formats? This free web app automates data cleaning and formatting with a single click in your browser. It dramatically improves back-office efficiency by eliminating manual replacements or the need to build complex VBA macros.",
+                btn_open: "Open Tool (Safe Local Processing)",
+                h2_features: "Features",
+                list_features: "<li>Auto-format and align broken CSV columns or comma-separated values</li><li>Bulk delete blank rows, unnecessary rows, or duplicate data</li><li>Standardize full-width/half-width characters and convert date formats</li><li>Instantly export processed results to new CSV/Excel files</li>",
+                h2_how: "How to use",
+                list_how: "<li>Click 'Open Tool' to access the application.</li><li>Drag and drop your messy CSV or Excel file onto the screen.</li><li>Select the 'Auto-format Rules' you want to apply (e.g., unify characters, remove blanks).</li><li>Execute the process, preview the clean table on screen, and download the fixed file.</li>",
+                h2_target: "Recommended for",
+                list_target: "<li>Admin, accounting, and back-office staff handling data entry and aggregation</li><li>Sales reps importing data into CRM or business card management software</li><li>Marketers wanting to clean raw data from e-commerce or web systems for analysis</li><li>Anyone who wants to quickly clean data without writing code (like Python)</li>",
+                h2_faq: "FAQ",
+                faq1_q: "Q. Is it completely free to use?",
+                faq1_a: "Yes, it is completely free to use without any user registration required.",
+                h2_related: "Related Tools",
+                list_related: "<li><a href='../ruby-word/?lang=en'>Auto Furigana Tool for MS Word</a></li><li><a href='../market/?lang=en'>Market Dashboard (Trend Analysis)</a></li><li><a href='../clearcut/?lang=en'>ClearCut Background Remover</a></li>",
+                footer: "© 2026 AutoCraft — Indie Dev Tool Lab"
+            },
+            ko: {
+                head_title: "CSV·Excel 자동 정렬 도구 | 데이터 클렌징 툴",
+                nav_back: "← 도구 목록으로 돌아가기",
+                h1_title: "CSV·Excel 데이터 자동 정렬 도구 (무료)",
+                desc_main: "시스템에서 추출된 CSV 파일이나 여러 명이 편집한 Excel 시트에서 '열이 어긋남', '불필요한 빈 줄', '전각/반각 문자 혼재' 같은 문제로 데이터 취합에 어려움을 겪으신 적 없으신가요? 이 웹 앱은 브라우저 상에서 클릭 한 번으로 규칙에 맞는 데이터 클리닝 및 정렬 작업을 자동 처리합니다. 수작업 교정이나 매크로(VBA) 작성의 번거로움을 없애고 업무 효율을 극대화시켜 줍니다.",
+                btn_open: "툴 열기 (브라우저에서 안전하게 처리)",
+                h2_features: "주요 기능",
+                list_features: "<li>어긋난 CSV 열 및 쉼표 구분자 자동 포맷팅 및 정렬</li><li>빈 줄, 불필요한 줄, 중복 데이터 일괄 삭제</li><li>반각/전각 문자 및 날짜 포맷 통일과 데이터 정제</li><li>처리된 결과를 새로운 CSV·Excel 파일로 즉시 내보내기</li>",
+                h2_how: "사용 방법",
+                list_how: "<li>'툴 열기' 버튼을 클릭하여 앱에 접속합니다.</li><li>작업할 CSV 혹은 Excel 파일을 화면에 드래그 앤 드롭합니다.</li><li>적용할 '자동 정렬 규칙'(문자 통일, 빈 줄 삭제 등)을 선택합니다.</li><li>실행 후 화면에서 프리뷰를 확인하고 깔끔한 표 포맷으로 다운로드합니다.</li>",
+                h2_target: "추천 대상",
+                list_target: "<li>데이터 입력 및 집계를 담당하는 사무직, 경리 등 백오피스 담당자</li><li>고객 리스트(CRM) 등에 데이터를 임포트해야 하는 영업 사원</li><li>쇼핑몰이나 웹 시스템의 원시 데이터를 분석용으로 가공하려는 마케터</li><li>Python 등 코딩 없이 빠르게 데이터 클렌징을 하고 싶은 분</li>",
+                h2_faq: "자주 묻는 질문",
+                faq1_q: "Q. 이용은 완전 무료인가요?",
+                faq1_a: "네, 회원가입 없이 완전 무료로 무제한 사용할 수 있습니다.",
+                h2_related: "관련 도구",
+                list_related: "<li><a href='../ruby-word/?lang=ko'>Word 자동 루비(후리가나) 추가</a></li><li><a href='../market/?lang=ko'>Market Dashboard (시장 동향 분석)</a></li><li><a href='../clearcut/?lang=ko'>ClearCut 이미지 배경 제거</a></li>",
+                footer: "© 2026 AutoCraft — 인디 개발 툴 컬렉션"
+            },
+            pt: {
+                head_title: "Formatador Automático CSV/Excel | Limpeza de Dados",
+                nav_back: "← Voltar aos Ferramentas",
+                h1_title: "Formatador Automático de CSV/Excel (Grátis)",
+                desc_main: "Você tem problemas para importar ou analisar arquivos CSV bagunçados exportados de sistemas, ou planilhas do Excel editadas por várias pessoas com colunas desalinhadas, linhas em branco ou formatos de caracteres misturados? Este aplicativo web gratuito automatiza a limpeza e formatação de dados com um único clique no seu navegador. Melhora drasticamente a eficiência do back-office, eliminando substituições manuais ou a necessidade de criar macros VBA complexas.",
+                btn_open: "Abrir Ferramenta (Processamento Local Seguro)",
+                h2_features: "O que a ferramenta faz",
+                list_features: "<li>Formata e alinha automaticamente colunas CSV quebradas ou valores separados por vírgula</li><li>Exclui em massa linhas em branco, linhas desnecessárias ou dados duplicados</li><li>Padroniza caracteres e converte formatos de data</li><li>Exporta instantaneamente os resultados processados para novos arquivos CSV/Excel</li>",
+                h2_how: "Como usar",
+                list_how: "<li>Clique em 'Abrir Ferramenta' para acessar o aplicativo.</li><li>Arraste e solte o seu arquivo CSV ou Excel bagunçado na tela.</li><li>Selecione as 'Regras de Auto-formatação' que deseja aplicar.</li><li>Execute o processo, visualize a tabela limpa na tela e baixe o arquivo corrigido.</li>",
+                h2_target: "Recomendado para",
+                list_target: "<li>Equipe administrativa, de contabilidade e de back-office que lida com entrada e agregação de dados</li><li>Representantes de vendas importando dados para CRM ou software de gestão</li><li>Profissionais de marketing que desejam limpar dados brutos para análise</li><li>Qualquer pessoa que queira limpar dados rapidamente sem escrever código</li>",
+                h2_faq: "Perguntas Frequentes",
+                faq1_q: "Q. É totalmente gratuito?",
+                faq1_a: "Sim, é totalmente gratuito e nenhum registro é necessário.",
+                h2_related: "Ferramentas Relacionadas",
+                list_related: "<li><a href='../ruby-word/?lang=pt'>Auto Furigana para Word</a></li><li><a href='../market/?lang=pt'>Dashboard de Mercado</a></li><li><a href='../clearcut/?lang=pt'>ClearCut - Removedor de Fundo</a></li>",
+                footer: "© 2026 AutoCraft — Ferramentas e Lab"
+            },
+            zh: {
+                head_title: "CSV/Excel 自动排版格式化工具 | 一键清洗数据",
+                nav_back: "← 返回主页",
+                h1_title: "CSV/Excel 自动排版与数据清洗工具（免费）",
+                desc_main: "在处理系统导出的 CSV 文件或多人协作填写的 Excel 表格时，是否经常遇到“列错位”、“混入多余空行”、“全角半角字符混杂”导致数据无法成功导入或汇总报错的问题？本工具是一款完全免费的Web应用，能在浏览器内一键自动执行数据清洗规则。省去繁琐的手工替换和编写 Excel VBA 宏的时间，让您的后台办公效率产生质的飞跃。",
+                btn_open: "打开工具（纯本地安全处理）",
+                h2_features: "功能特点",
+                list_features: "<li>自动修复并对齐错位的 CSV 列与逗号分隔符</li><li>一键批量删除空行、无用废行或重复数据</li><li>统一全角/半角字符、转换规范的日期格式等数据清理功能</li><li>将处理后的结果即刻导出为全新的干净 CSV/Excel 文件</li>",
+                h2_how: "使用方法",
+                list_how: "<li>点击“打开工具”按钮进入应用。</li><li>将带有乱码或排版混乱的 CSV / Excel 文件拖拽到页面中。</li><li>在页面勾选您希望执行的“自动整型规则”（如：统一字符格式、删除空行等）。</li><li>点击执行，预览整理后干净美观的表格，并安全下载到本地。</li>",
+                h2_target: "推荐人群",
+                list_target: "<li>负责数据录入、整理汇总的行政、财务及后台运营人员</li><li>需要将大量客户名单导入 CRM 或名片管理软件的销售人员</li><li>希望将电商或系统导出的生数据快速加工为分析格式的营销人员</li><li>不懂编写程序（Python等），但想快速实现数据清洗（Data Cleansing）的用户</li>",
+                h2_faq: "常见问题",
+                faq1_q: "Q. 完全免费吗？",
+                faq1_a: "是的，无需注册会员，您可以无限次完全免费使用该工具。",
+                h2_related: "相关工具",
+                list_related: "<li><a href='../ruby-word/?lang=zh'>Word 自动加注音工具</a></li><li><a href='../market/?lang=zh'>Market Dashboard（市场分析）</a></li><li><a href='../clearcut/?lang=zh'>ClearCut 智能抠图</a></li>",
+                footer: "© 2026 AutoCraft — 个人开发工具集合"
+            },
+            hi: {
+                head_title: "CSV/Excel Auto Formatter | Clean Data Instantly",
+                nav_back: "← Back to Home",
+                h1_title: "CSV/Excel ऑटो फॉर्मेटर (मुफ्त)",
+                desc_main: "सिस्टम से निकाले गए CSV डेटा या कई लोगों द्वारा एडिट की गई Excel शीट में अक्सर कॉलम गलत होते हैं, खाली लाइनें होती हैं या फॉन्ट अजीब होते हैं। यह मुफ्त वेब ऐप आपके ब्राउज़र में एक क्लिक से डेटा को साफ़ और अलाइन (Align) करता है। मैन्युअल बदलाव या VBA मैक्रो बनाने की परेशानी खत्म।",
+                btn_open: "टूल खोलें (ब्राउज़र में सुरक्षित रूप से)",
+                h2_features: "सुविधाएँ",
+                list_features: "<li>टूटे हुए CSV कॉलम को ऑटो-फॉर्मेट और सही करना</li><li>खाली या फालतू लाइनों को एक साथ हटाना</li><li>आधे/पूरे कैरेक्टर (Half/Full width) और तारीख को एक फॉर्मेट में लाना</li><li>नए साफ CSV/Excel में तुरंत एक्सपोर्ट</li>",
+                h2_how: "कैसे उपयोग करें",
+                list_how: "<li>ऐप एक्सेस करने के लिए 'टूल खोलें' पर क्लिक करें।</li><li>खराब CSV या Excel फ़ाइल को स्क्रीन पर लाएँ।</li><li>'ऑटो-फॉर्मेट नियम' चुनें (जैसे, खाली जगह हटाना)।</li><li>रूल चलाएँ, स्क्रीन पर साफ टेबल देखें, और डाउनलोड करें।</li>",
+                h2_target: "किनके लिए है?",
+                list_target: "<li>डेटा एंट्री और अकाउंटिंग का काम करने वाले लोग</li><li>CRM सॉफ्टवेयर में ग्राहकों की लिस्ट डालने वाले सेल्समैन</li><li>कच्चे डेटा को एनालाइज़ करने वाले मार्केटर्स</li><li>जो बिना कोडिंग (जैसे Python) के डेटा साफ़ करना चाहते हैं</li>",
+                h2_faq: "सामान्य प्रश्न",
+                faq1_q: "Q. क्या कोई छिपा हुआ चार्ज है?",
+                faq1_a: "नहीं, इसके इस्तेमाल के लिए ना कोई फीस है और ना ही लॉग-इन करना होता है। यह 100% फुल फ्री है।",
+                h2_related: "और टूल्स",
+                list_related: "<li><a href='../ruby-word/?lang=hi'>Word Auto Furigana Tool</a></li><li><a href='../market/?lang=hi'>Market Dashboard</a></li><li><a href='../clearcut/?lang=hi'>ClearCut Background Remover</a></li>",
+                footer: "© 2026 AutoCraft — Indie Innovation Lab"
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const lang = params.get('lang');
+
+            // Apply translation if valid language parameter exists
+            if (lang && translations[lang]) {
+                const dict = translations[lang];
+                document.documentElement.lang = lang;
+
+                // Replace text contents
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (dict[key]) {
+                        el.textContent = dict[key];
+                    }
+                });
+
+                // Replace HTML structures (lists)
+                document.querySelectorAll('[id^="list_"]').forEach(el => {
+                    const id = el.getAttribute('id');
+                    if (dict[id]) {
+                        el.innerHTML = dict[id];
+                    }
+                });
+            } else if (lang === 'hy') {
+                // For hybrid mode, we map to english for subpages to avoid screen clutter
+                const dict = translations['en'];
+                document.documentElement.lang = 'en';
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (dict[key]) el.textContent = dict[key];
+                });
+                document.querySelectorAll('[id^="list_"]').forEach(el => {
+                    const id = el.getAttribute('id');
+                    if (dict[id]) el.innerHTML = dict[id];
+                });
+                // Ensure internal links pass the hybrid param back
+                document.querySelectorAll('.related-links a').forEach(a => {
+                    const href = a.getAttribute('href').split('?')[0];
+                    a.setAttribute('href', href + '?lang=hy');
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

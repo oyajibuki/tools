@@ -1014,6 +1014,15 @@
                 `;
             }
 
+            // Append ?lang= to all internal tool links
+            document.querySelectorAll('a.primary').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('./')) {
+                    const basePath = href.split('?')[0];
+                    link.setAttribute('href', `${basePath}?lang=${langcode}`);
+                }
+            });
+
             // Save preference
             localStorage.setItem('preferredLanguage', langcode);
         }

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>画像・動画リサイズツール｜SNS・ブログ用にブラウザで一括リサイズ【無料】</title>
+    <title data-i18n="head_title">画像・動画リサイズツール｜SNS・ブログ用にブラウザで一括リサイズ【無料】</title>
     <meta name="description" content="容量の大きい画像や動画を、ブラウザ上で一瞬で圧縮・リサイズ。アップロード不要で安全・高速。SNS投稿やブログ運営、サイト軽量化に最適な無料リサイズツール。">
     <!-- OGP -->
     <meta property="og:title" content="画像・動画リサイズツール">
@@ -164,52 +164,54 @@
 
 <body>
 
-    <header><a href="../">← 無料AI・自動化ツール集 トップへ戻る</a></header>
+    <header><a href="../" data-i18n="nav_back">← 無料AI・自動化ツール集 トップへ戻る</a></header>
 
     <div class="container">
-        <h1>画像・動画リサイズツール（無料）</h1>
+        <h1 data-i18n="h1_title">画像・動画リサイズツール（無料）</h1>
 
-        <p>
+        <p data-i18n="desc_main">
             SNSへの投稿やブログの執筆、メール添付の際に「画質が良すぎてファイルサイズが大きすぎる」「画像の縦横比を揃えたい」といった悩みはありませんか？<br>
             本ツールを利用すれば、専用ソフトなしでブラウザ上で即座に画像（JPEG/PNG等）と動画のサイズを縮小・リサイズできます。<br>
             処理はローカルで実行されるため、アップロード待機時間はゼロでセキュリティ面でも安心です。
         </p>
 
         <div class="cta-area">
-            <a href="https://oyajibuki.github.io/resize-tool/" target="_blank" class="btn-primary">ツールを開く（無料）</a>
+            <a href="https://oyajibuki.github.io/resize-tool/" target="_blank" class="btn-primary"
+                data-i18n="btn_open">ツールを開く（無料）</a>
         </div>
 
-        <h2>このツールでできること</h2>
-        <ul>
+        <h2 data-i18n="h2_features">このツールでできること</h2>
+        <ul id="list_features">
             <li>画質を保ったままの画像・動画のファイルサイズ軽量化（圧縮）</li>
             <li>指定したピクセル（幅・高さ）へのリサイズ</li>
             <li>SNS（Twitter、Instagram）やブログの最適サイズへのワンタッチ変換</li>
             <li>クライアントで行う安全・高速なローカル処理（サーバーアップロード不要）</li>
         </ul>
 
-        <h2>使い方</h2>
-        <ol>
+        <h2 data-i18n="h2_how">使い方</h2>
+        <ol id="list_how">
             <li>「ツールを開く」ボタンからリサイズツールにアクセスします。</li>
             <li>サイズを小さくしたい画像や動画ファイルを選択またはドロップします。</li>
             <li>目標のサイズ、圧縮率、または用途（SNS用など）を選択します。</li>
             <li>即座にリサイズされたファイルをダウンロードして保存します。</li>
         </ol>
 
-        <h2>こんな人におすすめ</h2>
-        <ul>
+        <h2 data-i18n="h2_target">こんな人におすすめ</h2>
+        <ul id="list_target">
             <li>ブログやWebサイトの表示速度を上げたい（画像を軽くしたい）運営者</li>
             <li>SNSやフリマアプリに投稿する写真のサイズを調整したい方</li>
             <li>スマホの容量を空けるために動画を圧縮したい方</li>
             <li>仕事で「ファイルサイズは〇MB以下」という指定を受けているビジネスマン</li>
         </ul>
 
-        <h2>よくある質問</h2>
-        <p><strong>Q. サーバー上で画像を保存されますか？</strong><br>
-            いいえ、すべての処理はお使いのブラウザ内で行われるため、画像データが外部サーバーに送信・保存されることは一切ありません。</p>
+        <h2 data-i18n="h2_faq">よくある質問</h2>
+        <p><strong data-i18n="faq1_q">Q. サーバー上で画像を保存されますか？</strong><br>
+            <span data-i18n="faq1_a">いいえ、すべての処理はお使いのブラウザ内で行われるため、画像データが外部サーバーに送信・保存されることは一切ありません。</span>
+        </p>
 
         <div class="related-links">
-            <h2>関連ツール</h2>
-            <ul>
+            <h2 data-i18n="h2_related">関連ツール</h2>
+            <ul id="list_related">
                 <li><a href="../clearcut/">ClearCut 画像切り抜きツール</a></li>
                 <li><a href="../csv/">CSV・Excel自動整形ツール</a></li>
             </ul>
@@ -217,9 +219,153 @@
     </div>
 
     <footer>
-        <p>© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
+        <p data-i18n="footer">© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
     </footer>
 
+    <!-- Dynamic Translation Script -->
+    <script>
+        const translations = {
+            en: {
+                head_title: "Image & Video Resizer | Free Web Tool",
+                nav_back: "← Back to Tools",
+                h1_title: "Image & Video Resizer (Free)",
+                desc_main: "Do you struggle with file sizes being too large for social media, blogs, or emails? With this tool, you can instantly shrink and resize images (JPEG/PNG) and videos directly in your browser without specialized software. Processing is 100% local, meaning zero upload wait times and complete security.",
+                btn_open: "Open Tool (Free)",
+                h2_features: "Features",
+                list_features: "<li>Compress file size while maintaining image quality</li><li>Resize to specified pixels (width/height)</li><li>One-click optimization for social media (Twitter, Instagram) and blogs</li><li>Safe and high-speed local processing (no server uploads)</li>",
+                h2_how: "How to use",
+                list_how: "<li>Click 'Open Tool' to access the resizer.</li><li>Select or drop the image/video you want to shrink.</li><li>Choose the target size, compression ratio, or platform presets.</li><li>Instantly download the resized file.</li>",
+                h2_target: "Recommended for",
+                list_target: "<li>Blog/Website owners wanting faster load times</li><li>People posting on social media or flea market apps</li><li>Users wanting to free up storage space on their phones</li><li>Business people needing to email files under a strict MB limit</li>",
+                h2_faq: "FAQ",
+                faq1_q: "Q. Are my files saved on a server?",
+                faq1_a: "No. All processing happens entirely within your device's browser. Your data is never sent to external servers.",
+                h2_related: "Related Tools",
+                list_related: "<li><a href='../clearcut/?lang=en'>ClearCut Background Remover</a></li><li><a href='../csv/?lang=en'>CSV/Excel Auto-formatter</a></li>",
+                footer: "© 2026 AutoCraft — Indie Dev Tool Lab"
+            },
+            ko: {
+                head_title: "이미지·동영상 리사이즈 | 무료 웹 압축 도구",
+                nav_back: "← 도구 목록으로 돌아가기",
+                h1_title: "이미지·동영상 리사이즈 도구 (무료)",
+                desc_main: "SNS에 글을 올리거나 블로그 포스팅, 이메일 첨부 시 '용량이 너무 크다'고 느낀 적 없으신가요? 이 도구를 사용하면 전용 소프트웨어 없이 브라우저에서 이미지와 영상을 즉시 리사이즈(축소)할 수 있습니다. 로컬 처리를 하므로 업로드 시간이 없고 보안 또한 완벽합니다.",
+                btn_open: "툴 열기 (무료)",
+                h2_features: "주요 기능",
+                list_features: "<li>화질을 유지하며 이미지 및 동영상 파일 크기 압축</li><li>원하는 픽셀(가로·세로)로 즉시 변경</li><li>SNS(트위터, 인스타) 및 블로그용 최적 사이즈 원클릭 변환</li><li>서버 업로드가 없는 안전하고 빠른 클라이언트 로컬 처리</li>",
+                h2_how: "사용 방법",
+                list_how: "<li>'툴 열기' 버튼을 클릭합니다.</li><li>크기를 줄일 사진이나 영상을 드래그 앤 드롭합니다.</li><li>목표 크기, 압축률 혹은 용도(SNS용 등)를 선택합니다.</li><li>리사이즈가 완료된 파일을 다운로드합니다.</li>",
+                h2_target: "추천 대상",
+                list_target: "<li>웹사이트 로딩 속도를 높이려는(사진을 가볍게 하려는) 운영자</li><li>SNS나 중고거래 앱에 올릴 사진의 크기를 조절하려는 분</li><li>스마트폰 용량을 확보하기 위해 동영상을 압축하려는 분</li><li>이메일 첨부 용량 제한(ex. 10MB 이하) 때문에 곤란한 직장인</li>",
+                h2_faq: "자주 묻는 질문",
+                faq1_q: "Q. 파일이 서버에 저장되나요?",
+                faq1_a: "아니요, 모든 과정이 사용자 브라우저 안에서만 이루어지므로 서버로 전송되거나 저장되지 않습니다.",
+                h2_related: "관련 도구",
+                list_related: "<li><a href='../clearcut/?lang=ko'>ClearCut 이미지 배경 제거</a></li><li><a href='../csv/?lang=ko'>CSV·Excel 자동 정렬</a></li>",
+                footer: "© 2026 AutoCraft — 인디 개발 툴 컬렉션"
+            },
+            pt: {
+                head_title: "Redimensionador de Imagem e Vídeo | Grátis",
+                nav_back: "← Voltar aos Ferramentas",
+                h1_title: "Redimensionador de Mídia Online (Grátis)",
+                desc_main: "Problemas com arquivos muito pesados para postar nas redes sociais, blogs ou enviar por e-mail? Com esta ferramenta, você reduz o tamanho de fotos e vídeos na hora, diretamente no navegador. Como o processamento é local (sem upload), é extremamente rápido e 100% seguro.",
+                btn_open: "Abrir Ferramenta (Grátis)",
+                h2_features: "O que a ferramenta faz",
+                list_features: "<li>Comprime tamanho sem perder qualidade visível</li><li>Redimensionamento exato por pixels (largura/altura)</li><li>Presets otimizados para redes sociais (Instagram, Twitter) com um clique</li><li>Processamento local seguro no seu próprio aparelho</li>",
+                h2_how: "Como usar",
+                list_how: "<li>Acesse a ferramenta clicando acima.</li><li>Selecione ou arraste sua imagem/vídeo.</li><li>Escolha a porcentagem de compressão ou proporção.</li><li>O arquivo será processado na hora. Salve o resultado.</li>",
+                h2_target: "Recomendado para",
+                list_target: "<li>Donos de site/blog que querem melhorar a velocidade de carregamento</li><li>Usuários de redes sociais ou apps de desapego que precisam adequar o tamanho das fotos</li><li>Pessoas limpando espaço na memória do celular</li><li>Profissionais que precisam enviar e-mails limitados a poucos MBs</li>",
+                h2_faq: "Perguntas Frequentes",
+                faq1_q: "Q. As fotos são salvas em algum servidor?",
+                faq1_a: "Não. A mágica acontece dentro do seu próprio navegador. Seus arquivos saem do seu aparelho.",
+                h2_related: "Ferramentas Relacionadas",
+                list_related: "<li><a href='../clearcut/?lang=pt'>ClearCut - Removedor de Fundo</a></li><li><a href='../csv/?lang=pt'>Formatador Automático CSV</a></li>",
+                footer: "© 2026 AutoCraft — Ferramentas e Lab"
+            },
+            zh: {
+                head_title: "图片·视频压缩与尺寸调整 | 免费在线工具",
+                nav_back: "← 返回主页",
+                h1_title: "图片·视频尺寸调整工具（免费）",
+                desc_main: "在发博客、社交媒体或发送邮件附件时，是否经常遇到文件太大无法上传的烦恼？使用本工具，无需下载任何软件，在浏览器内就能快速调整图片（JPEG/PNG等）和视频的尺寸。采用纯前端本地处理，无上传等待时间，绝对保护隐私。",
+                btn_open: "打开工具（免费）",
+                h2_features: "功能特点",
+                list_features: "<li>在保持画质的前提下大幅压缩文件体积</li><li>自定义宽·高像素值进行等比缩放</li><li>一键适配 Twitter、Instagram 等社交媒体的最佳尺寸</li><li>安全、极速的纯本地处理（无需上传服务器）</li>",
+                h2_how: "使用方法",
+                list_how: "<li>点击“打开工具”按钮进入应用。</li><li>将需要压缩的图片或视频文件拖入选框。</li><li>选择想要压缩的比例或指定的尺寸及用途。</li><li>瞬间完成处理，点击下载保存。</li>",
+                h2_target: "推荐人群",
+                list_target: "<li>希望提升网站和博客加载速度的站长</li><li>需要将照片发布到二手交易平台或社交网站的用户</li><li>想要压缩视频以释放手机存储空间的人</li><li>工作邮件有附件大小限制的商务人士</li>",
+                h2_faq: "常见问题",
+                faq1_q: "Q. 图像会被保存在服务器上吗？",
+                faq1_a: "不会，所有处理都是在您的浏览器内部完成的，您的数据绝不会发送到任何外部服务器。",
+                h2_related: "相关工具",
+                list_related: "<li><a href='../clearcut/?lang=zh'>ClearCut 智能抠图</a></li><li><a href='../csv/?lang=zh'>CSV/Excel 自动排版工具</a></li>",
+                footer: "© 2026 AutoCraft — 个人开发工具集合"
+            },
+            hi: {
+                head_title: "Image & Video Resizer | Free Web Tool",
+                nav_back: "← Back to Home",
+                h1_title: "Image & Video Resizer (मुफ्त)",
+                desc_main: "क्या सोशल मीडिया या ईमेल के लिए आपकी फाइल्स बहुत बड़ी हैं? इस टूल से आप फोटो और वीडियो को बिना किसी ऐप के ब्राउज़र में तुरंत छोटा (रिसाइज़ और कंप्रेस) कर सकते हैं। सारी प्रोसेसिंग आपके डिवाइस पर होती है, इसलिए यह एकदम सुरक्षित और तेज़ है।",
+                btn_open: "टूल खोलें (मुफ्त)",
+                h2_features: "सुविधाएँ",
+                list_features: "<li>क्वालिटी से समझौता किए बिना फाइल साइज कम करना</li><li>चौड़ाई/ऊंचाई (Width/Height) कस्टमाइज़ करें</li><li>सोशल मीडिया के लिए वन-क्लिक प्रিসেટ્સ</li><li>पूरी तरह से सुरक्षित (सर्वर पर कुछ भी अपलोड नहीं होता)</li>",
+                h2_how: "कैसे उपयोग करें",
+                list_how: "<li>टूल खोलने के लिए ऊपर क्लिक करें।</li><li>फाइल सेलेक्ट करें या ड्रॉप करें।</li><li>कंप्रेशन रेट या साइज चुनें।</li><li>छोटा किया गया फाइल डाउनलोड करें।</li>",
+                h2_target: "किनके लिए है?",
+                list_target: "<li>ब्लॉगर्स जो वेबसाइट लोडिंग स्पीड बढ़ाना चाहते हैं</li><li>सोशल मीडिया पर फोटो डालने वाले लोग</li><li>वो लोग जिनका फोन स्टोरेज फुल हो गया हो</li><li>ऑफिस कर्मी जिन्हें छोटे साइज की ईमेल अटैचमेंट की जरूरत है</li>",
+                h2_faq: "सामान्य प्रश्न",
+                faq1_q: "Q. क्या फोटो सर्वर पर सेव होती है?",
+                faq1_a: "नहीं, ऐप आपके ब्राउज़र के भीतर काम करता है। कोई डेटा सर्वर पर नहीं भेजा जाता।",
+                h2_related: "और टूल्स",
+                list_related: "<li><a href='../clearcut/?lang=hi'>ClearCut Background Remover</a></li><li><a href='../csv/?lang=hi'>CSV Auto-formatter</a></li>",
+                footer: "© 2026 AutoCraft — Indie Innovation Lab"
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const lang = params.get('lang');
+
+            // Apply translation if valid language parameter exists
+            if (lang && translations[lang]) {
+                const dict = translations[lang];
+                document.documentElement.lang = lang;
+
+                // Replace text contents
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (dict[key]) {
+                        el.textContent = dict[key];
+                    }
+                });
+
+                // Replace HTML structures (lists)
+                document.querySelectorAll('[id^="list_"]').forEach(el => {
+                    const id = el.getAttribute('id');
+                    if (dict[id]) {
+                        el.innerHTML = dict[id];
+                    }
+                });
+            } else if (lang === 'hy') {
+                // For hybrid mode, we map to english for subpages to avoid screen clutter
+                const dict = translations['en'];
+                document.documentElement.lang = 'en';
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (dict[key]) el.textContent = dict[key];
+                });
+                document.querySelectorAll('[id^="list_"]').forEach(el => {
+                    const id = el.getAttribute('id');
+                    if (dict[id]) el.innerHTML = dict[id];
+                });
+                // Ensure internal links pass the hybrid param back
+                document.querySelectorAll('.related-links a').forEach(a => {
+                    const href = a.getAttribute('href').split('?')[0];
+                    a.setAttribute('href', href + '?lang=hy');
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

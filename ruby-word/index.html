@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Word自動ルビ振りツール｜漢字・英語に一括フリガナ付与【無料】</title>
+    <title data-i18n="head_title">Word自動ルビ振りツール｜漢字・英語に一括フリガナ付与【無料】</title>
     <meta name="description"
         content="Microsoft Word文書（docx形式）内の漢字や英単語に対して、読み仮名（ルビ・フリガナ）を一括で自動付与するツール。児童・生徒向けプリントや日本語学習教材の作成時間を大幅短縮できます。">
     <!-- OGP -->
@@ -165,53 +165,55 @@
 
 <body>
 
-    <header><a href="../">← 無料AI・自動化ツール集 トップへ戻る</a></header>
+    <header><a href="../" data-i18n="nav_back">← 無料AI・自動化ツール集 トップへ戻る</a></header>
 
     <div class="container">
-        <h1>Word自動ルビ振りツール（無料DL）</h1>
+        <h1 data-i18n="h1_title">Word自動ルビ振りツール（無料DL）</h1>
 
-        <p>
+        <p data-i18n="desc_main">
             教育現場（小学校・特別支援など）において、児童生徒向けのプリントやテストを作成する際、Wordで漢字に一つずつ「ルビ（ふりがな）」を振るのは非常に手間と時間がかかります。<br>
             本ツールは、Microsoft Word文書（.docx形式）を読み込み、含まれる漢字や英単語に対して自動で、かつ一括してルビを付与するデスクトップアプリケーションです。<br>
             教師や教材制作者の方の日々の業務負担を軽減し、文書の可読性を一瞬で向上させます。
         </p>
 
         <div class="cta-area">
-            <a href="https://github.com/oyajibuki/ruby-word/releases/" target="_blank" class="btn-primary">無料ダウンロード
+            <a href="https://github.com/oyajibuki/ruby-word/releases/" target="_blank" class="btn-primary"
+                data-i18n="btn_open">無料ダウンロード
                 (GitHub)</a>
         </div>
 
-        <h2>このツールでできること</h2>
-        <ul>
+        <h2 data-i18n="h2_features">このツールでできること</h2>
+        <ul id="list_features">
             <li>Word文書（.docx）内の漢字への自動ルビ振り（ふりがな一括付与）</li>
             <li>英単語に対するカタカナルビの付与</li>
             <li>学年別の漢字フィルタリング機能（指定した学年以下の漢字にはルビを振らない等の調整が可能）</li>
             <li>大量のテキストでも数秒で処理を完了する高速動作</li>
         </ul>
 
-        <h2>使い方</h2>
-        <ol>
+        <h2 data-i18n="h2_how">使い方</h2>
+        <ol id="list_how">
             <li>「無料ダウンロード」ボタンからGitHubのReleasesに飛び、アプリをダウンロード・解凍します。</li>
             <li>アプリを起動し、ルビを振りたいWordファイルを選択・アップロードします。</li>
             <li>「漢字のみ」「英語のみ」「学年指定」などの対象となるルビの各種設定を選びます。</li>
             <li>「実行」ボタンを押すと、自動的にルビが付与された新しいWordファイルが出力されます。</li>
         </ol>
 
-        <h2>こんな人におすすめ</h2>
-        <ul>
+        <h2 data-i18n="h2_target">こんな人におすすめ</h2>
+        <ul id="list_target">
             <li>学校の教員、塾講師などの教育関係者</li>
             <li>小学校低学年向けのプリント・テスト作成者</li>
             <li>日本語学習者（外国人）向けのテキスト・マニュアル作成担当者</li>
             <li>児童文学や絵本などのDTP編集者・ライター</li>
         </ul>
 
-        <h2>よくある質問</h2>
-        <p><strong>Q. 英語にルビを振る機能とはどのようなものですか？</strong><br>
-            Apple → アップル のように、英単語のスペルに対して自動的にカタカナの読み仮名を付与する機能です。</p>
+        <h2 data-i18n="h2_faq">よくある質問</h2>
+        <p><strong data-i18n="faq1_q">Q. 英語にルビを振る機能とはどのようなものですか？</strong><br>
+            <span data-i18n="faq1_a">Apple → アップル のように、英単語のスペルに対して自動的にカタカナの読み仮名を付与する機能です。</span>
+        </p>
 
         <div class="related-links">
-            <h2>関連ツール</h2>
-            <ul>
+            <h2 data-i18n="h2_related">関連ツール</h2>
+            <ul id="list_related">
                 <li><a href="../aozora/">青空文庫ルビ削除ツール</a></li>
                 <li><a href="../csv/">CSV・Excel自動整形ツール</a></li>
             </ul>
@@ -219,9 +221,153 @@
     </div>
 
     <footer>
-        <p>© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
+        <p data-i18n="footer">© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
     </footer>
 
+    <!-- Dynamic Translation Script -->
+    <script>
+        const translations = {
+            en: {
+                head_title: "Auto Ruby (Furigana) Tool for MS Word | Free Download",
+                nav_back: "← Back to Tools",
+                h1_title: "Auto Ruby (Furigana) Tool for MS Word",
+                desc_main: "Adding reading guides ('Ruby' or 'Furigana') to Japanese Kanji one by one in Word is incredibly time-consuming, especially for teachers creating materials for students. This desktop app reads your Microsoft Word (.docx) files and automatically adds furigana to all Kanji and English words in bulk. It significantly reduces the workload for teachers and learning material creators.",
+                btn_open: "Free Download (GitHub)",
+                h2_features: "Features",
+                list_features: "<li>Automatic, bulk insertion of Furigana (reading aids) for Kanji in .docx files</li><li>Katakana reading guides for English words</li><li>Grade-level filtering (e.g., skip adding furigana to Kanji learned in Grade 1 or earlier)</li><li>High-speed processing capable of handling large texts in seconds</li>",
+                h2_how: "How to use",
+                list_how: "<li>Click 'Free Download' to visit GitHub Releases and download/extract the app.</li><li>Launch the app and select the Word file you wish to process.</li><li>Choose settings like 'Kanji Only', 'English Only', or 'Target Grade'.</li><li>Click 'Execute', and a new Word file with automatically added furigana will be generated.</li>",
+                h2_target: "Recommended for",
+                list_target: "<li>School teachers, tutors, and educational staff</li><li>Creators of study materials or tests for elementary school children</li><li>Writers of textbooks or manuals for Japanese language learners (foreigners)</li><li>DTP editors and writers for children's literature/picture books</li>",
+                h2_faq: "FAQ",
+                faq1_q: "Q. What does the 'English Ruby' feature do?",
+                faq1_a: "It automatically adds Katakana pronunciation above English words (e.g., 'Apple' gets 'アップル' added above it).",
+                h2_related: "Related Tools",
+                list_related: "<li><a href='../aozora/?lang=en'>Aozora Bunko Ruby Remover</a></li><li><a href='../csv/?lang=en'>CSV/Excel Auto-formatter</a></li>",
+                footer: "© 2026 AutoCraft — Indie Dev Tool Lab"
+            },
+            ko: {
+                head_title: "워드 자동 루비(후리가나) 달기 도구 | 한자·영어 일괄 변환",
+                nav_back: "← 도구 목록으로 돌아가기",
+                h1_title: "Word 자동 루비(후리가나) 추가 도구 (무료)",
+                desc_main: "초등학교나 특수 교육 현장, 또는 일본어 학습 교재를 만들 때 Word에서 한자에 일일이 '루비(요미가나)'를 다는 것은 매우 번거롭고 시간이 오래 걸리는 작업입니다. 이 데스크탑 앱은 Microsoft Word(.docx) 문서를 읽어 들여 포함된 한자와 영단어에 대해 자동으로, 그리고 일괄적으로 루비를 달아줍니다. 교사와 교재 제작자의 업무 부담을 크게 줄여줍니다.",
+                btn_open: "무료 다운로드 (GitHub)",
+                h2_features: "주요 기능",
+                list_features: "<li>Word 문서(.docx) 내의 한자에 자동 루비 달기 (요미가나 일괄 부여)</li><li>영단어에 가타카나 읽기 달기</li><li>학년별 한자 필터링 기능 (지정한 학년 이하의 한자에는 루비를 달지 않는 등의 세밀한 조정 가능)</li><li>대량의 텍스트도 몇 초 만에 처리하는 고속 동작</li>",
+                h2_how: "사용 방법",
+                list_how: "<li>'무료 다운로드' 버튼을 통해 GitHub 릴리즈로 이동하여 앱을 다운로드 및 압축 해제합니다.</li><li>앱을 실행하고 수정할 Word 파일을 선택합니다.</li><li>'한자만', '영어만', '학년 지정' 등 루비 적용 대상에 관한 각종 설정을 선택합니다.</li><li>'실행' 버튼을 누르면 루비가 추가된 새로운 Word 파일이 생성됩니다.</li>",
+                h2_target: "추천 대상",
+                list_target: "<li>학교 교사, 학원 강사 등 교육 관계자</li><li>초등학교 저학년용 프린트물 및 시험지 제작자</li><li>외국인 일본어 학습자용 텍스트나 매뉴얼 제작 담당자</li><li>아동 문학, 그림책 등을 다루는 DTP 편집자 및 라이터</li>",
+                h2_faq: "자주 묻는 질문",
+                faq1_q: "Q. 영어에 루비를 단다는 것은 어떤 기능인가요?",
+                faq1_a: "Apple → 업푸루(アップル) 처럼 영단어 철자에 대해 발음을 자동으로 가타카나로 표시해 주는 기능입니다.",
+                h2_related: "관련 도구",
+                list_related: "<li><a href='../aozora/?lang=ko'>아오조라 문고 루비 삭제 도구</a></li><li><a href='../csv/?lang=ko'>CSV·Excel 자동 정렬</a></li>",
+                footer: "© 2026 AutoCraft — 인디 개발 툴 컬렉션"
+            },
+            pt: {
+                head_title: "Auto Ruby (Furigana) para MS Word | Download Grátis",
+                nav_back: "← Voltar aos Ferramentas",
+                h1_title: "Adicionador Automático de Furigana para Word",
+                desc_main: "Adicionar guias de leitura ('Ruby' ou 'Furigana') aos Kanjis japoneses no Word, um por um, é extremamente demorado. Este aplicativo de computador lê seus arquivos do Microsoft Word (.docx) e adiciona furiganas automaticamente a todos os Kanjis e palavras em inglês de uma só vez. Diminui significativamente a carga de trabalho de professores e criadores de materiais didáticos.",
+                btn_open: "Download Gratuito (GitHub)",
+                h2_features: "O que a ferramenta faz",
+                list_features: "<li>Inserção automática e em massa de Furigana (guias de leitura) para Kanjis em arquivos .docx</li><li>Guias de pronúncia em Katakana para palavras em inglês</li><li>Filtro por grau escolar (ex: pular a adição de furigana em Kanjis aprendidos da 1ª série para baixo)</li><li>Processamento de alta velocidade, capaz de lidar com textos enormes em segundos</li>",
+                h2_how: "Como usar",
+                list_how: "<li>Clique em 'Download Gratuito' para acessar os Releases do GitHub, baixe e extraia o aplicativo.</li><li>Abra o aplicativo e selecione o arquivo do Word que deseja processar.</li><li>Escolha as configurações como 'Apenas Kanji', 'Apenas Inglês' ou 'Filtrar por Série Escolar'.</li><li>Clique em 'Executar', e um novo arquivo do Word com os furiganas adicionados será criado.</li>",
+                h2_target: "Recomendado para",
+                list_target: "<li>Professores, tutores e equipe educacional</li><li>Criadores de materiais de estudo ou provas para crianças do ensino fundamental</li><li>Escritores de manuais ou livros para alunos estrangeiros aprendendo japonês</li><li>Editores DTP e escritores de literatura infantil/livros ilustrados</li>",
+                h2_faq: "Perguntas Frequentes",
+                faq1_q: "Q. O que faz o recurso 'Ruby em Inglês'?",
+                faq1_a: "Ele adiciona automaticamente a pronúncia em Katakana acima das palavras em inglês (por exemplo, a palavra 'Apple' recebe um 'アップル' acima dela).",
+                h2_related: "Ferramentas Relacionadas",
+                list_related: "<li><a href='../aozora/?lang=pt'>Removedor de Ruby de Aozora Bunko</a></li><li><a href='../csv/?lang=pt'>Formatador Automático CSV</a></li>",
+                footer: "© 2026 AutoCraft — Ferramentas e Lab"
+            },
+            zh: {
+                head_title: "Word 自动注音工具 | 为汉字/英语批量加注音（免费）",
+                nav_back: "← 返回主页",
+                h1_title: "Word 自动注音（Ruby）工具（离线版）",
+                desc_main: "在为日本小学生或日语学习者编写教材和试卷时，在 Word 中逐个为汉字添加注音（平假名/片假名）耗时巨大。这款桌面端软件可读取 Microsoft Word（.docx）文档，只需一键便能自动为所有汉字及英文单词批量添加顶部注音（Ruby），大大减轻了教师、教材编写者和出版排版人员的工作负担。",
+                btn_open: "免费下载 (GitHub)",
+                h2_features: "功能特点",
+                list_features: "<li>全自动为 Word（.docx）内的汉字批量添加平假名注音</li><li>支持为英文单词添加日文片假名发音标注</li><li>支持按年级进行汉字过滤（例如：小学三年级以下学过的汉字不添加注音）</li><li>处理速度极快，面对几万字的长文也能在数秒内输出</li>",
+                h2_how: "使用方法",
+                list_how: "<li>点击“免费下载”，跳转至 GitHub 的 Releases 页面下载并解压软件程序。</li><li>启动应用，选择并加载您需要标注读音的 Word 文件。</li><li>选择需要的设置，例如“仅汉字”、“仅英语”或“设置年级”。</li><li>点击“执行”，即可输出一份已经自动加好所有拼音注音的全新 Word 文档。</li>",
+                h2_target: "推荐人群",
+                list_target: "<li>小学教师、补习班讲师等教育工作者</li><li>小学低年级学习讲义和试卷的出题者</li><li>面对外国人日语培训中心，编写日语辅导教材的文案人员</li><li>儿童文学、绘本等的出版编辑（DTP）及作者</li>",
+                h2_faq: "常见问题",
+                faq1_q: "Q. 为“英语”注音是什么意思？",
+                faq1_a: "功能会自动在英语单词上方附上其日语假名的读音。例如自动将 Apple 上方标注“アップル”。",
+                h2_related: "相关工具",
+                list_related: "<li><a href='../aozora/?lang=zh'>青空文库注音删除工具</a></li><li><a href='../csv/?lang=zh'>CSV自动排版工具</a></li>",
+                footer: "© 2026 AutoCraft — 个人开发工具集合"
+            },
+            hi: {
+                head_title: "Auto Furigana Tool for MS Word | Free Download",
+                nav_back: "← Back to Home",
+                h1_title: "Word के लिए ऑटो फुरिगाना टूल",
+                desc_main: "वर्ड में जापानी कांजी और अंग्रेजी शब्दों पर एक-एक करके 'रूबी' (पढ़ने के लिए गाइड) लगाना बहुत ही समय लेने वाला काम है, खास तौर पर शिक्षकों के लिए। यह डेस्कटॉप ऐप आपकी .docx फाइल्स को पढ़ता है और सभी कांजी और अंग्रेजी शब्दों पर एक साथ फुरिगाना लगा देता है। यह शिक्षकों और अध्ययन सामग्री बनाने वालों का काम बहुत आसान कर देता है।",
+                btn_open: "मुफ्त डाउनलोड (GitHub)",
+                h2_features: "सुविधाएँ",
+                list_features: "<li>वर्ड (.docx) फाइलों में कांजी के लिए स्वचालित रूप से और एक साथ फुरिगाना (रूबी) लगाना</li><li>अंग्रेजी शब्दों के ऊपर काताकाना उच्चारण पढ़ना</li><li>ग्रेड-स्तरीय फ़िल्टरिंग (उदा. यदि आप कक्षा 3 से नीचे सीखे गए कांजी पर फुरिगाना नहीं चाहते हैं)</li><li>बहुत तेज़, कुछ ही सेकंड में हजारों शब्द प्रोसेस कर लेता है</li>",
+                h2_how: "कैसे उपयोग करें",
+                list_how: "<li>गिटहब रिलीज़ में जाने के लिए 'डाउनलोड' पर क्लिक करें और ऐप को डाउनलोड/एक्सट्रेक्ट करें।</li><li>ऐप चलाएं और उस वर्ड फ़ाइल को चुनें जिसे आप प्रोसेस करना चाहते हैं।</li><li>'सिर्फ कांजी', 'सिर्फ अंग्रेजी', या 'ग्रेड फ़िल्टर' जैसी सेटिंग्स चुनें।</li><li>'एक्ज़ीक्यूट' (Execute) पर क्लिक करें, और नए फुरिगाना के साथ एक नई वर्ड फाइल तैयार हो जाएगी।</li>",
+                h2_target: "किनके लिए है?",
+                list_target: "<li>स्कूल के शिक्षक, ट्यूटर और शिक्षा कर्मचारी</li><li>प्राथमिक विद्यालय के बच्चों के लिए अध्ययन सामग्री या टेस्ट बनाने वाले</li><li>जापानी भाषा सीखने वाले विदेशियों के लिए किताबें बनाने वाले लेखक</li><li>डीटीपी संपादक और बच्चों के साहित्य/चित्रपुस्तिका के लेखक</li>",
+                h2_faq: "सामान्य प्रश्न",
+                faq1_q: "Q. 'अंग्रेजी रूबी' सुविधा क्या करती है?",
+                faq1_a: "यह स्वतः ही अंग्रेजी शब्दों के ऊपर काताकाना उच्चारण जोड़ देती है (उदा. 'Apple' के ऊपर 'アップル' जोड़ देती है)।",
+                h2_related: "और टूल्स",
+                list_related: "<li><a href='../aozora/?lang=hi'>Aozora Bunko Ruby Remover</a></li><li><a href='../csv/?lang=hi'>CSV Auto-formatter</a></li>",
+                footer: "© 2026 AutoCraft — Indie Innovation Lab"
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const lang = params.get('lang');
+
+            // Apply translation if valid language parameter exists
+            if (lang && translations[lang]) {
+                const dict = translations[lang];
+                document.documentElement.lang = lang;
+
+                // Replace text contents
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (dict[key]) {
+                        el.textContent = dict[key];
+                    }
+                });
+
+                // Replace HTML structures (lists)
+                document.querySelectorAll('[id^="list_"]').forEach(el => {
+                    const id = el.getAttribute('id');
+                    if (dict[id]) {
+                        el.innerHTML = dict[id];
+                    }
+                });
+            } else if (lang === 'hy') {
+                // For hybrid mode, we map to english for subpages to avoid screen clutter
+                const dict = translations['en'];
+                document.documentElement.lang = 'en';
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (dict[key]) el.textContent = dict[key];
+                });
+                document.querySelectorAll('[id^="list_"]').forEach(el => {
+                    const id = el.getAttribute('id');
+                    if (dict[id]) el.innerHTML = dict[id];
+                });
+                // Ensure internal links pass the hybrid param back
+                document.querySelectorAll('.related-links a').forEach(a => {
+                    const href = a.getAttribute('href').split('?')[0];
+                    a.setAttribute('href', href + '?lang=hy');
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
