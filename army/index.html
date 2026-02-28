@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Army・Rush (アーミーラッシュ)｜無料タワーディフェンス・アクション育成ゲーム</title>
+    <meta name="description"
+        content="圧倒的な数の兵士を育成し、押し寄せる敵軍を迎え撃つ無料ブラウザ・タワーディフェンスゲーム「Army・Rush」。武器の強化とユニット増産の爽快アクションを今すぐプレイ！">
+    <!-- OGP -->
+    <meta property="og:title" content="Army・Rush（無料ブラウザゲーム）">
+    <meta property="og:description" content="大群で敵を撃ち破れ！爽快タワーディフェンス＆兵士育成アクション">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oyajibuki.github.io/tools/army/">
+    <meta property="og:image" content="https://oyajibuki.github.io/tools/og.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="../img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ... 共通スタイル ... */
+        :root {
+            --primary-color: #2563eb;
+            --primary-gradient: linear-gradient(135deg, #2563eb, #1d4ed8);
+            --text-main: #1f2937;
+            --text-sub: #4b5563;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        header {
+            background: #111;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary-color);
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        h1 {
+            font-size: 2rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 40px;
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+        }
+
+        p {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+        }
+
+        ul,
+        ol {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .cta-area {
+            text-align: center;
+            margin: 50px 0;
+            padding: 30px;
+            background: #eff6ff;
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--primary-gradient);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 15px 40px;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .related-links {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .related-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .related-links a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+    </style>
+
+    <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "FAQPage",
+   "mainEntity": [{
+     "@type": "Question",
+     "name": "スマートフォンでプレイできますか？",
+     "acceptedAnswer": { "@type": "Answer", "text": "はい、ブラウザ上で動作するため、PCはもちろんスマホからのタップ操作でも問題なくプレイ可能です。" }
+   }, {
+     "@type": "Question",
+     "name": "ダウンロードやインストールは必要ですか？",
+     "acceptedAnswer": { "@type": "Answer", "text": "いいえ、一切不要です。「プレイを開始する」ボタンを押せば、すぐにブラウザ内でゲームが始まります。" }
+   }]
+  }
+  </script>
+</head>
+
+<body>
+
+    <header><a href="../">← 無料AI・自動化ツール集 トップへ戻る</a></header>
+
+    <div class="container">
+        <h1>Army・Rush (アーミーラッシュ)</h1>
+
+        <p>
+            「Army・Rush（アーミーラッシュ）」は、押し寄せる敵の軍勢（ウェーブ）から自陣の基地を守り抜く、無料ブラウザ・タワーディフェンスアクションゲームです。<br>
+            最初は少数の兵士からスタートしますが、敵を倒して得た資金で次々と兵器をアンロック・増員し、圧倒的な数の自軍（Army）で敵を一斉掃射（Rush）する爽快感が最大の魅力です。<br>
+            アプリのダウンロードやインストールは不要。PC・スマートフォン問わず、ブラウザからいつでも無料でプレイ可能です。
+        </p>
+
+        <div class="cta-area">
+            <a href="https://oyajibuki.github.io/Army/" target="_blank" class="btn-primary">今すぐプレイ開始（無料・DL不要）</a>
+        </div>
+
+        <h2>ゲームの魅力と遊び方</h2>
+        <ul>
+            <li><strong>兵士と武器の強化：</strong> 歩兵から重火器まで、多彩なユニットをアンロックし部隊を編成・強化します。</li>
+            <li><strong>爽快な大群バトル：</strong> 画面を覆い尽くすほどの自軍と敵軍がぶつかり合う、ド派手な「わちゃわちゃ感」が楽しめます。</li>
+            <li><strong>戦術的育成要素：</strong> 限られた資金を「兵士の数」に回すか「個人の武器強化」に回すか、プレイスタイルに応じた戦略が求められます。</li>
+        </ul>
+
+        <h2>操作方法（PC・スマホ両対応）</h2>
+        <ol>
+            <li>上の「今すぐプレイ開始」ボタンからゲーム画面へアクセスします。</li>
+            <li>自動で攻撃を行う自軍を見守りながら、画面下部のメニューから「兵士追加」や「アップグレード」をタップ（クリック）して部隊を強化します。</li>
+            <li>敵の波（ウェーブ）を凌ぎ切ると報酬を獲得でき、さらなる強力な武器や施設を解放できます。</li>
+            <li>敗北してもステータスを引き継いで再挑戦（強くてニューゲーム）ができるシステムで、遊べば遊ぶほど爽快感が増します。</li>
+        </ol>
+
+        <h2>こんな人におすすめ</h2>
+        <ul>
+            <li>ヴァンパイアサバイバー（Vampire Survivors）系や、大量の自軍で敵を圧倒するワラワラ系のゲームが好きな方</li>
+            <li>兵士の配置やアップグレードを考えるタワーディフェンス（TD）ゲームが好きな方</li>
+            <li>インストールなしでサクッと短時間でクリア・周回できるフリーゲームを探している方</li>
+            <li>クリッカーゲームや放置・育成ゲームの要素が好きなゲーマー</li>
+        </ul>
+
+        <h2>よくある質問</h2>
+        <p><strong>Q. 課金要素はありますか？</strong><br>
+            いいえ、最後まで完全無料で遊べるフリーゲームです。スタミナ回復や有料ガチャ等の要素はありません。</p>
+
+        <div class="related-links">
+            <h2>その他の無料ゲーム・ツール</h2>
+            <ul>
+                <li><a href="../powa/">ポワ・サバ（サバイバルアクション）</a></li>
+                <li><a href="../market/">Market Dashboard（市場分析ツール）</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
+    </footer>
+
+</body>
+
+</html>

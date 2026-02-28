@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Word自動ルビ振りツール｜漢字・英語に一括フリガナ付与【無料】</title>
+    <meta name="description"
+        content="Microsoft Word文書（docx形式）内の漢字や英単語に対して、読み仮名（ルビ・フリガナ）を一括で自動付与するツール。児童・生徒向けプリントや日本語学習教材の作成時間を大幅短縮できます。">
+    <!-- OGP -->
+    <meta property="og:title" content="Word自動ルビ一括付与ツール">
+    <meta property="og:description" content="Word文書の漢字・英語に自動でフリガナを振る時短ツール｜無料">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oyajibuki.github.io/tools/ruby-word/">
+    <meta property="og:image" content="https://oyajibuki.github.io/tools/og.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="../img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ... 共通スタイル ... */
+        :root {
+            --primary-color: #2563eb;
+            --primary-gradient: linear-gradient(135deg, #2563eb, #1d4ed8);
+            --text-main: #1f2937;
+            --text-sub: #4b5563;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        header {
+            background: #111;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary-color);
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        h1 {
+            font-size: 2rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 40px;
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+        }
+
+        p {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+        }
+
+        ul,
+        ol {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .cta-area {
+            text-align: center;
+            margin: 50px 0;
+            padding: 30px;
+            background: #eff6ff;
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--primary-gradient);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 15px 40px;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .related-links {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .related-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .related-links a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+    </style>
+
+    <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "FAQPage",
+   "mainEntity": [{
+     "@type": "Question",
+     "name": "英語の読み仮名にも対応していますか？",
+     "acceptedAnswer": { "@type": "Answer", "text": "はい、漢字だけでなく英単語に対してもカタカナでルビを振ることが可能です。" }
+   }, {
+     "@type": "Question",
+     "name": "無料ですか？",
+     "acceptedAnswer": { "@type": "Answer", "text": "GitHubから無料でダウンロードしてご利用いただけます。" }
+   }]
+  }
+  </script>
+</head>
+
+<body>
+
+    <header><a href="../">← 無料AI・自動化ツール集 トップへ戻る</a></header>
+
+    <div class="container">
+        <h1>Word自動ルビ振りツール（無料DL）</h1>
+
+        <p>
+            教育現場（小学校・特別支援など）において、児童生徒向けのプリントやテストを作成する際、Wordで漢字に一つずつ「ルビ（ふりがな）」を振るのは非常に手間と時間がかかります。<br>
+            本ツールは、Microsoft Word文書（.docx形式）を読み込み、含まれる漢字や英単語に対して自動で、かつ一括してルビを付与するデスクトップアプリケーションです。<br>
+            教師や教材制作者の方の日々の業務負担を軽減し、文書の可読性を一瞬で向上させます。
+        </p>
+
+        <div class="cta-area">
+            <a href="https://github.com/oyajibuki/ruby-word/releases/" target="_blank" class="btn-primary">無料ダウンロード
+                (GitHub)</a>
+        </div>
+
+        <h2>このツールでできること</h2>
+        <ul>
+            <li>Word文書（.docx）内の漢字への自動ルビ振り（ふりがな一括付与）</li>
+            <li>英単語に対するカタカナルビの付与</li>
+            <li>学年別の漢字フィルタリング機能（指定した学年以下の漢字にはルビを振らない等の調整が可能）</li>
+            <li>大量のテキストでも数秒で処理を完了する高速動作</li>
+        </ul>
+
+        <h2>使い方</h2>
+        <ol>
+            <li>「無料ダウンロード」ボタンからGitHubのReleasesに飛び、アプリをダウンロード・解凍します。</li>
+            <li>アプリを起動し、ルビを振りたいWordファイルを選択・アップロードします。</li>
+            <li>「漢字のみ」「英語のみ」「学年指定」などの対象となるルビの各種設定を選びます。</li>
+            <li>「実行」ボタンを押すと、自動的にルビが付与された新しいWordファイルが出力されます。</li>
+        </ol>
+
+        <h2>こんな人におすすめ</h2>
+        <ul>
+            <li>学校の教員、塾講師などの教育関係者</li>
+            <li>小学校低学年向けのプリント・テスト作成者</li>
+            <li>日本語学習者（外国人）向けのテキスト・マニュアル作成担当者</li>
+            <li>児童文学や絵本などのDTP編集者・ライター</li>
+        </ul>
+
+        <h2>よくある質問</h2>
+        <p><strong>Q. 英語にルビを振る機能とはどのようなものですか？</strong><br>
+            Apple → アップル のように、英単語のスペルに対して自動的にカタカナの読み仮名を付与する機能です。</p>
+
+        <div class="related-links">
+            <h2>関連ツール</h2>
+            <ul>
+                <li><a href="../aozora/">青空文庫ルビ削除ツール</a></li>
+                <li><a href="../csv/">CSV・Excel自動整形ツール</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
+    </footer>
+
+</body>
+
+</html>

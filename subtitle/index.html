@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AI字幕自動生成｜動画から一発で字幕作成【無料ツール】</title>
+    <meta name="description" content="動画をアップロードするだけでAIが自動で字幕とテロップを生成。日本語対応・完全無料・インストール不要のAI字幕作成ツールです。">
+    <!-- OGP -->
+    <meta property="og:title" content="AI字幕自動生成ツール">
+    <meta property="og:description" content="動画から一発で字幕とテロップ作成｜完全無料">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oyajibuki.github.io/tools/subtitle/">
+    <meta property="og:image" content="https://oyajibuki.github.io/tools/og.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="../img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-gradient: linear-gradient(135deg, #2563eb, #1d4ed8);
+            --text-main: #1f2937;
+            --text-sub: #4b5563;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        header {
+            background: #111;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary-color);
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        h1 {
+            font-size: 2rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 40px;
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+        }
+
+        p {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+        }
+
+        ul,
+        ol {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .cta-area {
+            text-align: center;
+            margin: 50px 0;
+            padding: 30px;
+            background: #eff6ff;
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--primary-gradient);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 15px 40px;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .related-links {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .related-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .related-links a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+    </style>
+
+    <!-- FAQ 構造化データ -->
+    <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "FAQPage",
+   "mainEntity": [{
+     "@type": "Question",
+     "name": "このツールは完全無料ですか？",
+     "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "はい、完全無料でご利用いただけます。課金や登録は一切不要です。"
+     }
+   }, {
+     "@type": "Question",
+     "name": "日本語以外の言語にも対応していますか？",
+     "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "はい、Whisper AIのモデルを使用しているため、日本語以外の多数の言語の文字起こしと字幕生成にも対応しています。"
+     }
+   }]
+  }
+  </script>
+</head>
+
+<body>
+
+    <header>
+        <a href="../">← 無料AI・自動化ツール集 トップへ戻る</a>
+    </header>
+
+    <div class="container">
+        <h1>AI字幕自動生成ツール（無料）</h1>
+
+        <p>
+            動画編集で字幕やテロップを作成する作業は時間がかかりがちです。<br>
+            本ツールでは、動画ファイルや音声ファイルをアップロードするだけで、高精度なAI（Whisper）が自動で文字起こしを行い、日本語字幕ファイル（SRT等）を生成します。<br>
+            これにより、動画編集の手間と時間を大幅に効率化できます。インストール不要・完全無料で、ブラウザから誰でもすぐに利用可能です。
+        </p>
+
+        <div class="cta-area">
+            <a href="https://subtitle-ai-free-aen8v76jncxmxzrwxqdumz.streamlit.app/" target="_blank"
+                class="btn-primary">ツールを開く（無料）</a>
+        </div>
+
+        <h2>このツールでできること</h2>
+        <ul>
+            <li>動画や音声ファイルからの自動テキスト化（文字起こし）</li>
+            <li>高精度なAI音声認識を利用した字幕の自動生成</li>
+            <li>タイムコード付きの字幕ファイル（SRT形式等）の即時ダウンロード</li>
+            <li>手作業によるテロップ入力作業・編集コストの大幅な削減</li>
+        </ul>
+
+        <h2>使い方</h2>
+        <ol>
+            <li>上記の「ツールを開く」ボタンからアプリにアクセスします。</li>
+            <li>字幕を付けたい動画（mp4等）または音声ファイルをドラッグ＆ドロップでアップロードします。</li>
+            <li>AIによる自動処理（文字起こし・解析）を数分待ちます。</li>
+            <li>完成した字幕データをダウンロードし、動画編集ソフト（Premiere Pro等）に読み込ませて完了です。</li>
+        </ol>
+
+        <h2>こんな人におすすめ</h2>
+        <ul>
+            <li>編集時間を短縮したいYouTuber・動画クリエイター</li>
+            <li>社内向けマニュアル動画や研修動画の担当者</li>
+            <li>講義・Webセミナー(ウェビナー)のアーカイブ動画作成者</li>
+            <li>字幕付けの外注費を抑えたい方</li>
+        </ul>
+
+        <h2>よくある質問</h2>
+        <p><strong>Q. 本当に無料で使えますか？</strong><br>
+            はい、インストールや会員登録なども不要で、完全無料で利用できます。</p>
+
+        <p><strong>Q. 音声データはサーバーに保存されますか？</strong><br>
+            処理完了後、データは保持されずに破棄される仕組みのため、機密情報を含む動画でも安心してご利用いただけます。</p>
+
+        <div class="related-links">
+            <h2>関連ツール</h2>
+            <ul>
+                <li><a href="../clearcut/">ClearCut 画像切り抜きツール</a></li>
+                <li><a href="../resize/">画像・動画リサイズツール</a></li>
+                <li><a href="../ruby-word/">Word自動ルビ振りツール</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
+    </footer>
+
+</body>
+
+</html>

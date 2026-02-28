@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CSV・Excel自動整形ツール｜列揃え・不要行削除・文字変換【無料】</title>
+    <meta name="description"
+        content="乱れたCSVデータやExcel出力シートの書式を自動的にクリーンアップ・整形する無料Webツール。列のズレ修正、不要な改行や半角・全角の文字変換などデータプレパレーション作業をワンクリックで効率化します。">
+    <!-- OGP -->
+    <meta property="og:title" content="CSV・Excelデータ自動整形ツール">
+    <meta property="og:description" content="崩れた表データの一括クリーンアップ・フォーマット変換｜完全無料">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oyajibuki.github.io/tools/csv/">
+    <meta property="og:image" content="https://oyajibuki.github.io/tools/og.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="../img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ... 共通スタイル ... */
+        :root {
+            --primary-color: #2563eb;
+            --primary-gradient: linear-gradient(135deg, #2563eb, #1d4ed8);
+            --text-main: #1f2937;
+            --text-sub: #4b5563;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        header {
+            background: #111;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary-color);
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        h1 {
+            font-size: 2rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 40px;
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+        }
+
+        p {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+        }
+
+        ul,
+        ol {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .cta-area {
+            text-align: center;
+            margin: 50px 0;
+            padding: 30px;
+            background: #eff6ff;
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--primary-gradient);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 15px 40px;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .related-links {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .related-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .related-links a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+    </style>
+
+    <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "FAQPage",
+   "mainEntity": [{
+     "@type": "Question",
+     "name": "会社の機密データが含まれているCSVをアップロードしても大丈夫ですか？",
+     "acceptedAnswer": { "@type": "Answer", "text": "はい、ファイル処理はすべてお使いのブラウザ上（ローカル）で完結するため、外部サーバーへのデータ送信は一切なく、情報漏洩の心配はありません。" }
+   }]
+  }
+  </script>
+</head>
+
+<body>
+
+    <header><a href="../">← 無料AI・自動化ツール集 トップへ戻る</a></header>
+
+    <div class="container">
+        <h1>CSV・Excel自動整形ツール（無料）</h1>
+
+        <p>
+            システムから出力（エクスポート）されたCSVファイルや、複数の人が編集したExcelシートにおいて、「列がズレている」「不要な空白行が混ざっている」「全角カナと半角カナが混在している」等の問題でデータの取り込み・集計が進まないことはありませんか？<br>
+            本ツールは、ルールに沿ったデータクリーニング・整形作業をブラウザ上でワンクリックで自動処理する完全無料のWebアプリです。<br>
+            手作業による置換やExcelのマクロ（VBA）構築の手間を省き、バックオフィス業務を劇的に効率化します。
+        </p>
+
+        <div class="cta-area">
+            <a href="https://oyajibuki.github.io/csv-app/" target="_blank" class="btn-primary">ツールを開く（ブラウザ上で安全に処理）</a>
+        </div>
+
+        <h2>このツールでできること</h2>
+        <ul>
+            <li>崩れたCSV列やカンマ区切りの自動フォーマット・整列</li>
+            <li>空行・不要行、あるいは重複データの一括削除</li>
+            <li>半角/全角文字の統一、日付フォーマットの変換などのクリンネス</li>
+            <li>処理結果の新規CSV・Excelファイルへの即時エクスポート機能</li>
+        </ul>
+
+        <h2>使い方</h2>
+        <ol>
+            <li>「ツールを開く」ボタンからアプリへアクセスします。</li>
+            <li>お手元のCSVまたはExcelファイルを画面にドラッグ＆ドロップします。</li>
+            <li>画面上で実行したい「自動整形ルール」（文字種の統一、空白行削除など）を選択します。</li>
+            <li>処理を実行し、画面上でプレビューを確認後、綺麗な表データとしてダウンロードします。</li>
+        </ol>
+
+        <h2>こんな人におすすめ</h2>
+        <ul>
+            <li>データ入力・集計に関わる事務担当者、経理・バックオフィス業務の方</li>
+            <li>顧客リスト(CRM)や名刺管理ソフトへとデータをインポートする営業担当者</li>
+            <li>ECサイトやWebシステムから出力した生データを分析用に加工したいマーケター</li>
+            <li>プログラム(Python等)を書かずに素早くデータクレンジングをしたい方</li>
+        </ul>
+
+        <h2>よくある質問</h2>
+        <p><strong>Q. 利用は完全無料ですか？</strong><br>
+            はい、会員登録なども不要で完全無料で使い放題です。</p>
+
+        <div class="related-links">
+            <h2>関連ツール</h2>
+            <ul>
+                <li><a href="../ruby-word/">Word自動ルビ振りツール</a></li>
+                <li><a href="../market/">Market Dashboard（市場動向分析）</a></li>
+                <li><a href="../clearcut/">ClearCut 画像切り抜きツール</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ClearCut 画像切り抜き｜ブラウザで簡単背景透過【無料ツール】</title>
+    <meta name="description" content="画像の背景を一瞬で透過・切り抜きできるAIツール「ClearCut」。インストール不要でブラウザから直接利用可能。ECサイトの物撮りやサムネイル作成に最適です。">
+    <!-- OGP -->
+    <meta property="og:title" content="ClearCut 画像切り抜きツール">
+    <meta property="og:description" content="AIが高精度に画像の背景を自動透過・切り抜き｜完全無料">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oyajibuki.github.io/tools/clearcut/">
+    <meta property="og:image" content="https://oyajibuki.github.io/tools/og.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="../img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-gradient: linear-gradient(135deg, #2563eb, #1d4ed8);
+            --text-main: #1f2937;
+            --text-sub: #4b5563;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        header {
+            background: #111;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary-color);
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        h1 {
+            font-size: 2rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 40px;
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+        }
+
+        p {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+        }
+
+        ul,
+        ol {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .cta-area {
+            text-align: center;
+            margin: 50px 0;
+            padding: 30px;
+            background: #eff6ff;
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--primary-gradient);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 15px 40px;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .related-links {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .related-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .related-links a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+    </style>
+
+    <!-- FAQ 構造化データ -->
+    <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "FAQPage",
+   "mainEntity": [{
+     "@type": "Question",
+     "name": "このツールは無料ですか？",
+     "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "はい、どなたでも無料で画像を透過できるツールです。"
+     }
+   }, {
+     "@type": "Question",
+     "name": "どのような画像が切り抜けますか？",
+     "acceptedAnswer": {
+       "@type": "Answer",
+       "text": "人物、商品（物撮り）、動物など、被写体がはっきりしている画像に対して高い精度で背景を自動削除します。"
+     }
+   }]
+  }
+  </script>
+</head>
+
+<body>
+
+    <header>
+        <a href="../">← 無料AI・自動化ツール集 トップへ戻る</a>
+    </header>
+
+    <div class="container">
+        <h1>ClearCut 画像切り抜きツール（無料）</h1>
+
+        <p>
+            ECサイトの商品画像、YouTubeのサムネイル、プレゼン資料などを作成する際、画像の背景を消す（透過させる）作業は面倒です。<br>
+            「ClearCut」は、AIが被写体を瞬時に認識し、複雑な輪郭でも綺麗に背景を切り抜いて透過画像（PNG形式）を作成する無料Webツールです。<br>
+            Photoshopなどの専用ソフトは不要。ブラウザから画像をアップロードするだけで一瞬で切り抜きが完了します。
+        </p>
+
+        <div class="cta-area">
+            <a href="https://huggingface.co/spaces/AutoCraft502/clearcut" target="_blank"
+                class="btn-primary">ツールを開く（無料）</a>
+        </div>
+
+        <h2>このツールでできること</h2>
+        <ul>
+            <li>AIによる全自動の高精度な背景透過</li>
+            <li>人物の髪の毛や、商品の細かいフチなどの境界線を自然に切り抜き</li>
+            <li>背景が透明になったPNG画像のダウンロード</li>
+            <li>ワンクリックでの即時プレビューと処理</li>
+        </ul>
+
+        <h2>使い方</h2>
+        <ol>
+            <li>上記の「ツールを開く」ボタンをクリックし、ClearCutにアクセスします。</li>
+            <li>背景を消したい画像を画面にドラッグ＆ドロップ、または選択してアップロードします。</li>
+            <li>AIが自動的に被写体を検出し、数秒で背景を削除（透過）します。</li>
+            <li>透過された画像（PNG形式）を保存・ダウンロードして利用します。</li>
+        </ol>
+
+        <h2>こんな人におすすめ</h2>
+        <ul>
+            <li>フリマアプリ（メルカリ等）やECサイトに綺麗な商品画像を出品したい方</li>
+            <li>ブログのアイキャッチやYouTubeサムネイルを手軽に作成したい方</li>
+            <li>プレゼン資料（PowerPoint等）に使う画像の背景を消したいビジネスパーソン</li>
+            <li>画像編集ソフトを持っていない、または操作が苦手な方</li>
+        </ul>
+
+        <h2>よくある質問</h2>
+        <p><strong>Q. 利用に料金はかかりますか？</strong><br>
+            基本無料でご利用いただけます。</p>
+
+        <p><strong>Q. アップロードした画像は公開されますか？</strong><br>
+            画像は背景処理のためだけに使用され、全体公開されることはありません。</p>
+
+        <div class="related-links">
+            <h2>関連ツール</h2>
+            <ul>
+                <li><a href="../resize/">画像・動画リサイズツール</a></li>
+                <li><a href="../subtitle/">AI字幕自動生成ツール</a></li>
+                <li><a href="../csv/">CSV自動整形ツール</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
+    </footer>
+
+</body>
+
+</html>

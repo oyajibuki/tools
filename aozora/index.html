@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>青空文庫ルビ削除ツール｜機械学習・自然言語処理向けテキスト整形【無料】</title>
+    <meta name="description"
+        content="青空文庫形式のテキスト（《ルビ》や［＃注記］など）を一括でクリーンアップし、ルビを削除する無料のWebツール。AI・機械学習の自然言語処理（NLP）データセット作成に。">
+    <!-- OGP -->
+    <meta property="og:title" content="青空文庫ルビ一括削除ツール">
+    <meta property="og:description" content="AI学習用テキスト整形｜青空文庫のルビ・注記を自動クリアする無料ツール">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oyajibuki.github.io/tools/aozora/">
+    <meta property="og:image" content="https://oyajibuki.github.io/tools/og.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="../img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ... 共通スタイル ... */
+        :root {
+            --primary-color: #2563eb;
+            --primary-gradient: linear-gradient(135deg, #2563eb, #1d4ed8);
+            --text-main: #1f2937;
+            --text-sub: #4b5563;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        header {
+            background: #111;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary-color);
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        h1 {
+            font-size: 2rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 40px;
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+        }
+
+        p {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+        }
+
+        ul,
+        ol {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .cta-area {
+            text-align: center;
+            margin: 50px 0;
+            padding: 30px;
+            background: #eff6ff;
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--primary-gradient);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 15px 40px;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .related-links {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .related-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .related-links a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+    </style>
+
+    <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "FAQPage",
+   "mainEntity": [{
+     "@type": "Question",
+     "name": "テキストのアップロード上限はありますか？",
+     "acceptedAnswer": { "@type": "Answer", "text": "基本的にはブラウザアプリ上で処理されるため、一般的な小説一つ分のテキストファイルであれば問題なく高速に処理可能です。" }
+   }]
+  }
+  </script>
+</head>
+
+<body>
+
+    <header><a href="../">← 無料AI・自動化ツール集 トップへ戻る</a></header>
+
+    <div class="container">
+        <h1>青空文庫ルビ一括削除ツール（無料）</h1>
+
+        <p>
+            青空文庫などで公開されている文学作品のテキストファイルには、特有のルビ記号（例：漢字《かんじ》）や注記（［＃…］）が含まれています。<br>
+            機械学習（AI）の学習用データや、自然言語処理（NLP）のコーパスとしてこれらのテキストを利用する場合、ルビや特殊記号はノイズとなるため除去する前処理（クレンジング）が必須です。<br>
+            本ツールは、ブラウザ上でテキストを貼り付けるだけで青空文庫形式の特殊タグを一瞬で削除・整形する完全無料ツールです。
+        </p>
+
+        <div class="cta-area">
+            <a href="https://aozora-ruby-remover-n4dpzggyj553wsbnqpl7at.streamlit.app/" target="_blank"
+                class="btn-primary">ツールを開く（無料）</a>
+        </div>
+
+        <h2>このツールでできること</h2>
+        <ul>
+            <li>青空文庫形式のルビ（《》で囲まれた読み仮名）の自動削除</li>
+            <li>［＃…］といった注記記号、入力者注のクリーンアップ</li>
+            <li>機械学習・LLM向けのクリーンなプレーンテキストへの一括変換整形</li>
+        </ul>
+
+        <h2>使い方</h2>
+        <ol>
+            <li>「ツールを開く」ボタンからアプリへアクセスします。</li>
+            <li>編集・整形したい青空文庫形式のテキストファイルをアップロードするか、直接テキストボックスに貼り付けます。</li>
+            <li>「ルビ削除」ボタンを押すと、瞬時に記号が除去されたクリーンなテキストが生成されます。</li>
+            <li>結果をコピー、またはテキストファイルとしてダウンロードします。</li>
+        </ol>
+
+        <h2>こんな人におすすめ</h2>
+        <ul>
+            <li>自然言語処理、形態素解析などに取り組むAIエンジニア・学生</li>
+            <li>大規模言語モデル(LLM)のファインチューニング用データセット作成者</li>
+            <li>電子書籍（EPUBなど）を作成する際、ルビを取り除きたい方</li>
+            <li>テキスト読み上げソフトを利用するために邪魔な記号を消したい方</li>
+        </ul>
+
+        <h2>よくある質問</h2>
+        <p><strong>Q. ルビを残して漢字だけを消すことはできますか？</strong><br>
+            本ツールは機械学習のプレーンテキスト抽出を主目的としているため、「ルビなどの付加情報を消去する」専用の動作となります。</p>
+
+        <div class="related-links">
+            <h2>関連ツール</h2>
+            <ul>
+                <li><a href="../ruby-word/">Word自動ルビ振りツール</a></li>
+                <li><a href="../csv/">CSV・Excel自動整形ツール</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
+    </footer>
+
+</body>
+
+</html>

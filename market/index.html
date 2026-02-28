@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Market Dashboard｜市場動向・金融データリアルタイム分析【無料アプリ】</title>
+    <meta name="description"
+        content="金融市場のリアルタイム動向、株価、経済指標を一目で把握できるMarket Dashboard（マーケットダッシュボード）。投資家やリサーチャー向けの無料市場分析ツールです。">
+    <!-- OGP -->
+    <meta property="og:title" content="Market Dashboard（市場分析ツール）">
+    <meta property="og:description" content="リアルタイムの金融市場データと経済指標を一覧で可視化する無料ダッシュボード">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oyajibuki.github.io/tools/market/">
+    <meta property="og:image" content="https://oyajibuki.github.io/tools/og.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="../img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ... 共通スタイル ... */
+        :root {
+            --primary-color: #2563eb;
+            --primary-gradient: linear-gradient(135deg, #2563eb, #1d4ed8);
+            --text-main: #1f2937;
+            --text-sub: #4b5563;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+        }
+
+        header {
+            background: #111;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary-color);
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        h1 {
+            font-size: 2rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 40px;
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
+        }
+
+        p {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+        }
+
+        ul,
+        ol {
+            color: var(--text-sub);
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .cta-area {
+            text-align: center;
+            margin: 50px 0;
+            padding: 30px;
+            background: #eff6ff;
+            border-radius: 8px;
+        }
+
+        .btn-dashboard {
+            display: inline-block;
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 15px 40px;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px rgba(139, 92, 246, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-dashboard:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        .related-links {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .related-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .related-links a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+    </style>
+
+    <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "FAQPage",
+   "mainEntity": [{
+     "@type": "Question",
+     "name": "スマートフォンからでも見やすいですか？",
+     "acceptedAnswer": { "@type": "Answer", "text": "はい、レスポンシブデザインに対応しており、モバイル環境からでも見やすくチャートや指標を確認できます。" }
+   }]
+  }
+  </script>
+</head>
+
+<body>
+
+    <header><a href="../">← 無料AI・自動化ツール集 トップへ戻る</a></header>
+
+    <div class="container">
+        <h1>Market Dashboard（市場動向分析ダッシュボード）</h1>
+
+        <p>
+            現在の複雑な金融市場における株価指数や為替、各種経済指標を複数のサイトを巡回してチェックするのは非効率です。<br>
+            Market Dashboardは、最新の市場データやトレンド、主要な金融指標を1つの画面でリアルタイムに可視化（ビジュアライズ）する分析Webアプリです。<br>
+            ブラウザを開くだけで、投資判断やリサーチに必要な情報を瞬時に把握できます。
+        </p>
+
+        <div class="cta-area">
+            <a href="https://oyajibuki.github.io/market-dashboard/" target="_blank" class="btn-dashboard">ダッシュボードを開く</a>
+        </div>
+
+        <h2>このツールでできること</h2>
+        <ul>
+            <li>主要な株式市場（日経・NYダウなど）や為替データの一覧表示</li>
+            <li>直感的にトレンドを把握できる各種チャートの可視化</li>
+            <li>市場のボラティリティやセンチメントの分析指標へのアクセス</li>
+            <li>レスポンシブ対応による、PC・スマホからの快適な閲覧</li>
+        </ul>
+
+        <h2>使い方</h2>
+        <ol>
+            <li>「ダッシュボードを開く」ボタンからアプリにアクセスします（登録不要）。</li>
+            <li>画面に表示されるウィジェット形式のチャート・数値を閲覧します。</li>
+            <li>必要に応じて表示期間や対象の指標を切り替えて、市場の全体像を分析します。</li>
+        </ol>
+
+        <h2>こんな人におすすめ</h2>
+        <ul>
+            <li>日々のマーケット動向を短時間で俯瞰したい個人投資家・デイトレーダー</li>
+            <li>経済や金融のニュースを読み解くため、基礎データを確認したいリサーチャー</li>
+            <li>朝の通勤時間やスキマ時間にスマホで市況をチェックしたいビジネスマン</li>
+        </ul>
+
+        <h2>よくある質問</h2>
+        <p><strong>Q. 利用は無料ですか？</strong><br>
+            はい、どなたでも無料で閲覧できます。口座開設や面倒な登録も一切ありません。</p>
+
+        <div class="related-links">
+            <h2>関連ツール</h2>
+            <ul>
+                <li><a href="../csv/">CSV・Excel自動整形ツール</a></li>
+                <li><a href="../powa/">ポワ・サバ（ブラウザゲーム）</a></li>
+                <li><a href="../army/">Army・Rush（タワーディフェンス）</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 AutoCraft — 個人開発・業務改善ツール Lab</p>
+    </footer>
+
+</body>
+
+</html>
