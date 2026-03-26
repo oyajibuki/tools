@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyFocus | スケジュール管理＆木が育つ学習アプリ</title>
+  <meta name="description" content="学習スケジュールを設定して、勉強するほど木が育っていく集中支援アプリ。PWA対応でスマホのホーム画面から起動できます。">
+  <link rel="icon" type="image/png" href="https://oyajibuki.github.io/Study/icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://oyajibuki.github.io/Study/icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="StudyFocus">
+  <meta name="theme-color" content="#16a34a">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Noto Sans JP', sans-serif; }
+    .hero-bg {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    }
+    .sf-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: #0F172A;
+      letter-spacing: -0.02em;
+    }
+    .sf-logo span { color: #16a34a; }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .note-placeholder {
+      border: 2px dashed #86efac;
+      border-radius: 16px;
+      background: #f0fdf4;
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .tree-anim {
+      animation: sway 3s ease-in-out infinite;
+      display: inline-block;
+    }
+    @keyframes sway {
+      0%,100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+  </style>
+</head>
+<body class="text-gray-800 antialiased">
+
+  <!-- ========== Header ========== -->
+  <header class="bg-white shadow-sm fixed w-full z-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl tree-anim">🌱</span>
+        <span class="sf-logo">Study<span>Focus</span></span>
+      </div>
+      <nav class="flex items-center gap-3">
+        <a href="../" class="text-sm text-gray-500 hover:text-gray-700 transition">← ツール一覧</a>
+        <a href="https://oyajibuki.github.io/Study/"
+           target="_blank"
+           class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-full text-sm font-medium transition duration-300">
+          無料で使う
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========== Hero ========== -->
+  <section class="hero-bg pt-32 pb-20 lg:pt-40 lg:pb-28 border-b border-green-100">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
+
+      <div class="inline-flex items-center gap-2 bg-green-100 text-green-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-6">
+        <span>🌱</span> 勉強するたびに木が育つ
+      </div>
+
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+        学習スケジュールを立てて、<br>
+        <span class="text-green-600">木を育てながら集中。</span>
+      </h1>
+
+      <p class="text-lg text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+        やることを決めて、集中して勉強する。<br>
+        学習時間が増えるほど木が成長していく<br>
+        シンプルな学習サポートアプリです。
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="https://oyajibuki.github.io/Study/"
+           target="_blank"
+           class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-4 rounded-xl text-lg shadow-lg transition duration-300">
+          🌱 無料で使ってみる
+        </a>
+        <a href="../"
+           class="bg-white hover:bg-gray-50 text-gray-700 font-semibold px-8 py-4 rounded-xl text-lg border border-gray-200 shadow transition duration-300">
+          ← ツール一覧に戻る
+        </a>
+      </div>
+
+      <!-- PWAバッジ -->
+      <div class="mt-8 flex flex-wrap justify-center gap-3 text-sm text-gray-500">
+        <span class="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">✅ インストール不要</span>
+        <span class="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">📱 ホーム画面に追加可（PWA）</span>
+        <span class="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-full border border-gray-200 shadow-sm">🆓 完全無料</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Features ========== -->
+  <section class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+
+      <div class="text-center mb-14">
+        <h2 class="text-3xl font-bold text-gray-900 mb-3">StudyFocus の機能</h2>
+        <p class="text-gray-500">シンプルな設計で、学習習慣を続けやすく。</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+
+        <div class="flex gap-4 p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+          <div class="feature-icon bg-green-100">📅</div>
+          <div>
+            <h3 class="font-bold text-lg text-gray-900 mb-1">学習スケジュールを設定</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">科目・教材・目標時間を事前に設定。「今日は何をどれだけやるか」を明確にしてから学習を開始できます。</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+          <div class="feature-icon bg-emerald-100">🌳</div>
+          <div>
+            <h3 class="font-bold text-lg text-gray-900 mb-1">勉強中に木が育っていく</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">学習中はリアルタイムで木が成長。集中を続けるほど木が大きくなり、達成感が視覚的に得られます。</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+          <div class="feature-icon bg-blue-100">⏱️</div>
+          <div>
+            <h3 class="font-bold text-lg text-gray-900 mb-1">集中タイマー</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">学習時間を計測するシンプルなタイマー機能。中断すると木の成長が止まるので、集中力維持に効果的です。</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4 p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
+          <div class="feature-icon bg-purple-100">📱</div>
+          <div>
+            <h3 class="font-bold text-lg text-gray-900 mb-1">スマホのホーム画面に追加（PWA）</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Safariの「ホーム画面に追加」でアプリのように使えます。毎日の習慣化に最適です。</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== How to Use ========== -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl font-bold text-gray-900 mb-3">使い方</h2>
+        <p class="text-gray-500">3ステップで学習をスタートできます。</p>
+      </div>
+
+      <div class="space-y-6">
+        <div class="flex gap-5 items-start bg-white p-6 rounded-2xl shadow-sm">
+          <div class="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">1</div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">学習スケジュールを設定する</h3>
+            <p class="text-gray-500 text-sm">科目・教材・目標時間を入力します。今日やることを決めてから始めることで、集中力が高まります。</p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start bg-white p-6 rounded-2xl shadow-sm">
+          <div class="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">2</div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">学習スタート → 木が育ち始める</h3>
+            <p class="text-gray-500 text-sm">スタートボタンを押すと、タイマーが動き始め木が成長します。途中でやめると木が枯れるので、集中力が続きます。</p>
+          </div>
+        </div>
+        <div class="flex gap-5 items-start bg-white p-6 rounded-2xl shadow-sm">
+          <div class="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">3</div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">完了！木を育てながら習慣化</h3>
+            <p class="text-gray-500 text-sm">目標時間を達成すると木が完成。毎日続けることで森が広がっていきます。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Note Section ========== -->
+  <section class="py-20 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-3">📝 開発ノート</h2>
+        <p class="text-gray-500">制作背景や使い方の詳細はこちら（近日公開予定）</p>
+      </div>
+      <div class="note-placeholder">
+        <div class="text-4xl mb-4">📓</div>
+        <p class="text-green-600 font-semibold text-lg mb-2">note 記事 準備中</p>
+        <p class="text-gray-400 text-sm">開発背景・設計の考え方・使い方ガイドをnoteで公開予定です。<br>もうしばらくお待ちください。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
+  <section class="py-20 bg-green-600">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-3xl font-bold text-white mb-4">今日から学習習慣を始めよう</h2>
+      <p class="text-green-200 mb-10 text-lg">インストール不要・登録不要。ブラウザですぐに使えます。</p>
+      <a href="https://oyajibuki.github.io/Study/"
+         target="_blank"
+         class="inline-block bg-white hover:bg-gray-50 text-green-600 font-bold px-10 py-4 rounded-xl text-lg shadow-lg transition duration-300">
+        🌱 StudyFocus を開く（無料）
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== Footer ========== -->
+  <footer class="bg-gray-900 text-gray-400 text-center py-10 text-sm">
+    <p>© 2026 <a href="../" class="text-green-400 hover:underline">AutoCraft</a> — 個人開発ツール集</p>
+    <p class="mt-1 text-xs opacity-60">StudyFocus — 学習スケジュール＆育成アプリ</p>
+  </footer>
+
+</body>
+</html>
