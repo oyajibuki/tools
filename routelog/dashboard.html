@@ -235,6 +235,32 @@
     document.getElementById('refreshBtn').addEventListener('click', loadData);
 
     // ===================================================
+    // JSONP ヘルパー（GASのCORSリダイレクト問題を回避）
+    // ===================================================
+    function fetchJSONP(url) {
+      return new Promise((resolve, reject) => {
+        const cbName = 'rl_cb_' + Date.now();
+        const script = document.createElement('script');
+
+        const timer = setTimeout(() => {
+          cleanup();
+          reject(new Error('タイムアウト（10秒）。GASが正しくデプロイされているか確認してください。'));
+        }, 10000);
+
+        function cleanup() {
+          clearTimeout(timer);
+          delete window[cbName];
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }
+
+        window[cbName] = (data) => { cleanup(); resolve(data); };
+        script.onerror = () => { cleanup(); reject(new Error('スクリプト読み込みエラー。GAS URLを確認してください。')); };
+        script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cbName;
+        document.head.appendChild(script);
+      });
+    }
+
+    // ===================================================
     // データ取得
     // ===================================================
     async function loadData() {
@@ -250,9 +276,8 @@
 
       try {
         const dateParam = formatDate(currentDate);
-        const url = `${gasUrl}?date=${encodeURIComponent(dateParam)}`;
-        const res  = await fetch(url);
-        const data = await res.json();
+        const url  = `${gasUrl}?date=${encodeURIComponent(dateParam)}`;
+        const data = await fetchJSONP(url);
 
         if (data.error) throw new Error(data.error);
 
