@@ -6,6 +6,10 @@
   <title>RouteLog | 外回り移動記録アプリ｜GPS記録・経費CSV出力</title>
   <meta name="description" content="外回り営業の移動距離をGPSで簡単記録。車・電車・自転車・徒歩に対応。経費申請用CSVをワンタップ出力。スマホのホーム画面から起動できるPWAアプリ。">
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="apple-touch-icon" href="./favicon.svg">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="RouteLog">
+  <meta name="theme-color" content="#2563eb">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
   <style>
@@ -203,6 +207,45 @@
             <p class="text-gray-500 text-sm">右上の「CSV出力」を押すとExcelで開けるファイルをダウンロード。担当者名・日時・移動距離・手段・メモが記載されます。</p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Quick Links ========== -->
+  <section class="py-16 bg-gray-50 border-b border-gray-100">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">ページ一覧</h2>
+        <p class="text-gray-500 text-sm">ホーム画面に追加しておくと便利です</p>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-4">
+        <a href="https://oyajibuki.github.io/Route-tax/" target="_blank"
+           class="flex items-center gap-4 p-5 bg-white rounded-2xl border-2 border-blue-200 shadow-sm hover:shadow-md hover:border-blue-400 transition group">
+          <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white text-2xl flex-shrink-0">📍</div>
+          <div>
+            <p class="font-bold text-gray-900 group-hover:text-blue-700">RouteLog アプリ</p>
+            <p class="text-xs text-gray-400 mt-0.5">GPS記録・チェックイン</p>
+            <p class="text-xs text-blue-500 mt-1 font-semibold">🔵 メンバー用</p>
+          </div>
+        </a>
+        <a href="./presentation-1.html"
+           class="flex items-center gap-4 p-5 bg-white rounded-2xl border-2 border-orange-200 shadow-sm hover:shadow-md hover:border-orange-400 transition group">
+          <div class="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center text-white text-2xl flex-shrink-0">📊</div>
+          <div>
+            <p class="font-bold text-gray-900 group-hover:text-orange-600">営業チームダッシュボード</p>
+            <p class="text-xs text-gray-400 mt-0.5">活動状況・移動ログ</p>
+            <p class="text-xs text-orange-500 mt-1 font-semibold">🟠 チームリーダー用</p>
+          </div>
+        </a>
+        <a href="./presentation-2.html"
+           class="flex items-center gap-4 p-5 bg-white rounded-2xl border-2 border-purple-200 shadow-sm hover:shadow-md hover:border-purple-400 transition group">
+          <div class="w-12 h-12 bg-purple-600 rounded-xl flex items-center justify-center text-white text-2xl flex-shrink-0">🔥</div>
+          <div>
+            <p class="font-bold text-gray-900 group-hover:text-purple-700">KPI相関ダッシュボード</p>
+            <p class="text-xs text-gray-400 mt-0.5">OshiPay統計・KPI分析</p>
+            <p class="text-xs text-purple-500 mt-1 font-semibold">🟣 経営者用</p>
+          </div>
+        </a>
       </div>
     </div>
   </section>
