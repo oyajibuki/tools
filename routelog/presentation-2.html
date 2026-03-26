@@ -184,15 +184,25 @@
     });
     document.getElementById('refreshBtn').addEventListener('click', loadData);
 
-    // JSONP
-    function fetchJSONP(url) {
+    // fetch → JSONP フォールバック
+    async function gasGet(url) {
+      // 1st: fetch() を試す（GAS が CORS に対応している場合）
+      try {
+        const r = await Promise.race([
+          fetch(url),
+          new Promise((_,rej) => setTimeout(()=>rej(new Error('fetch timeout')), 15000))
+        ]);
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return await r.json();
+      } catch(_) {}
+      // 2nd: JSONP フォールバック
       return new Promise((resolve, reject) => {
-        const cb = 'rl_cb_' + Date.now();
+        const cb = 'rl_cb_' + Date.now() + '_' + Math.random().toString(36).slice(2);
         const s  = document.createElement('script');
-        const t  = setTimeout(() => { cleanup(); reject(new Error('タイムアウト')); }, 20000);
+        const t  = setTimeout(() => { cleanup(); reject(new Error('タイムアウト（GASが応答しない）')); }, 20000);
         function cleanup() { clearTimeout(t); delete window[cb]; if(s.parentNode) s.parentNode.removeChild(s); }
         window[cb] = d => { cleanup(); resolve(d); };
-        s.onerror  = () => { cleanup(); reject(new Error('読み込みエラー')); };
+        s.onerror  = () => { cleanup(); reject(new Error('GAS接続エラー（URLを確認してください）')); };
         s.src = url + (url.includes('?')?'&':'?') + 'callback=' + cb;
         document.head.appendChild(s);
       });
@@ -201,7 +211,7 @@
     async function loadData() {
       setRefreshing(true); showSkeleton();
       try {
-        const data = await fetchJSONP(`${GAS_URL}?date=${encodeURIComponent(fmtDate(currentDate))}`);
+        const data = await gasGet(`${GAS_URL}?date=${encodeURIComponent(fmtDate(currentDate))}`);
         if (data.error) throw new Error(data.error);
         renderDashboard(data);
         document.getElementById('lastUpdated').textContent = '最終更新: ' + new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
@@ -353,7 +363,7 @@
       document.getElementById('oshiLastUpdated').textContent = '読み込み中...';
       document.querySelectorAll('#oshiStatsGrid .oshipay-stat').forEach(el => el.classList.add('oshipay-loading'));
       try {
-        const data = await fetchJSONP(`${GAS_URL}?action=oshipay_stats`);
+        const data = await gasGet(`${GAS_URL}?action=oshipay_stats`);
         if (data.error) throw new Error(data.error);
         if (data.creators_total === undefined) throw new Error('GASを再デプロイしてください');
         renderOshiStats(data);
