@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RouteLog ダッシュボード｜勤怠・移動管理</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', 'Noto Sans JP', sans-serif; background: #f1f5f9; }
+    .card { background: #fff; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+    .status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .dot-green  { background: #10b981; }
+    .dot-gray   { background: #d1d5db; }
+    .dot-red    { background: #ef4444; }
+    .person-card { transition: transform 0.2s, box-shadow 0.2s; }
+    .person-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+    .skeleton { background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 8px; }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+    #setup-panel { border: 2px dashed #93c5fd; }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- ===== Header ===== -->
+  <header class="bg-blue-700 text-white shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">📍</span>
+        <div>
+          <p class="font-bold text-lg leading-tight">RouteLog</p>
+          <p class="text-blue-200 text-xs">管理者ダッシュボード</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="settingsBtn"
+          class="text-blue-200 hover:text-white text-sm flex items-center gap-1 px-3 py-1.5 rounded-lg hover:bg-blue-600 transition">
+          ⚙️ 設定
+        </button>
+        <a href="./" class="text-blue-200 hover:text-white text-sm px-3 py-1.5 rounded-lg hover:bg-blue-600 transition">
+          ← 戻る
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Setup Panel ===== -->
+  <div id="setup-panel" class="max-w-6xl mx-auto mt-6 mx-4 p-6 rounded-2xl bg-blue-50 hidden">
+    <p class="font-bold text-blue-800 mb-1 text-lg">⚙️ GAS URL を設定してください</p>
+    <p class="text-blue-600 text-sm mb-4">RouteLog の Google Apps Script デプロイ URL を入力してください。一度設定するとブラウザに保存されます。</p>
+    <div class="flex gap-2">
+      <input id="gasUrlInput" type="text" placeholder="https://script.google.com/macros/s/..."
+        class="flex-1 border border-blue-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-blue-500">
+      <button id="saveUrlBtn"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2 rounded-lg text-sm transition">
+        保存して接続
+      </button>
+    </div>
+    <p id="urlError" class="text-red-500 text-xs mt-2 hidden">URLを入力してください</p>
+  </div>
+
+  <!-- ===== Main Content ===== -->
+  <main class="max-w-6xl mx-auto px-4 py-6 space-y-6">
+
+    <!-- Date Navigator -->
+    <div class="card p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <button id="prevDay"
+          class="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-600 transition font-bold">
+          ‹
+        </button>
+        <div class="text-center">
+          <p id="dateDisplay" class="text-xl font-bold text-gray-800"></p>
+          <p id="dayOfWeek" class="text-xs text-gray-400"></p>
+        </div>
+        <button id="nextDay"
+          class="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-600 transition font-bold">
+          ›
+        </button>
+        <input id="datePicker" type="date" class="border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-600 focus:outline-none focus:border-blue-400 ml-2">
+      </div>
+      <div class="flex items-center gap-3">
+        <span id="lastUpdated" class="text-xs text-gray-400"></span>
+        <button id="refreshBtn"
+          class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-4 py-2 rounded-lg flex items-center gap-2 transition">
+          <span id="refreshIcon">🔄</span> 更新
+        </button>
+      </div>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="statsRow">
+      <div class="card p-4 text-center">
+        <p class="text-3xl font-bold text-blue-600" id="statMembers">—</p>
+        <p class="text-xs text-gray-400 mt-1">チームメンバー</p>
+      </div>
+      <div class="card p-4 text-center">
+        <p class="text-3xl font-bold text-green-500" id="statFullCheckin">—</p>
+        <p class="text-xs text-gray-400 mt-1">朝チェックイン済</p>
+      </div>
+      <div class="card p-4 text-center">
+        <p class="text-3xl font-bold text-indigo-500" id="statDistance">—</p>
+        <p class="text-xs text-gray-400 mt-1">チーム総移動距離(km)</p>
+      </div>
+      <div class="card p-4 text-center">
+        <p class="text-3xl font-bold text-orange-500" id="statLogs">—</p>
+        <p class="text-xs text-gray-400 mt-1">移動ポイント数</p>
+      </div>
+    </div>
+
+    <!-- Team Cards -->
+    <div>
+      <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">👥 チーム状況</h2>
+      <div id="teamCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- JS で生成 -->
+        <div class="skeleton h-44"></div>
+        <div class="skeleton h-44"></div>
+        <div class="skeleton h-44"></div>
+      </div>
+    </div>
+
+    <!-- No data -->
+    <div id="noDataMsg" class="hidden card p-10 text-center text-gray-400">
+      <p class="text-4xl mb-3">📭</p>
+      <p class="font-semibold">この日のデータはありません</p>
+      <p class="text-sm mt-1">別の日付を選択するか、RouteLogアプリから記録してください</p>
+    </div>
+
+    <!-- Movement Log -->
+    <div id="logSection">
+      <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">🗺️ 移動ログ</h2>
+      <div class="card overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-100">
+                <th class="text-left px-4 py-3 text-gray-500 font-semibold whitespace-nowrap">時刻</th>
+                <th class="text-left px-4 py-3 text-gray-500 font-semibold whitespace-nowrap">担当者</th>
+                <th class="text-left px-4 py-3 text-gray-500 font-semibold whitespace-nowrap">手段</th>
+                <th class="text-right px-4 py-3 text-gray-500 font-semibold whitespace-nowrap">距離</th>
+                <th class="text-left px-4 py-3 text-gray-500 font-semibold">メモ</th>
+              </tr>
+            </thead>
+            <tbody id="logTableBody">
+              <tr><td colspan="5" class="text-center py-8 text-gray-300">読み込み中...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // ===================================================
+    // 設定・定数
+    // ===================================================
+    const GAS_URL_KEY = 'routelog_gas_url';
+    const DAYS = ['日','月','火','水','木','金','土'];
+    const MODE_ICONS = { '車':'🚗', '電車':'🚃', '自転車':'🚲', '徒歩':'🚶', '-':'📍' };
+
+    let currentDate = new Date();
+    currentDate.setHours(0,0,0,0);
+
+    // ===================================================
+    // GAS URL 管理
+    // ===================================================
+    function getGasUrl() { return localStorage.getItem(GAS_URL_KEY) || ''; }
+
+    function saveGasUrl(url) {
+      localStorage.setItem(GAS_URL_KEY, url.trim());
+    }
+
+    document.getElementById('settingsBtn').addEventListener('click', () => {
+      const panel = document.getElementById('setup-panel');
+      panel.classList.toggle('hidden');
+      document.getElementById('gasUrlInput').value = getGasUrl();
+    });
+
+    document.getElementById('saveUrlBtn').addEventListener('click', () => {
+      const url = document.getElementById('gasUrlInput').value.trim();
+      if (!url) { document.getElementById('urlError').classList.remove('hidden'); return; }
+      document.getElementById('urlError').classList.add('hidden');
+      saveGasUrl(url);
+      document.getElementById('setup-panel').classList.add('hidden');
+      loadData();
+    });
+
+    // ===================================================
+    // 日付ナビゲーション
+    // ===================================================
+    function formatDate(d) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,'0');
+      const day = String(d.getDate()).padStart(2,'0');
+      return `${y}/${m}/${day}`;
+    }
+
+    function formatDateISO(d) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,'0');
+      const day = String(d.getDate()).padStart(2,'0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function updateDateDisplay() {
+      const dateStr = `${currentDate.getFullYear()}年${currentDate.getMonth()+1}月${currentDate.getDate()}日`;
+      const dow = DAYS[currentDate.getDay()];
+      const isToday = formatDate(currentDate) === formatDate(new Date());
+      document.getElementById('dateDisplay').textContent = dateStr;
+      document.getElementById('dayOfWeek').textContent = dow + '曜日' + (isToday ? ' （今日）' : '');
+      document.getElementById('datePicker').value = formatDateISO(currentDate);
+    }
+
+    document.getElementById('prevDay').addEventListener('click', () => {
+      currentDate.setDate(currentDate.getDate() - 1);
+      updateDateDisplay();
+      loadData();
+    });
+
+    document.getElementById('nextDay').addEventListener('click', () => {
+      currentDate.setDate(currentDate.getDate() + 1);
+      updateDateDisplay();
+      loadData();
+    });
+
+    document.getElementById('datePicker').addEventListener('change', (e) => {
+      const [y,m,d] = e.target.value.split('-').map(Number);
+      currentDate = new Date(y, m-1, d);
+      updateDateDisplay();
+      loadData();
+    });
+
+    document.getElementById('refreshBtn').addEventListener('click', loadData);
+
+    // ===================================================
+    // データ取得
+    // ===================================================
+    async function loadData() {
+      const gasUrl = getGasUrl();
+      if (!gasUrl) {
+        document.getElementById('setup-panel').classList.remove('hidden');
+        showSkeleton();
+        return;
+      }
+
+      setRefreshing(true);
+      showSkeleton();
+
+      try {
+        const dateParam = formatDate(currentDate);
+        const url = `${gasUrl}?date=${encodeURIComponent(dateParam)}`;
+        const res  = await fetch(url);
+        const data = await res.json();
+
+        if (data.error) throw new Error(data.error);
+
+        renderDashboard(data);
+        document.getElementById('lastUpdated').textContent =
+          '最終更新: ' + new Date().toLocaleTimeString('ja-JP', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+
+      } catch (err) {
+        console.error(err);
+        showError(err.message);
+      } finally {
+        setRefreshing(false);
+      }
+    }
+
+    function setRefreshing(flag) {
+      document.getElementById('refreshIcon').textContent = flag ? '⏳' : '🔄';
+      document.getElementById('refreshBtn').disabled = flag;
+    }
+
+    // ===================================================
+    // レンダリング
+    // ===================================================
+    function renderDashboard({ logs, checkins }) {
+      // --- 人物別に集計 ---
+      const people = {};
+
+      const addPerson = (name) => {
+        if (!people[name]) people[name] = {
+          name,
+          checkins: { 朝: null, 昼: null, 夜: null },
+          distance: 0,
+          points: 0,
+          logs: []
+        };
+      };
+
+      (checkins || []).forEach(c => {
+        const name = c['担当者'];
+        const type = c['種別(朝/昼/夜)'];
+        const time = String(c['チェックイン日時']).substring(11, 16);
+        addPerson(name);
+        if (type) people[name].checkins[type] = time;
+      });
+
+      (logs || []).forEach(l => {
+        const name = l['担当者'];
+        addPerson(name);
+        people[name].distance += parseFloat(l['移動距離(km)']) || 0;
+        if ((parseFloat(l['移動距離(km)']) || 0) > 0) people[name].points++;
+        people[name].logs.push(l);
+      });
+
+      const peopleList = Object.values(people).sort((a,b) => a.name.localeCompare(b.name, 'ja'));
+
+      // --- 統計 ---
+      const totalDist = peopleList.reduce((s,p) => s + p.distance, 0);
+      const morningChecked = peopleList.filter(p => p.checkins['朝']).length;
+      document.getElementById('statMembers').textContent   = peopleList.length;
+      document.getElementById('statFullCheckin').textContent = morningChecked;
+      document.getElementById('statDistance').textContent  = totalDist.toFixed(1);
+      document.getElementById('statLogs').textContent      = (logs||[]).length;
+
+      // --- チームカード ---
+      if (peopleList.length === 0) {
+        document.getElementById('teamCards').innerHTML = '';
+        document.getElementById('noDataMsg').classList.remove('hidden');
+        document.getElementById('logSection').classList.add('hidden');
+        return;
+      }
+      document.getElementById('noDataMsg').classList.add('hidden');
+      document.getElementById('logSection').classList.remove('hidden');
+
+      document.getElementById('teamCards').innerHTML = peopleList.map(p => buildPersonCard(p)).join('');
+
+      // --- 移動ログテーブル ---
+      const allLogs = [...(logs||[])].sort((a,b) => String(a['記録日時']).localeCompare(String(b['記録日時'])));
+
+      if (allLogs.length === 0) {
+        document.getElementById('logTableBody').innerHTML =
+          '<tr><td colspan="5" class="text-center py-8 text-gray-300">この日の移動ログはありません</td></tr>';
+      } else {
+        document.getElementById('logTableBody').innerHTML = allLogs.map(l => {
+          const time = String(l['記録日時']).substring(11, 16);
+          const mode = l['移動手段'] || '-';
+          const icon = MODE_ICONS[mode] || '📍';
+          const dist = parseFloat(l['移動距離(km)']) || 0;
+          const distStr = dist > 0
+            ? `<span class="font-bold text-blue-600">+${dist.toFixed(2)}</span>`
+            : `<span class="text-gray-400">スタート</span>`;
+          return `
+            <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
+              <td class="px-4 py-3 text-gray-500 whitespace-nowrap">${time}</td>
+              <td class="px-4 py-3 font-medium whitespace-nowrap">${l['担当者'] || ''}</td>
+              <td class="px-4 py-3 whitespace-nowrap">${icon} ${mode}</td>
+              <td class="px-4 py-3 text-right whitespace-nowrap">${distStr}</td>
+              <td class="px-4 py-3 text-gray-500 text-xs">${l['メモ'] || ''}</td>
+            </tr>`;
+        }).join('');
+      }
+    }
+
+    function buildPersonCard(p) {
+      const checkinRows = [
+        { key: '朝', icon: '🌅', label: '朝' },
+        { key: '昼', icon: '☀️', label: '昼' },
+        { key: '夜', icon: '🌙', label: '夜' },
+      ].map(({ key, icon, label }) => {
+        const time = p.checkins[key];
+        const dot  = time
+          ? '<span class="status-dot dot-green"></span>'
+          : '<span class="status-dot dot-gray"></span>';
+        const timeStr = time
+          ? `<span class="font-bold text-gray-800">${time}</span>`
+          : `<span class="text-gray-300">——</span>`;
+        return `
+          <div class="flex items-center justify-between text-sm py-1">
+            <div class="flex items-center gap-2">${dot}<span class="text-gray-500">${icon} ${label}</span></div>
+            ${timeStr}
+          </div>`;
+      }).join('');
+
+      const allChecked = p.checkins['朝'] && p.checkins['昼'] && p.checkins['夜'];
+      const morningOk  = p.checkins['朝'];
+      const badgeColor = allChecked ? 'bg-green-100 text-green-700'
+                       : morningOk  ? 'bg-yellow-100 text-yellow-700'
+                       : 'bg-red-100 text-red-600';
+      const badgeText  = allChecked ? '✅ 全完了' : morningOk ? '🌅 朝のみ' : '❌ 未チェックイン';
+
+      return `
+        <div class="card person-card p-5">
+          <div class="flex items-center justify-between mb-3">
+            <p class="font-bold text-gray-800 text-base">${p.name}</p>
+            <span class="badge ${badgeColor}">${badgeText}</span>
+          </div>
+          <div class="border-t border-gray-100 pt-3 mb-3">
+            ${checkinRows}
+          </div>
+          <div class="border-t border-gray-100 pt-3 flex items-center justify-between">
+            <div class="flex items-center gap-1.5 text-blue-600">
+              <span>📍</span>
+              <span class="font-bold text-lg">${p.distance.toFixed(1)}</span>
+              <span class="text-xs text-gray-400">km</span>
+            </div>
+            <span class="text-xs text-gray-400">${p.points} 地点</span>
+          </div>
+        </div>`;
+    }
+
+    function showSkeleton() {
+      document.getElementById('teamCards').innerHTML = `
+        <div class="skeleton h-44"></div>
+        <div class="skeleton h-44"></div>
+        <div class="skeleton h-44"></div>`;
+      document.getElementById('logTableBody').innerHTML =
+        '<tr><td colspan="5" class="text-center py-8 text-gray-300">読み込み中...</td></tr>';
+      document.getElementById('statMembers').textContent   = '—';
+      document.getElementById('statFullCheckin').textContent = '—';
+      document.getElementById('statDistance').textContent  = '—';
+      document.getElementById('statLogs').textContent      = '—';
+      document.getElementById('noDataMsg').classList.add('hidden');
+      document.getElementById('logSection').classList.remove('hidden');
+    }
+
+    function showError(msg) {
+      document.getElementById('teamCards').innerHTML = `
+        <div class="col-span-3 card p-8 text-center text-red-500">
+          <p class="text-3xl mb-2">⚠️</p>
+          <p class="font-bold">データ取得エラー</p>
+          <p class="text-xs mt-1 text-gray-400">${msg}</p>
+          <p class="text-xs mt-2 text-gray-400">GAS URLが正しいか、GASが正しく再デプロイされているか確認してください</p>
+        </div>`;
+    }
+
+    // ===================================================
+    // 初期化
+    // ===================================================
+    updateDateDisplay();
+
+    if (!getGasUrl()) {
+      document.getElementById('setup-panel').classList.remove('hidden');
+      showSkeleton();
+    } else {
+      loadData();
+    }
+
+    // 5分ごとに自動更新
+    setInterval(() => {
+      const today = new Date(); today.setHours(0,0,0,0);
+      if (formatDate(currentDate) === formatDate(today)) loadData();
+    }, 5 * 60 * 1000);
+  </script>
+
+</body>
+</html>
