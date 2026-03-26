@@ -111,7 +111,14 @@
 
     <!-- Team Cards -->
     <div>
-      <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">👥 チーム状況</h2>
+      <div class="flex items-center gap-3 mb-3">
+        <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider">👥 チーム状況</h2>
+        <span id="filterBadge" class="hidden items-center gap-1.5 bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">
+          <span id="filterName"></span>
+          <button onclick="clearFilter()" class="ml-1 text-blue-400 hover:text-blue-700 font-bold text-sm leading-none">✕</button>
+        </span>
+        <span id="filterHint" class="text-xs text-gray-400">名前をクリックでフィルター</span>
+      </div>
       <div id="teamCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <!-- JS で生成 -->
         <div class="skeleton h-44"></div>
@@ -159,6 +166,7 @@
     const GAS_URL_KEY = 'routelog_gas_url';
     const DAYS = ['日','月','火','水','木','金','土'];
     const MODE_ICONS = { '車':'🚗', '電車':'🚃', '自転車':'🚲', '徒歩':'🚶', '-':'📍' };
+    let activeFilter = null; // クリックしたメンバーでフィルター
 
     let currentDate = new Date();
     currentDate.setHours(0,0,0,0);
@@ -302,6 +310,7 @@
     // レンダリング
     // ===================================================
     function renderDashboard({ logs, checkins }) {
+      window._lastData = { logs, checkins }; // フィルター再描画用キャッシュ
       // --- 人物別に集計 ---
       const people = {};
 
@@ -354,7 +363,9 @@
       document.getElementById('teamCards').innerHTML = peopleList.map(p => buildPersonCard(p)).join('');
 
       // --- 移動ログテーブル ---
-      const allLogs = [...(logs||[])].sort((a,b) => String(a['記録日時']).localeCompare(String(b['記録日時'])));
+      const allLogs = [...(logs||[])]
+        .filter(l => !activeFilter || l['担当者'] === activeFilter)
+        .sort((a,b) => String(a['記録日時']).localeCompare(String(b['記録日時'])));
 
       if (allLogs.length === 0) {
         document.getElementById('logTableBody').innerHTML =
@@ -407,8 +418,13 @@
                        : 'bg-red-100 text-red-600';
       const badgeText  = allChecked ? '✅ 全完了' : morningOk ? '🌅 朝のみ' : '❌ 未チェックイン';
 
+      const isActive  = activeFilter === p.name;
+      const cardStyle = isActive
+        ? 'ring-2 ring-blue-500 bg-blue-50'
+        : 'hover:ring-2 hover:ring-blue-200';
+
       return `
-        <div class="card person-card p-5">
+        <div class="card person-card p-5 cursor-pointer ${cardStyle}" onclick="toggleFilter('${p.name.replace(/'/g,"\\'")}')">
           <div class="flex items-center justify-between mb-3">
             <p class="font-bold text-gray-800 text-base">${p.name}</p>
             <span class="badge ${badgeColor}">${badgeText}</span>
@@ -450,6 +466,37 @@
           <p class="text-xs mt-1 text-gray-400">${msg}</p>
           <p class="text-xs mt-2 text-gray-400">GAS URLが正しいか、GASが正しく再デプロイされているか確認してください</p>
         </div>`;
+    }
+
+    // ===================================================
+    // フィルター操作
+    // ===================================================
+    function toggleFilter(name) {
+      activeFilter = (activeFilter === name) ? null : name;
+      updateFilterBadge();
+      // ログテーブルとカードだけ再描画（データ再取得なし）
+      if (window._lastData) renderDashboard(window._lastData);
+    }
+
+    function clearFilter() {
+      activeFilter = null;
+      updateFilterBadge();
+      if (window._lastData) renderDashboard(window._lastData);
+    }
+
+    function updateFilterBadge() {
+      const badge = document.getElementById('filterBadge');
+      const hint  = document.getElementById('filterHint');
+      if (activeFilter) {
+        document.getElementById('filterName').textContent = `📍 ${activeFilter} のみ表示`;
+        badge.classList.remove('hidden');
+        badge.classList.add('inline-flex');
+        hint.classList.add('hidden');
+      } else {
+        badge.classList.add('hidden');
+        badge.classList.remove('inline-flex');
+        hint.classList.remove('hidden');
+      }
     }
 
     // ===================================================
