@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RouteLog | OshiPay営業チーム 活動ダッシュボード</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', 'Noto Sans JP', sans-serif; background: #f1f5f9; }
+    .card { background: #fff; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+    .status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .dot-green { background: #10b981; }
+    .dot-gray  { background: #d1d5db; }
+    .person-card { transition: transform 0.2s, box-shadow 0.2s; }
+    .person-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+    .skeleton { background: linear-gradient(90deg,#f3f4f6 25%,#e5e7eb 50%,#f3f4f6 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 8px; }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-blue-700 text-white shadow-lg">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl">📍</span>
+        <div>
+          <p class="font-bold text-lg leading-tight">RouteLog</p>
+          <p class="text-blue-200 text-xs">OshiPay営業チーム 活動ダッシュボード</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <span id="lastUpdated" class="text-blue-200 text-xs hidden sm:block"></span>
+        <button id="refreshBtn" class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-lg text-sm font-bold transition">
+          <span id="refreshIcon">🔄</span> 更新
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6 space-y-6">
+
+    <!-- Date Navigation -->
+    <div class="card px-5 py-4 flex items-center gap-4 flex-wrap">
+      <button id="prevDay" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold transition">‹</button>
+      <div class="flex-1 min-w-0">
+        <p id="dateDisplay" class="text-xl font-bold text-gray-800"></p>
+        <p id="dayOfWeek"   class="text-xs text-gray-400"></p>
+      </div>
+      <input id="datePicker" type="date" class="border border-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
+      <button id="nextDay" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold transition">›</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div class="card p-4 text-center"><p class="text-3xl font-bold text-blue-600"  id="statMembers">—</p><p class="text-xs text-gray-400 mt-1">チームメンバー</p></div>
+      <div class="card p-4 text-center"><p class="text-3xl font-bold text-green-500" id="statCheckin">—</p><p class="text-xs text-gray-400 mt-1">朝チェックイン済</p></div>
+      <div class="card p-4 text-center"><p class="text-3xl font-bold text-indigo-500" id="statDistance">—</p><p class="text-xs text-gray-400 mt-1">チーム総移動距離(km)</p></div>
+      <div class="card p-4 text-center"><p class="text-3xl font-bold text-orange-500" id="statLogs">—</p><p class="text-xs text-gray-400 mt-1">移動ポイント数</p></div>
+    </div>
+
+    <!-- Team Cards -->
+    <div>
+      <div class="flex items-center gap-3 mb-3">
+        <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider">👥 チーム状況</h2>
+        <span id="filterBadge" class="hidden items-center gap-1.5 bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">
+          <span id="filterName"></span>
+          <button onclick="clearFilter()" class="ml-1 text-blue-400 hover:text-blue-700 font-bold text-sm">✕</button>
+        </span>
+        <span id="filterHint" class="text-xs text-gray-400">名前をクリックでフィルター</span>
+      </div>
+      <div id="teamCards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="skeleton h-44"></div><div class="skeleton h-44"></div><div class="skeleton h-44"></div>
+      </div>
+    </div>
+
+    <!-- No Data -->
+    <div id="noDataMsg" class="hidden card p-10 text-center text-gray-400">
+      <p class="text-4xl mb-3">📭</p>
+      <p class="font-semibold">この日のデータはありません</p>
+      <p class="text-sm mt-1">別の日付を選択するか、RouteLogアプリから記録してください</p>
+    </div>
+
+    <!-- Movement Log -->
+    <div id="logSection">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider">🗺️ 移動ログ</h2>
+      </div>
+      <div class="card overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-100">
+                <th class="text-left px-4 py-3 text-gray-500 font-semibold">時刻</th>
+                <th class="text-left px-4 py-3 text-gray-500 font-semibold">担当者</th>
+                <th class="text-left px-4 py-3 text-gray-500 font-semibold">手段</th>
+                <th class="text-right px-4 py-3 text-gray-500 font-semibold">距離</th>
+                <th class="text-left px-4 py-3 text-gray-500 font-semibold">メモ</th>
+              </tr>
+            </thead>
+            <tbody id="logTableBody">
+              <tr><td colspan="5" class="text-center py-8 text-gray-300">読み込み中...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const GAS_URL  = 'https://script.google.com/macros/s/AKfycbyCIOj0829frh8IsGlTQCF_LdqyeD21-myiQA-Hia6IovBfvvBzeogYfWyfNSu4OJGn/exec';
+    const DAYS     = ['日','月','火','水','木','金','土'];
+    const MODE_ICONS = { '車':'🚗', '電車':'🚃', '自転車':'🚲', '徒歩':'🚶', '-':'📍' };
+    let activeFilter = null;
+    let currentDate  = new Date(); currentDate.setHours(0,0,0,0);
+
+    // ── 日付 ──
+    function fmtDate(d) { return `${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`; }
+    function fmtISO(d)  { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+
+    function updateDateDisplay() {
+      const isToday = fmtDate(currentDate) === fmtDate(new Date());
+      document.getElementById('dateDisplay').textContent = `${currentDate.getFullYear()}年${currentDate.getMonth()+1}月${currentDate.getDate()}日`;
+      document.getElementById('dayOfWeek').textContent   = DAYS[currentDate.getDay()] + '曜日' + (isToday ? ' （今日）' : '');
+      document.getElementById('datePicker').value = fmtISO(currentDate);
+    }
+
+    document.getElementById('prevDay').addEventListener('click', () => { currentDate.setDate(currentDate.getDate()-1); updateDateDisplay(); loadData(); });
+    document.getElementById('nextDay').addEventListener('click', () => { currentDate.setDate(currentDate.getDate()+1); updateDateDisplay(); loadData(); });
+    document.getElementById('datePicker').addEventListener('change', e => {
+      const [y,m,d] = e.target.value.split('-').map(Number);
+      currentDate = new Date(y,m-1,d); updateDateDisplay(); loadData();
+    });
+    document.getElementById('refreshBtn').addEventListener('click', loadData);
+
+    // ── JSONP ──
+    function fetchJSONP(url) {
+      return new Promise((resolve, reject) => {
+        const cb = 'rl_cb_' + Date.now();
+        const s  = document.createElement('script');
+        const t  = setTimeout(() => { cleanup(); reject(new Error('タイムアウト')); }, 10000);
+        function cleanup() { clearTimeout(t); delete window[cb]; if (s.parentNode) s.parentNode.removeChild(s); }
+        window[cb] = d => { cleanup(); resolve(d); };
+        s.onerror  = () => { cleanup(); reject(new Error('読み込みエラー')); };
+        s.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cb;
+        document.head.appendChild(s);
+      });
+    }
+
+    // ── データ取得 ──
+    async function loadData() {
+      setRefreshing(true); showSkeleton();
+      try {
+        const data = await fetchJSONP(`${GAS_URL}?date=${encodeURIComponent(fmtDate(currentDate))}`);
+        if (data.error) throw new Error(data.error);
+        renderDashboard(data);
+        document.getElementById('lastUpdated').textContent = '最終更新: ' + new Date().toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+      } catch(err) {
+        showError(err.message);
+      } finally { setRefreshing(false); }
+    }
+
+    function setRefreshing(f) {
+      document.getElementById('refreshIcon').textContent = f ? '⏳' : '🔄';
+      document.getElementById('refreshBtn').disabled = f;
+    }
+
+    // ── レンダリング ──
+    function renderDashboard({ logs, checkins }) {
+      window._lastData = { logs, checkins };
+      const people = {};
+      const add = name => { if (!people[name]) people[name] = { name, checkins:{朝:null,昼:null,夜:null}, distance:0, points:0, logs:[] }; };
+
+      (checkins||[]).forEach(c => {
+        add(c['担当者']);
+        if (c['種別(朝/昼/夜)']) people[c['担当者']].checkins[c['種別(朝/昼/夜)']] = String(c['チェックイン日時']).substring(11,16);
+      });
+      (logs||[]).forEach(l => {
+        add(l['担当者']);
+        const d = parseFloat(l['移動距離(km)'])||0;
+        people[l['担当者']].distance += d;
+        if (d > 0) people[l['担当者']].points++;
+        people[l['担当者']].logs.push(l);
+      });
+
+      const list = Object.values(people).sort((a,b) => a.name.localeCompare(b.name,'ja'));
+
+      document.getElementById('statMembers').textContent  = list.length;
+      document.getElementById('statCheckin').textContent  = list.filter(p=>p.checkins['朝']).length;
+      document.getElementById('statDistance').textContent = list.reduce((s,p)=>s+p.distance,0).toFixed(1);
+      document.getElementById('statLogs').textContent     = (logs||[]).length;
+
+      if (list.length === 0) {
+        document.getElementById('teamCards').innerHTML = '';
+        document.getElementById('noDataMsg').classList.remove('hidden');
+        document.getElementById('logSection').classList.add('hidden');
+        return;
+      }
+      document.getElementById('noDataMsg').classList.add('hidden');
+      document.getElementById('logSection').classList.remove('hidden');
+      document.getElementById('teamCards').innerHTML = list.map(p => buildPersonCard(p)).join('');
+
+      const allLogs = [...(logs||[])].filter(l => !activeFilter || l['担当者']===activeFilter)
+        .sort((a,b) => String(a['記録日時']).localeCompare(String(b['記録日時'])));
+
+      document.getElementById('logTableBody').innerHTML = allLogs.length === 0
+        ? '<tr><td colspan="5" class="text-center py-8 text-gray-300">この日の移動ログはありません</td></tr>'
+        : allLogs.map(l => {
+            const time = String(l['記録日時']).substring(11,16);
+            const mode = l['移動手段']||'-';
+            const icon = MODE_ICONS[mode]||'📍';
+            const dist = parseFloat(l['移動距離(km)'])||0;
+            const distStr = dist>0 ? `<span class="font-bold text-blue-600">+${dist.toFixed(2)}</span>` : `<span class="text-gray-400">スタート</span>`;
+            return `<tr class="border-b border-gray-50 hover:bg-gray-50">
+              <td class="px-4 py-3 text-gray-500 whitespace-nowrap">${time}</td>
+              <td class="px-4 py-3 font-medium whitespace-nowrap">${l['担当者']||''}</td>
+              <td class="px-4 py-3 whitespace-nowrap">${icon} ${mode}</td>
+              <td class="px-4 py-3 text-right whitespace-nowrap">${distStr}</td>
+              <td class="px-4 py-3 text-gray-500 text-xs">${l['メモ']||''}</td>
+            </tr>`;
+          }).join('');
+    }
+
+    function buildPersonCard(p) {
+      const rows = ['朝','昼','夜'].map((k,i) => {
+        const icons = ['🌅','☀️','🌙'];
+        const time = p.checkins[k];
+        return `<div class="flex items-center justify-between text-sm py-1">
+          <div class="flex items-center gap-2">
+            <span class="status-dot ${time?'dot-green':'dot-gray'}"></span>
+            <span class="text-gray-500">${icons[i]} ${k}</span>
+          </div>
+          ${time ? `<span class="font-bold text-gray-800">${time}</span>` : `<span class="text-gray-300">——</span>`}
+        </div>`;
+      }).join('');
+
+      const allOk    = p.checkins['朝'] && p.checkins['昼'] && p.checkins['夜'];
+      const morningOk= p.checkins['朝'];
+      const badgeColor = allOk ? 'bg-green-100 text-green-700' : morningOk ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-600';
+      const badgeText  = allOk ? '✅ 全完了' : morningOk ? '🌅 朝のみ' : '❌ 未チェックイン';
+      const isActive   = activeFilter === p.name;
+      const ring       = isActive ? 'ring-2 ring-blue-500 bg-blue-50' : 'hover:ring-2 hover:ring-blue-200';
+
+      return `<div class="card person-card p-5 cursor-pointer ${ring}" onclick="toggleFilter('${p.name.replace(/'/g,"\\'")}')">
+        <div class="flex items-center justify-between mb-3">
+          <p class="font-bold text-gray-800">${p.name}</p>
+          <span class="badge ${badgeColor}">${badgeText}</span>
+        </div>
+        <div class="border-t border-gray-100 pt-3 mb-3">${rows}</div>
+        <div class="border-t border-gray-100 pt-3 flex items-center justify-between">
+          <div class="flex items-center gap-1.5 text-blue-600">
+            <span>📍</span><span class="font-bold text-lg">${p.distance.toFixed(1)}</span><span class="text-xs text-gray-400">km</span>
+          </div>
+          <span class="text-xs text-gray-400">${p.points} 地点</span>
+        </div>
+      </div>`;
+    }
+
+    function showSkeleton() {
+      document.getElementById('teamCards').innerHTML = '<div class="skeleton h-44"></div><div class="skeleton h-44"></div><div class="skeleton h-44"></div>';
+      document.getElementById('logTableBody').innerHTML = '<tr><td colspan="5" class="text-center py-8 text-gray-300">読み込み中...</td></tr>';
+      ['statMembers','statCheckin','statDistance','statLogs'].forEach(id => document.getElementById(id).textContent='—');
+      document.getElementById('noDataMsg').classList.add('hidden');
+      document.getElementById('logSection').classList.remove('hidden');
+    }
+
+    function showError(msg) {
+      document.getElementById('teamCards').innerHTML = `<div class="col-span-3 card p-8 text-center text-red-500"><p class="text-3xl mb-2">⚠️</p><p class="font-bold">データ取得エラー</p><p class="text-xs mt-1 text-gray-400">${msg}</p></div>`;
+    }
+
+    function toggleFilter(name) {
+      activeFilter = (activeFilter===name) ? null : name;
+      updateFilterBadge();
+      if (window._lastData) renderDashboard(window._lastData);
+    }
+    function clearFilter() { activeFilter=null; updateFilterBadge(); if(window._lastData) renderDashboard(window._lastData); }
+    function updateFilterBadge() {
+      const badge = document.getElementById('filterBadge');
+      const hint  = document.getElementById('filterHint');
+      if (activeFilter) {
+        document.getElementById('filterName').textContent = `📍 ${activeFilter} のみ表示`;
+        badge.classList.remove('hidden'); badge.classList.add('inline-flex'); hint.classList.add('hidden');
+      } else {
+        badge.classList.add('hidden'); badge.classList.remove('inline-flex'); hint.classList.remove('hidden');
+      }
+    }
+
+    // ── 初期化 ──
+    updateDateDisplay();
+    loadData();
+    setInterval(() => { if (fmtDate(currentDate)===fmtDate(new Date())) loadData(); }, 5*60*1000);
+  </script>
+
+</body>
+</html>
