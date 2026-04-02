@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="../img/favicon.png">
+  <title>TuneDrop｜30分で消えるSNS — 必要最低限で繋がる。</title>
+  <meta name="description" content="投稿が30分で自動削除される新感覚SNS。フォロワー数もいいね数もない。必要最低限で繋がる、気楽にポストできる場所。">
+
+  <!-- OGP -->
+  <meta property="og:title" content="TuneDrop｜30分で消えるSNS">
+  <meta property="og:description" content="必要最低限で繋がる。30分で消える、今の思い。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oyajibuki.github.io/tools/tunedrop/">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(160deg, #38bdf8 0%, #7dd3fc 40%, #bae6fd 80%, #e0f2fe 100%);
+      color: #fff;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.83rem;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .nav-logo:hover { opacity: 0.7; }
+    .nav-logo img { height: 26px; filter: brightness(0) invert(1); opacity: 0.8; }
+
+    .nav-back {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.83rem;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .nav-back:hover { opacity: 0.6; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 60px;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    }
+
+    .hero .tagline {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.9;
+      margin-bottom: 48px;
+    }
+
+    .hero-btn-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    .btn-open {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #4ade80;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(74, 222, 128, 0.4);
+      transition: all 0.2s ease;
+    }
+    .btn-open:hover {
+      background: #22c55e;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(74, 222, 128, 0.5);
+    }
+
+    .btn-note {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 15px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.4);
+      transition: all 0.2s ease;
+    }
+    .btn-note:hover {
+      background: rgba(255,255,255,0.35);
+    }
+
+    /* ── Features ── */
+    .features {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 36px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 20px;
+      padding: 28px 20px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.88);
+    }
+
+    .feature-card .icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #0c4a6e;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 0.83rem;
+      color: #1e5f8a;
+      line-height: 1.65;
+    }
+
+    /* ── Concept ── */
+    .concept {
+      max-width: 600px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+    }
+
+    .concept-box {
+      background: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 24px;
+      padding: 40px 32px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+    }
+
+    .concept-box p {
+      font-size: 1rem;
+      color: #1e5f8a;
+      line-height: 2;
+    }
+
+    .concept-box strong {
+      color: #0c4a6e;
+      font-weight: 700;
+    }
+
+    /* ── CTA Bottom ── */
+    .cta-bottom {
+      text-align: center;
+      padding: 0 24px 80px;
+    }
+
+    .cta-bottom p {
+      font-size: 0.88rem;
+      color: #1e5f8a;
+      margin-bottom: 28px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 0.8rem;
+      color: #1e5f8a;
+      border-top: 1px solid rgba(255,255,255,0.4);
+    }
+
+    footer a {
+      color: #1e5f8a;
+      text-decoration: none;
+    }
+    footer a:hover { color: #0c4a6e; }
+
+    @media (max-width: 600px) {
+      nav { padding: 14px 20px; }
+      .hero { padding-top: 60px; }
+      .hero h1 { font-size: 3rem; }
+      .concept-box { padding: 28px 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="../" class="nav-logo">
+      <img src="../img/logo.png" alt="AutoCraft">
+      AutoCraft Tools
+    </a>
+    <a href="../" class="nav-back">← ツール一覧</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>TuneDrop</h1>
+    <p class="tagline">
+      必要最低限で繋がる。<br>
+      30分で消える、今の思い。
+    </p>
+    <div class="hero-btn-group">
+      <a href="https://oyajibuki.github.io/TuneDrop/" class="btn-open" target="_blank" rel="noopener noreferrer">
+        アプリを開く
+      </a>
+      <a href="https://note.com/crisp_rue6588/n/nc330770b6640" class="btn-note" target="_blank" rel="noopener noreferrer">
+        📝 note記事を読む
+      </a>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <h2>TuneDropとは？</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="icon">⏱️</span>
+        <h3>30分で自動削除</h3>
+        <p>すべての投稿は30分後に消えます。デジタルな痕跡を残さず気楽につぶやける。</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">🚫</span>
+        <h3>いいね数・フォロワーなし</h3>
+        <p>数字に縛られない。今この瞬間の気持ちだけをシェアする場所。</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">🌬️</span>
+        <h3>SNS疲れを解消</h3>
+        <p>積み重なる過去の投稿や永遠に残るタイムラインのプレッシャーから解放。</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">🌐</span>
+        <h3>ブラウザですぐ使える</h3>
+        <p>インストール不要。スマホ・PC対応。LINEかGoogleでログインするだけ。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Concept -->
+  <div class="concept">
+    <div class="concept-box">
+      <p>
+        現代のSNSは<strong>息苦しい</strong>。<br>
+        フォロワー数、いいね数、蓄積し続ける過去の投稿…<br>
+        すべてがじわじわとプレッシャーになっていく。<br><br>
+        TuneDropは、そんな重さを手放すための場所。<br>
+        投稿は消える。記録は残らない。<br>
+        <strong>ただ、今この瞬間だけを共有する。</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- CTA Bottom -->
+  <section class="cta-bottom">
+    <p>登録不要 · 完全無料 · スマホ・PC対応</p>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:14px; max-width:340px; margin:0 auto;">
+      <a href="https://oyajibuki.github.io/TuneDrop/" class="btn-open" target="_blank" rel="noopener noreferrer">
+        アプリを開く
+      </a>
+      <a href="https://note.com/crisp_rue6588/n/nc330770b6640" class="btn-note" target="_blank" rel="noopener noreferrer">
+        📝 note記事を読む
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <a href="../">← AutoCraft ツール一覧に戻る</a>
+    &nbsp;·&nbsp;© 2026 AutoCraft
+  </footer>
+
+</body>
+</html>
