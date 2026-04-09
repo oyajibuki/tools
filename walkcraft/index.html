@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="../img/favicon.png">
+  <title>WalkCraft｜歩いて集めて街を作るリアル散歩RPG</title>
+  <meta name="description" content="歩くことで素材を集め、クラフトして拠点を発展させる位置情報連動ゲーム。マップ上で他プレイヤーとアイテム交換も。ブラウザで今すぐ遊べる無料RPG。">
+
+  <!-- OGP -->
+  <meta property="og:title" content="WalkCraft｜歩いて集めて街を作るリアル散歩RPG">
+  <meta property="og:description" content="歩くことで素材を集め、クラフトして拠点を発展させる位置情報連動ゲーム。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oyajibuki.github.io/tools/walkcraft/">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(160deg, #0f172a 0%, #1e3a2f 40%, #14532d 80%, #166534 100%);
+      color: #fff;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: rgba(0,0,0,0.25);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: rgba(255,255,255,0.75);
+      font-size: 0.83rem;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .nav-logo:hover { opacity: 0.7; }
+    .nav-logo img { height: 26px; filter: brightness(0) invert(1); opacity: 0.7; }
+
+    .nav-back {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.83rem;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .nav-back:hover { opacity: 0.6; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 60px;
+    }
+
+    .hero-emoji {
+      font-size: 4rem;
+      margin-bottom: 16px;
+      display: block;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.3);
+    }
+
+    .hero .tagline {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.9;
+      margin-bottom: 12px;
+    }
+
+    .hero .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 44px;
+    }
+
+    .badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.85);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-btn-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    .btn-open {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      box-shadow: 0 4px 24px rgba(74, 222, 128, 0.4);
+      transition: all 0.2s ease;
+    }
+    .btn-open:hover {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(74, 222, 128, 0.55);
+    }
+
+    .btn-note {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.9);
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 15px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.25);
+      transition: all 0.2s ease;
+    }
+    .btn-note:hover {
+      background: rgba(255,255,255,0.22);
+    }
+
+    /* ── How it works ── */
+    .how {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 24px 40px;
+    }
+
+    .how h2 {
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 36px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .step-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 28px 20px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s, background 0.2s;
+      position: relative;
+    }
+    .step-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.14);
+    }
+
+    .step-num {
+      display: inline-block;
+      background: linear-gradient(135deg, #4ade80, #22c55e);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      line-height: 22px;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .step-card .icon {
+      font-size: 2.2rem;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .step-card h3 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .step-card p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.65;
+    }
+
+    /* ── Features ── */
+    .features {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 20px 24px 60px;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 36px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 28px 20px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.14);
+    }
+
+    .feature-card .icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .feature-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #86efac;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.65;
+    }
+
+    /* ── Concept ── */
+    .concept {
+      max-width: 620px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+    }
+
+    .concept-box {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(134,239,172,0.3);
+      border-radius: 24px;
+      padding: 40px 32px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+    }
+
+    .concept-box p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.82);
+      line-height: 2;
+    }
+
+    .concept-box strong {
+      color: #86efac;
+      font-weight: 700;
+    }
+
+    /* ── Base preview ── */
+    .base-preview {
+      max-width: 720px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+    }
+
+    .base-preview h2 {
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 24px;
+    }
+
+    .base-timeline {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.2) transparent;
+    }
+
+    .base-item {
+      flex: 0 0 auto;
+      text-align: center;
+      padding: 16px 14px;
+      position: relative;
+    }
+
+    .base-item:not(:last-child)::after {
+      content: '→';
+      position: absolute;
+      right: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255,255,255,0.3);
+      font-size: 1rem;
+    }
+
+    .base-item .b-icon { font-size: 2rem; display: block; margin-bottom: 6px; }
+    .base-item .b-name { font-size: 0.72rem; color: rgba(255,255,255,0.7); font-weight: 600; }
+    .base-item .b-lv { font-size: 0.65rem; color: #4ade80; font-weight: 700; margin-bottom: 2px; }
+
+    /* ── CTA Bottom ── */
+    .cta-bottom {
+      text-align: center;
+      padding: 0 24px 80px;
+    }
+
+    .cta-bottom p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 28px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    footer a {
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+    }
+    footer a:hover { color: rgba(255,255,255,0.7); }
+
+    @media (max-width: 600px) {
+      nav { padding: 14px 20px; }
+      .hero { padding-top: 60px; }
+      .hero h1 { font-size: 3rem; }
+      .concept-box { padding: 28px 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="../" class="nav-logo">
+      <img src="../img/logo.png" alt="AutoCraft">
+      AutoCraft Tools
+    </a>
+    <a href="../" class="nav-back">← ツール一覧</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <span class="hero-emoji">🗺️</span>
+    <h1>WalkCraft</h1>
+    <p class="tagline">
+      歩くことで、世界は広がる。<br>
+      素材を集め、クラフトして、あなただけの街を築け。
+    </p>
+    <div class="badge-row">
+      <span class="badge">📍 位置情報ゲーム</span>
+      <span class="badge">🆓 基本無料</span>
+      <span class="badge">📱 ブラウザ対応</span>
+      <span class="badge">🤝 プレイヤー間交換</span>
+    </div>
+    <div class="hero-btn-group">
+      <a href="https://oyajibuki.github.io/WalkCraft/" class="btn-open" target="_blank" rel="noopener noreferrer">
+        🗺️ 今すぐ遊ぶ（無料）
+      </a>
+      <a href="#" class="btn-note" target="_blank" rel="noopener noreferrer">
+        📝 note記事を読む
+      </a>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how">
+    <h2>どんなゲーム？</h2>
+    <div class="steps">
+      <div class="step-card">
+        <span class="step-num">1</span>
+        <span class="icon">🚶</span>
+        <h3>歩いて素材ドロップ</h3>
+        <p>現実の地図を歩くと、木・石・鉄など100種以上の素材がランダムでドロップ。</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">2</span>
+        <span class="icon">⚒️</span>
+        <h3>クラフトで新アイテム</h3>
+        <p>集めた素材を組み合わせて、道具・食料・建材・乗り物など95種以上を制作。</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">3</span>
+        <span class="icon">🏗️</span>
+        <h3>拠点を建設・発展</h3>
+        <p>焚き火キャンプから始まり、メガロポリスへ。素材を納品してレベルアップ。</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">4</span>
+        <span class="icon">🤝</span>
+        <h3>全国プレイヤーと交換</h3>
+        <p>マップ上にアイテムを出品して他のプレイヤーと取引。ご当地素材は交換が鍵。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <h2>主な特徴</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="icon">🌍</span>
+        <h3>リアルGPS連動</h3>
+        <p>実際に歩いた距離・場所に基づいて素材がドロップ。散歩・通勤が冒険になる。</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">🎰</span>
+        <h3>4段階ガチャ</h3>
+        <p>コモン〜レジェンドまで4段階のレア度。古代のコアや妖精の粉など激レア素材も。</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">🏘️</span>
+        <h3>県ご当地素材</h3>
+        <p>北海道メロンから琉球ガラスまで47都道府県のご当地素材。高レベル攻略の鍵。</p>
+      </div>
+      <div class="feature-card">
+        <span class="icon">📡</span>
+        <h3>リアルタイム交換</h3>
+        <p>MapにGeoDrop出品。他プレイヤーの出品をリアルタイムで確認・取引できる。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Base timeline -->
+  <section class="base-preview">
+    <h2>拠点の成長ロードマップ</h2>
+    <div class="base-timeline">
+      <div class="base-item">
+        <span class="b-lv">Lv1〜</span>
+        <span class="b-icon">🔥</span>
+        <span class="b-name">焚き火キャンプ</span>
+      </div>
+      <div class="base-item">
+        <span class="b-lv">Lv2〜</span>
+        <span class="b-icon">⛺</span>
+        <span class="b-name">テント</span>
+      </div>
+      <div class="base-item">
+        <span class="b-lv">Lv3〜</span>
+        <span class="b-icon">🏕️</span>
+        <span class="b-name">丸太小屋</span>
+      </div>
+      <div class="base-item">
+        <span class="b-lv">Lv4〜</span>
+        <span class="b-icon">🏠</span>
+        <span class="b-name">レンガの家</span>
+      </div>
+      <div class="base-item">
+        <span class="b-lv">Lv5〜</span>
+        <span class="b-icon">⚙️</span>
+        <span class="b-name">鉄工所</span>
+      </div>
+      <div class="base-item">
+        <span class="b-lv">Lv6〜</span>
+        <span class="b-icon">🏭</span>
+        <span class="b-name">蒸気工場</span>
+      </div>
+      <div class="base-item">
+        <span class="b-lv">Lv7〜</span>
+        <span class="b-icon">🏛️</span>
+        <span class="b-name">研究施設</span>
+      </div>
+      <div class="base-item">
+        <span class="b-lv">Lv8〜</span>
+        <span class="b-icon">🌆</span>
+        <span class="b-name">メガロポリス</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Concept -->
+  <div class="concept">
+    <div class="concept-box">
+      <p>
+        毎日の散歩や通勤が、<strong>冒険になる</strong>。<br>
+        歩いた分だけ素材が増え、クラフトが進み、街が育つ。<br><br>
+        他のプレイヤーと素材を交換し、<br>
+        全国のご当地アイテムを集めて——<br>
+        <strong>あなただけのメガロポリスを完成させろ。</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- CTA Bottom -->
+  <section class="cta-bottom">
+    <p>アカウント登録不要で試し遊び · 基本無料 · スマホ・PC対応</p>
+    <div style="display:flex; flex-direction:column; align-items:center; gap:14px; max-width:340px; margin:0 auto;">
+      <a href="https://oyajibuki.github.io/WalkCraft/" class="btn-open" target="_blank" rel="noopener noreferrer">
+        🗺️ 今すぐ遊ぶ（無料）
+      </a>
+      <a href="#" class="btn-note" target="_blank" rel="noopener noreferrer">
+        📝 note記事を読む
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <a href="../">← AutoCraft ツール一覧に戻る</a>
+    &nbsp;·&nbsp;© 2026 AutoCraft
+  </footer>
+
+</body>
+</html>
