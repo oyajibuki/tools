@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VibeDiff | AIの変更を「言葉」で解読する差分解析ツール</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#6366f1',
+            secondary: '#4f46e5',
+            dark: '#1e293b',
+          },
+          fontFamily: {
+            sans: ['"Inter"', '"Noto Sans JP"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
+    .grad-text {
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+
+  <!-- ========== Header ========== -->
+  <header class="fixed w-full top-0 z-50 bg-white/70 backdrop-blur-lg border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">⚡</span>
+        <span class="text-xl font-black tracking-tighter text-slate-900">VibeDiff</span>
+      </div>
+      <nav>
+        <a
+          href="https://oyajibuki.github.io/diff/"
+          target="_blank"
+          class="bg-slate-900 hover:bg-slate-800 text-white px-6 py-2 rounded-lg font-bold transition duration-300">
+          無料で使う
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========== Hero Section ========== -->
+  <section class="pt-32 pb-20 lg:pt-48 lg:pb-32 bg-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="text-center">
+        <div class="inline-block px-4 py-1.5 mb-6 text-sm font-bold tracking-widest text-primary uppercase bg-indigo-50 rounded-full">
+          For AI Vibe Coders
+        </div>
+        <h1 class="text-5xl md:text-7xl font-black text-slate-900 mb-8 leading-[1.1] tracking-tight">
+          AIの変更を、<br><span class="grad-text">「言葉」で解読する。</span>
+        </h1>
+        <p class="text-xl text-slate-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+          AIエンジニアのための通訳ツール。CursorやChatGPTによるコード変更を、<br class="hidden md:block">
+          「役割」と「ロジック」の意味レベルで瞬時に翻訳。バイブコーディングの不安を解消します。
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a
+            href="https://oyajibuki.github.io/diff/"
+            target="_blank"
+            class="bg-primary hover:bg-secondary text-white text-lg font-bold py-4 px-12 rounded-xl shadow-2xl shadow-indigo-200 transition duration-300 transform hover:-translate-y-1">
+            差分を解析する（無料）
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Features ========== -->
+  <section class="py-24 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+          <div class="text-3xl mb-4">📂</div>
+          <h3 class="text-lg font-bold mb-3">フォルダ一括比較</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            プロジェクト全体の変更箇所を一撃でリストアップ。
+          </p>
+        </div>
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+          <div class="text-3xl mb-4">🗣️</div>
+          <h3 class="text-lg font-bold mb-3">ロジック翻訳</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            「ここが何をするパーツか」をAIエンジニアに分かりやすく解説。
+          </p>
+        </div>
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+          <div class="text-3xl mb-4">🔍</div>
+          <h3 class="text-lg font-bold mb-3">スキップ済み解析</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            巨大なライブラリや一時ファイルは賢くスキップし、本質のみを抽出。
+          </p>
+        </div>
+        <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+          <div class="text-3xl mb-4">🔒</div>
+          <h3 class="text-lg font-bold mb-3">完全ローカル動作</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            ファイルはサーバーへ送信されません。あなたのブラウザ内だけで完結。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
+  <section class="py-24 bg-slate-900 text-white text-center">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl md:text-5xl font-black mb-8">あなたのバイブスを、確信に変える。</h2>
+      <a
+        href="https://oyajibuki.github.io/diff/"
+        target="_blank"
+        class="inline-block bg-white text-slate-900 hover:bg-slate-100 text-xl font-bold py-5 px-12 rounded-xl shadow-2xl transition duration-300">
+        VibeDiffを今すぐ使う
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== Footer ========== -->
+  <footer class="bg-white border-t border-slate-200 py-12 text-slate-500 text-sm text-center">
+    <div class="max-w-7xl mx-auto px-4">
+      <p class="mb-2 font-bold text-slate-900 tracking-tighter">VibeDiff — The Logic Interpreter</p>
+      <p>&copy; 2026 AutoCraft. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>これ俺の！ (ItsMe) | デジタル証明・所有権記録アプリ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@700;800&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#6366f1',
+            secondary: '#4f46e5',
+            accent: '#f43f5e',
+          },
+          fontFamily: {
+            sans: ['"Noto Sans JP"', 'sans-serif'],
+            brand: ['"Outfit"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Noto Sans JP', sans-serif; }
+    .hero-bg {
+      background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+    }
+    .im-logo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: #1e1b4b;
+      letter-spacing: -0.02em;
+    }
+    .im-logo span {
+      color: #6366f1;
+    }
+  </style>
+</head>
+<body class="text-slate-900 antialiased">
+
+  <!-- ========== Header ========== -->
+  <header class="bg-white/80 backdrop-blur-md shadow-sm fixed w-full z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">🛡️</span>
+        <span class="im-logo">Its<span>Me</span></span>
+      </div>
+      <nav>
+        <a
+          href="https://its-me-indol.vercel.app/"
+          target="_blank"
+          class="bg-primary hover:bg-secondary text-white px-6 py-2 rounded-full font-bold transition duration-300">
+          今すぐ証明する
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========== Hero Section ========== -->
+  <section class="hero-bg pt-32 pb-20 lg:pt-40 lg:pb-32">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-6xl font-black text-slate-900 mb-6 leading-tight tracking-tight">
+        「これ、俺の！」を、<br><span class="text-primary">もっと公式に。もっと簡単に。</span>
+      </h1>
+      <p class="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+        SNSの投稿、デジタルアート、独自のアイデア。<br>
+        誰でも簡単に「所有権」を記録し、デジタル上でのアイデンティティを証明。
+        ブロックチェーンのような信頼性を、アプリ一つで提供します。
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a
+          href="https://its-me-indol.vercel.app/"
+          target="_blank"
+          class="bg-primary hover:bg-secondary text-white text-lg font-bold py-4 px-10 rounded-full shadow-xl shadow-indigo-200 transition duration-300 transform hover:-translate-y-1">
+          アプリを開く（完全無料）
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Features ========== -->
+  <section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-3 gap-12">
+        <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-xl transition duration-500">
+          <div class="w-14 h-14 bg-indigo-100 text-primary rounded-2xl flex items-center justify-center mb-6 text-2xl">
+            ✍️
+          </div>
+          <h3 class="text-xl font-bold mb-4">簡単デジタル署名</h3>
+          <p class="text-slate-600 leading-relaxed">
+            わずかな操作でコンテンツにデジタル署名を付与。あなたの作品であることを永遠に記録します。
+          </p>
+        </div>
+        <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-xl transition duration-500">
+          <div class="w-14 h-14 bg-rose-100 text-accent rounded-2xl flex items-center justify-center mb-6 text-2xl">
+            💎
+          </div>
+          <h3 class="text-xl font-bold mb-4">所有権の可視化</h3>
+          <p class="text-slate-600 leading-relaxed">
+            SNSの投稿URLを紐づけるだけで、誰がオリジナルの作成者かを誰でも確認できるようになります。
+          </p>
+        </div>
+        <div class="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:shadow-xl transition duration-500">
+          <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 text-2xl">
+            ⛓️
+          </div>
+          <h3 class="text-xl font-bold mb-4">偽造不能な記録</h3>
+          <p class="text-slate-600 leading-relaxed">
+            一度記録されたデータは改ざんが困難な形式で保存され、あなたの権利を守り続けます。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
+  <section class="py-24 bg-slate-900 text-white text-center">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-4xl font-black mb-8">あなたのデジタル財産を、今日から守る。</h2>
+      <a
+        href="https://its-me-indol.vercel.app/"
+        target="_blank"
+        class="inline-block bg-white text-slate-900 hover:bg-slate-100 text-xl font-black py-5 px-12 rounded-full shadow-2xl transition duration-300">
+        無料で今すぐ始める
+      </a>
+      <p class="mt-8 text-slate-400">会員登録・アプリのインストールは不要です。</p>
+    </div>
+  </section>
+
+  <!-- ========== Footer ========== -->
+  <footer class="bg-white border-t border-slate-200 py-12 text-slate-500 text-sm text-center">
+    <div class="max-w-7xl mx-auto px-4">
+      <p class="mb-4 font-brand font-bold text-slate-900">ItsMe — Digital Ownership App</p>
+      <p>&copy; 2026 AutoCraft. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
