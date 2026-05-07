@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="../img/favicon.png">
+  <title>TrashQuest｜海岸ゴミ拾いフィットネスアプリ</title>
+  <meta name="description" content="海岸のゴミ拾いを「クエスト」に変えるフィットネスアプリ。地球を綺麗にしながら、自分も健康になれる新しい社会貢献体験。ブラウザで今すぐ始められる無料ツール。">
+
+  <!-- OGP -->
+  <meta property="og:title" content="TrashQuest｜海岸ゴミ拾いフィットネスアプリ">
+  <meta property="og:description" content="海岸のゴミ拾いをクエスト化。運動しながら海を綺麗にしよう。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oyajibuki.github.io/tools/trushquest/">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(160deg, #0c4a6e 0%, #075985 40%, #0891b2 80%, #06b6d4 100%);
+      color: #fff;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: rgba(0,0,0,0.25);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: rgba(255,255,255,0.75);
+      font-size: 0.83rem;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .nav-logo:hover { opacity: 0.7; }
+    .nav-logo img { height: 26px; filter: brightness(0) invert(1); opacity: 0.7; }
+
+    .nav-back {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.83rem;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .nav-back:hover { opacity: 0.6; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 60px;
+    }
+
+    .hero-emoji {
+      font-size: 4rem;
+      margin-bottom: 16px;
+      display: block;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 10vw, 5rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.3);
+    }
+
+    .hero .tagline {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.9;
+      margin-bottom: 12px;
+    }
+
+    .hero .badge-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 44px;
+    }
+
+    .badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.9);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 9999px;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-btn-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    .btn-open {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      box-shadow: 0 4px 24px rgba(14, 165, 233, 0.4);
+      transition: all 0.2s ease;
+    }
+    .btn-open:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(14, 165, 233, 0.55);
+      filter: brightness(1.1);
+    }
+
+    .btn-note {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.9);
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 15px 32px;
+      border-radius: 9999px;
+      text-decoration: none;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,0.25);
+      transition: all 0.2s ease;
+    }
+    .btn-note:hover {
+      background: rgba(255,255,255,0.22);
+    }
+
+    /* ── How it works ── */
+    .how {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 60px 24px 40px;
+    }
+
+    .how h2 {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 36px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .step-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 24px;
+      padding: 32px 24px;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s;
+    }
+    .step-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.12);
+    }
+
+    .step-num {
+      display: inline-block;
+      background: #0ea5e9;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      line-height: 24px;
+      margin-bottom: 16px;
+    }
+
+    .step-card .icon {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .step-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .step-card p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.7;
+    }
+
+    /* ── Concept ── */
+    .concept {
+      max-width: 620px;
+      margin: 40px auto 80px;
+      padding: 0 24px;
+    }
+
+    .concept-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      border-radius: 28px;
+      padding: 40px 32px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .concept-box p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.85);
+      line-height: 2.1;
+    }
+
+    .concept-box strong {
+      color: #38bdf8;
+      font-weight: 700;
+    }
+
+    /* ── CTA Bottom ── */
+    .cta-bottom {
+      text-align: center;
+      padding: 0 24px 100px;
+    }
+
+    .cta-bottom p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 32px;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 32px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    footer a {
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+    }
+    footer a:hover { color: rgba(255,255,255,0.7); }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.8rem; }
+      .nav-logo span { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="../" class="nav-logo">
+      <img src="../img/logo.png" alt="AutoCraft">
+      <span>AutoCraft Tools</span>
+    </a>
+    <a href="../" class="nav-back">← ツール一覧</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <span class="hero-emoji">🌊</span>
+    <h1>TrashQuest</h1>
+    <p class="tagline">
+      海岸のゴミを拾って、クエストをクリア。<br>
+      地球を綺麗にしながら、自分も健康になれるフィットネス。
+    </p>
+    <div class="badge-row">
+      <span class="badge">📍 神奈川エリア特化</span>
+      <span class="badge">🏃 フィットネス</span>
+      <span class="badge">🆓 基本無料</span>
+      <span class="badge">📷 成果報告システム</span>
+    </div>
+
+    <div class="hero-btn-group">
+      <a href="https://trush-quest.vercel.app/" class="btn-open" target="_blank" rel="noopener noreferrer">
+        🌊 アプリを起動する（無料）
+      </a>
+      <a href="https://note.com/crisp_rue6588/n/trashquest_dummy" class="btn-note" target="_blank" rel="noopener noreferrer">
+        📝 note記事を読む
+      </a>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how">
+    <h2>遊びかた</h2>
+    <div class="steps">
+      <div class="step-card">
+        <span class="step-num">1</span>
+        <span class="icon">🔍</span>
+        <h3>クエストを探す</h3>
+        <p>あなたの近くにある海岸クエストを選択。江ノ島、茅ヶ崎、大磯など多数用意。</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">2</span>
+        <span class="icon">🚶</span>
+        <h3>海岸へ向かう</h3>
+        <p>現地のチェックインポイントへ移動。散歩やジョギングを兼ねて健康的に。</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">3</span>
+        <span class="icon">♻️</span>
+        <h3>ゴミ拾いを実行</h3>
+        <p>安全に注意して海岸を清掃。あなたの行動が直接、環境保護に繋がります。</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num">4</span>
+        <span class="icon">🏅</span>
+        <h3>成果を報告</h3>
+        <p>拾ったゴミを撮影して完了報告。経験値を獲得し、称号をアップグレード！</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Concept -->
+  <div class="concept">
+    <div class="concept-box">
+      <p>
+        ただのゴミ拾いを、<strong>冒険に変える</strong>。<br>
+        一人の小さな一歩が、美しい海岸を取り戻す大きな力に。<br><br>
+        散歩やフィットネスのついでに、<br>
+        地球への貢献を<strong>「遊び」として楽しもう。</strong><br>
+        <strong>目指せ、海岸の守護者。</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- CTA Bottom -->
+  <section class="cta-bottom">
+    <p>基本無料 · スマホ対応 · インストール不要 · 神奈川県内順次拡大中</p>
+    <div class="hero-btn-group">
+      <a href="https://trush-quest.vercel.app/" class="btn-open" target="_blank" rel="noopener noreferrer">
+        🌊 今すぐゴミ拾いクエストを始める
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <a href="../">← AutoCraft ツール一覧に戻る</a>
+    &nbsp;·&nbsp;© 2026 AutoCraft
+  </footer>
+
+  <script>
+  // アクセスカウンター
+  fetch("https://script.google.com/macros/s/AKfycbznxYkj5ixnK_pHkGR8LUYhEYdvSYpaiF3x4LaZy964wlu068oak1X1uuIiyqCEtGWF/exec?page=TrashQuest")
+    .catch(() => {});
+  </script>
+
+</body>
+</html>
