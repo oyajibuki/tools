@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WidgetCraft | Notion & Link-in-Bio Interactive Widgets</title>
   
-  <!-- Google Fonts: Plus Jakarta Sans (SaaS style) & Noto Sans JP -->
+  <!-- Google Fonts: Plus Jakarta Sans & Noto Sans JP -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -371,7 +371,9 @@
       box-sizing: border-box;
     }
 
-    /* Remove overlapping display: block trigger */
+    body.embed-mode .widget-container {
+      display: block;
+    }
 
     /* Themes application styles for widgets */
     .theme-light {
@@ -714,7 +716,7 @@
         <select id="widget-select" class="select-input" onchange="updateWidgetType()">
           <option value="goal">🎯 目標達成メーター (Goal)</option>
           <option value="pomodoro">⏱️ ポモドーロ・タイマー</option>
-          <option value="poll">💬 3択クイック投票 (Poll)</option>
+          <option value="poll">💬 選択投票 (Poll)</option>
         </select>
       </div>
 
@@ -785,16 +787,11 @@
           <input type="text" id="poll-question-input" class="text-input" value="このページは役立ちましたか？" oninput="updatePreview()" />
         </div>
         <div class="control-group">
-          <label class="control-label" for="poll-opt1-input">選択肢 1</label>
-          <input type="text" id="poll-opt1-input" class="text-input" value="👍 はい、とても！" oninput="updatePreview()" />
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="poll-opt2-input">選択肢 2</label>
-          <input type="text" id="poll-opt2-input" class="text-input" value="🤔 普通かな" oninput="updatePreview()" />
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="poll-opt3-input">選択肢 3</label>
-          <input type="text" id="poll-opt3-input" class="text-input" value="💤 あまり..." oninput="updatePreview()" />
+          <label class="control-label">選択肢</label>
+          <div id="poll-options-container" style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Dynamic inputs go here -->
+          </div>
+          <button type="button" class="timer-btn" onclick="addPollOptionField()" style="margin-top: 12px; width: 100%; border: 1px dashed rgba(255,255,255,0.15); background: rgba(255,255,255,0.02); padding: 10px; border-radius: 8px; color: var(--text-main);">＋ 選択肢を追加</button>
         </div>
       </div>
     </aside>
@@ -816,12 +813,24 @@
       <!-- Export code and links -->
       <div class="export-panel">
         <div class="export-tabs">
-          <button id="tab-notion" class="tab-btn active" onclick="switchTab('notion')">Notion / Embed Link</button>
-          <button id="tab-html" class="tab-btn" onclick="switchTab('html')">Iframe HTML Code</button>
+          <button id="tab-notion" class="tab-btn active" onclick="switchTab('notion')" style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-weight: 800; font-family: monospace;">N</span> Notion埋め込み
+          </button>
+          <button id="tab-note" class="tab-btn" onclick="switchTab('note')" style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-weight: 800; font-size: 0.95rem;">🄽</span> note / ブログ
+          </button>
+          <button id="tab-html" class="tab-btn" onclick="switchTab('html')" style="display: flex; align-items: center; gap: 6px;">
+            <span>&lt;/&gt;</span> HTMLコード
+          </button>
         </div>
         
         <div class="code-box">
           <div id="code-display" class="code-text">生成中...</div>
+        </div>
+
+        <div id="note-guide" style="display: none; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4; background: rgba(255,255,255,0.03); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+          💡 <strong>note.com での表示方法:</strong><br>
+          note.comではセキュリティ上の制限から直接HTMLを埋め込めません。そのため、<strong>このウィジェットを埋め込んだNotionページをWebに公開し、そのNotionリンクをnote記事内に貼り付ける</strong>ことで、Notion経由でnote内に綺麗にウィジェットを表示させることができます。（下記URL自体は標準 of ブログリンクとしても貼り付け可能です）。
         </div>
 
         <button class="action-btn" onclick="copyCode()">
@@ -876,22 +885,8 @@
   <div id="widget-poll" class="widget-container">
     <div class="poll-widget" id="embed-poll-container">
       <div class="poll-question" id="embed-poll-question">質問文</div>
-      <div class="poll-options">
-        <div class="poll-option-row" onclick="votePoll(0)">
-          <div id="embed-poll-bar-0" class="poll-bg-fill"></div>
-          <span class="poll-option-label" id="embed-poll-label-0">選択肢 1</span>
-          <span class="poll-option-percent" id="embed-poll-percent-0">0%</span>
-        </div>
-        <div class="poll-option-row" onclick="votePoll(1)">
-          <div id="embed-poll-bar-1" class="poll-bg-fill"></div>
-          <span class="poll-option-label" id="embed-poll-label-1">選択肢 2</span>
-          <span class="poll-option-percent" id="embed-poll-percent-1">0%</span>
-        </div>
-        <div class="poll-option-row" onclick="votePoll(2)">
-          <div id="embed-poll-bar-2" class="poll-bg-fill"></div>
-          <span class="poll-option-label" id="embed-poll-label-2">選択肢 3</span>
-          <span class="poll-option-percent" id="embed-poll-percent-2">0%</span>
-        </div>
+      <div class="poll-options" id="embed-poll-options">
+        <!-- Dynamic option rows go here -->
       </div>
       <div class="poll-reset" onclick="resetPoll()">投票をやり直す</div>
     </div>
@@ -904,6 +899,7 @@
     let activeColor = 'violet';
     let currentTab = 'notion';
     let localUrl = '';
+    let pollOptions = ['👍 はい、とても！', '🤔 普通かな', '💤 あまり...'];
 
     // ==========================================================================
     // A. INITIALIZATION & ROUTING
@@ -922,10 +918,15 @@
       } else {
         // Dashboard Mode
         document.body.classList.add('dashboard-mode');
+        initDashboardMode();
         updateWidgetType();
         updatePreview();
       }
     });
+
+    function initDashboardMode() {
+      renderPollOptionInputs();
+    }
 
     // ==========================================================================
     // B. DASHBOARD CONTROLLER (Settings -> Iframe Preview & Code)
@@ -954,6 +955,56 @@
       updatePreview();
     }
 
+    function renderPollOptionInputs() {
+      const container = document.getElementById('poll-options-container');
+      if (!container) return;
+      
+      container.innerHTML = '';
+      pollOptions.forEach((opt, index) => {
+        const row = document.createElement('div');
+        row.style.display = 'flex';
+        row.style.gap = '8px';
+        row.style.alignItems = 'center';
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'text-input';
+        input.value = opt;
+        input.placeholder = `選択肢 ${index + 1}`;
+        input.oninput = (e) => {
+          pollOptions[index] = e.target.value;
+          updatePreview();
+        };
+        
+        row.appendChild(input);
+        
+        // Show delete button only if there are more than 2 options
+        if (pollOptions.length > 2) {
+          const delBtn = document.createElement('button');
+          delBtn.type = 'button';
+          delBtn.className = 'timer-btn';
+          delBtn.style.padding = '10px 14px';
+          delBtn.style.color = 'var(--color-rose)';
+          delBtn.style.border = '1px solid rgba(244, 63, 94, 0.2)';
+          delBtn.innerHTML = '🗑️';
+          delBtn.onclick = () => {
+            pollOptions.splice(index, 1);
+            renderPollOptionInputs();
+            updatePreview();
+          };
+          row.appendChild(delBtn);
+        }
+        
+        container.appendChild(row);
+      });
+    }
+
+    function addPollOptionField() {
+      pollOptions.push(`選択肢 ${pollOptions.length + 1}`);
+      renderPollOptionInputs();
+      updatePreview();
+    }
+
     function getGeneratedUrl() {
       const widget = document.getElementById('widget-select').value;
       const theme = document.getElementById('theme-select').value;
@@ -973,9 +1024,7 @@
         data.break = document.getElementById('pomodoro-break-input').value;
       } else if (widget === 'poll') {
         data.q = document.getElementById('poll-question-input').value;
-        data.o1 = document.getElementById('poll-opt1-input').value;
-        data.o2 = document.getElementById('poll-opt2-input').value;
-        data.o3 = document.getElementById('poll-opt3-input').value;
+        data.opts = pollOptions.filter(opt => opt.trim() !== '');
       }
 
       // Safe Base64 encoding supporting UTF-8 (emojis and Japanese)
@@ -1003,19 +1052,24 @@
       currentTab = tab;
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       document.getElementById(`tab-${tab}`).classList.add('active');
+      
+      const noteGuide = document.getElementById('note-guide');
+      if (noteGuide) {
+        noteGuide.style.display = tab === 'note' ? 'block' : 'none';
+      }
+      
       updatePreview();
     }
 
     function updateExportCode(url) {
       const display = document.getElementById('code-display');
-      if (currentTab === 'notion') {
+      if (currentTab === 'notion' || currentTab === 'note') {
         display.textContent = url;
       } else {
         display.textContent = `<iframe src="${url}" width="100%" height="240" style="border:none; background:transparent;" allowtransparency="true"></iframe>`;
       }
     }
 
-    // This is utility helper that allows copying to clipboard in iframe contexts too
     function copyCode() {
       const display = document.getElementById('code-display');
       const textToCopy = display.textContent;
@@ -1052,12 +1106,12 @@
 
     // Poll State
     let pollVotedIndex = -1;
-    let pollVotes = [0, 0, 0];
+    let pollVotes = [];
 
     function renderWidget(type, params) {
       // Decode base64 data if available
       let data = {};
-      const dParam = params.get('d');
+      const dParam = params.get('d') ? params.get('d').replace(/ /g, '+') : null;
       if (dParam) {
         try {
           data = JSON.parse(decodeURIComponent(escape(atob(dParam))));
@@ -1116,32 +1170,64 @@
       
       else if (type === 'poll') {
         const q = getVal('q', 'アンケート質問');
-        const o1 = getVal('o1', 'はい');
-        const o2 = getVal('o2', 'いいえ');
-        const o3 = getVal('o3', 'わからない');
+        const opts = data.opts || [
+          getVal('o1', 'はい'),
+          getVal('o2', 'いいえ'),
+          getVal('o3', 'わからない')
+        ];
 
         document.getElementById('embed-poll-question').textContent = q;
-        document.getElementById('embed-poll-label-0').textContent = o1;
-        document.getElementById('embed-poll-label-1').textContent = o2;
-        document.getElementById('embed-poll-label-2').textContent = o3;
 
-        // Restore votes
-        const savedVoted = localStorage.getItem(`${widgetInstanceKey}_voted`);
+        // Render rows dynamically
+        const optionsContainer = document.getElementById('embed-poll-options');
+        optionsContainer.innerHTML = '';
+
+        // Setup votes state size
         const savedVotesData = localStorage.getItem(`${widgetInstanceKey}_votes`);
-        
         if (savedVotesData) {
           pollVotes = JSON.parse(savedVotesData);
+          while (pollVotes.length < opts.length) pollVotes.push(0);
+          pollVotes = pollVotes.slice(0, opts.length);
         } else {
           // Initialize mock random data to look realistic
-          pollVotes = [Math.floor(Math.random() * 20) + 10, Math.floor(Math.random() * 15) + 5, Math.floor(Math.random() * 8) + 1];
+          pollVotes = Array.from({ length: opts.length }, () => Math.floor(Math.random() * 20) + 5);
         }
 
+        const savedVoted = localStorage.getItem(`${widgetInstanceKey}_voted`);
         if (savedVoted !== null) {
           pollVotedIndex = parseInt(savedVoted);
           document.getElementById('embed-poll-container').classList.add('voted');
+        } else {
+          pollVotedIndex = -1;
+          document.getElementById('embed-poll-container').classList.remove('voted');
         }
 
-        updatePollUI();
+        opts.forEach((opt, index) => {
+          const row = document.createElement('div');
+          row.className = 'poll-option-row';
+          row.onclick = () => votePoll(index);
+          
+          const fill = document.createElement('div');
+          fill.id = `embed-poll-bar-${index}`;
+          fill.className = 'poll-bg-fill';
+          
+          const label = document.createElement('span');
+          label.className = 'poll-option-label';
+          label.textContent = opt;
+          
+          const percent = document.createElement('span');
+          percent.id = `embed-poll-percent-${index}`;
+          percent.className = 'poll-option-percent';
+          percent.textContent = '0%';
+          
+          row.appendChild(fill);
+          row.appendChild(label);
+          row.appendChild(percent);
+          
+          optionsContainer.appendChild(row);
+        });
+
+        updatePollUI(opts.length);
       }
     }
 
@@ -1153,6 +1239,7 @@
       document.getElementById('embed-goal-percent').textContent = `${pct}%`;
     }
 
+    // --- Goal Tracker Actions ---
     function incrementGoal() {
       if (goalCurrent < goalTarget) {
         goalCurrent++;
@@ -1179,6 +1266,7 @@
       document.getElementById('embed-timer-circle').style.strokeDashoffset = offset;
     }
 
+    // --- Timer Actions ---
     function toggleTimer() {
       const btn = document.getElementById('embed-timer-toggle');
       if (timerInterval) {
@@ -1236,16 +1324,21 @@
     }
 
     // --- Poll Logic ---
-    function updatePollUI() {
+    function updatePollUI(optCount) {
+      const count = optCount || pollVotes.length;
       const totalVotes = pollVotes.reduce((a, b) => a + b, 0);
       
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < count; i++) {
         const pct = totalVotes > 0 ? Math.round((pollVotes[i] / totalVotes) * 100) : 0;
-        document.getElementById(`embed-poll-percent-${i}`).textContent = `${pct}%`;
-        document.getElementById(`embed-poll-bar-${i}`).style.width = pollVotedIndex !== -1 ? `${pct}%` : '0%';
+        const pctTextEl = document.getElementById(`embed-poll-percent-${i}`);
+        const barEl = document.getElementById(`embed-poll-bar-${i}`);
+        
+        if (pctTextEl) pctTextEl.textContent = `${pct}%`;
+        if (barEl) barEl.style.width = pollVotedIndex !== -1 ? `${pct}%` : '0%';
       }
     }
 
+    // --- Vote actions ---
     function votePoll(index) {
       if (pollVotedIndex === -1) {
         pollVotedIndex = index;
@@ -1259,10 +1352,8 @@
       }
     }
 
-    // Allow user to reset their vote
     function resetPoll() {
       if (pollVotedIndex !== -1) {
-        // Revert local state
         pollVotes[pollVotedIndex] = Math.max(0, pollVotes[pollVotedIndex] - 1);
         pollVotedIndex = -1;
         
