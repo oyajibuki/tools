@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WidgetCraft | Notion & Link-in-Bio Interactive Widgets</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans (SaaS style) & Noto Sans JP -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================================================
+       1. Core Design System & Variables
+       ========================================================================== */
+    :root {
+      /* Colors for Dashboard */
+      --bg-dark: #090d16;
+      --bg-card: rgba(17, 25, 40, 0.75);
+      --bg-sidebar: #0f1626;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border-color: rgba(255, 255, 255, 0.08);
+      
+      /* Color Themes for Widgets */
+      --color-violet: #8b5cf6;
+      --color-violet-gradient: linear-gradient(135deg, #8b5cf6, #6d28d9);
+      --color-emerald: #10b981;
+      --color-emerald-gradient: linear-gradient(135deg, #10b981, #059669);
+      --color-rose: #f43f5e;
+      --color-rose-gradient: linear-gradient(135deg, #f43f5e, #e11d48);
+      --color-amber: #f59e0b;
+      --color-amber-gradient: linear-gradient(135deg, #f59e0b, #d97706);
+      --color-sky: #0ea5e9;
+      --color-sky-gradient: linear-gradient(135deg, #0ea5e9, #0284c7);
+      
+      /* Default Selected Color */
+      --accent: var(--color-violet);
+      --accent-gradient: var(--color-violet-gradient);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', 'Noto Sans JP', sans-serif;
+      overflow-x: hidden;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Common Widget Container (Reset backgrounds for iframe embedding) */
+    body.embed-mode {
+      background: transparent !important;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+    }
+
+    body.dashboard-mode {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.1) 0px, transparent 50%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ==========================================================================
+       2. Dashboard Layout & Styling
+       ========================================================================== */
+    .dashboard-container {
+      display: none;
+      flex: 1;
+      grid-template-columns: 400px 1fr;
+      height: 100vh;
+      max-height: 100vh;
+      overflow: hidden;
+    }
+
+    body.dashboard-mode .dashboard-container {
+      display: grid;
+    }
+
+    /* Sidebar controls */
+    .sidebar {
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow-y: auto;
+      padding: 30px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      background: var(--color-violet-gradient);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #fff;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #fff, var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin: 25px 0 12px 0;
+      font-weight: 700;
+    }
+
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    .control-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #e5e7eb;
+    }
+
+    .select-input, .text-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .select-input:focus, .text-input:focus {
+      border-color: var(--color-violet);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+
+    .select-input option {
+      background: var(--bg-sidebar);
+      color: #fff;
+    }
+
+    /* Color picker buttons */
+    .color-picker {
+      display: flex;
+      gap: 10px;
+      margin-top: 5px;
+    }
+
+    .color-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .color-btn.active {
+      border-color: #fff;
+      transform: scale(1.1);
+    }
+
+    /* Main Preview & Export Area */
+    .main-workspace {
+      display: flex;
+      flex-direction: column;
+      padding: 40px;
+      overflow-y: auto;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .preview-container {
+      width: 100%;
+      max-width: 600px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 40px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .preview-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 15px;
+    }
+
+    .preview-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .preview-badge {
+      background: rgba(139, 92, 246, 0.2);
+      color: #a78bfa;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .iframe-wrapper {
+      width: 100%;
+      height: 240px;
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      position: relative;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: transparent;
+    }
+
+    /* Export Code Panel */
+    .export-panel {
+      width: 100%;
+      max-width: 600px;
+      background: rgba(15, 22, 38, 0.9);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .export-tabs {
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 16px;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 16px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      position: relative;
+      font-family: inherit;
+    }
+
+    .tab-btn.active {
+      color: #fff;
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--color-violet);
+    }
+
+    .code-box {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.85rem;
+      color: #10b981;
+      overflow-x: auto;
+      white-space: nowrap;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .code-text {
+      overflow-x: auto;
+      margin-right: 15px;
+    }
+
+    .action-btn {
+      background: var(--color-violet-gradient);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+    }
+
+    .action-btn:active {
+      transform: translateY(1px);
+    }
+
+    /* ==========================================================================
+       3. Widgets Rendering Layouts & Styles
+       ========================================================================== */
+    .widget-container {
+      display: none;
+      width: 100%;
+      max-width: 480px;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+      box-sizing: border-box;
+    }
+
+    body.embed-mode .widget-container {
+      display: block;
+    }
+
+    /* Themes application styles for widgets */
+    .theme-light {
+      background-color: #ffffff;
+      color: #1f2937;
+      border: 1px solid #e5e7eb;
+    }
+    .theme-dark {
+      background-color: #111827;
+      color: #f9fafb;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .theme-glass {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      color: inherit;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    /* Add dynamic color variables based on query parameter */
+    .widget-container[data-color="violet"] { --w-accent: var(--color-violet); --w-accent-gradient: var(--color-violet-gradient); }
+    .widget-container[data-color="emerald"] { --w-accent: var(--color-emerald); --w-accent-gradient: var(--color-emerald-gradient); }
+    .widget-container[data-color="rose"] { --w-accent: var(--color-rose); --w-accent-gradient: var(--color-rose-gradient); }
+    .widget-container[data-color="amber"] { --w-accent: var(--color-amber); --w-accent-gradient: var(--color-amber-gradient); }
+    .widget-container[data-color="sky"] { --w-accent: var(--color-sky); --w-accent-gradient: var(--color-sky-gradient); }
+
+    /* --- WIDGET 1: GOAL TRACKER --- */
+    .goal-widget {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .goal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+    }
+
+    .goal-title {
+      font-size: 1.1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .goal-stats {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 16px;
+      background: rgba(128, 128, 128, 0.15);
+      border-radius: 9999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--w-accent-gradient, var(--color-violet-gradient));
+      border-radius: 9999px;
+      width: 0%;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .goal-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .percentage-text {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--w-accent, var(--color-violet));
+    }
+
+    .interact-btn {
+      background: var(--w-accent-gradient, var(--color-violet-gradient));
+      color: #fff;
+      border: none;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .interact-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    }
+
+    .interact-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* --- WIDGET 2: POMODORO TIMER --- */
+    .timer-widget {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .timer-circle-container {
+      position: relative;
+      width: 140px;
+      height: 140px;
+    }
+
+    .timer-svg {
+      transform: rotate(-90deg);
+      width: 140px;
+      height: 140px;
+    }
+
+    .timer-bg-circle {
+      fill: none;
+      stroke: rgba(128, 128, 128, 0.1);
+      stroke-width: 8px;
+    }
+
+    .timer-progress-circle {
+      fill: none;
+      stroke: var(--w-accent, var(--color-violet));
+      stroke-width: 8px;
+      stroke-linecap: round;
+      stroke-dasharray: 377;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 0.3s linear;
+    }
+
+    .timer-text-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .timer-display {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .timer-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+      margin-top: 2px;
+    }
+
+    .timer-controls {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .timer-btn {
+      background: rgba(128, 128, 128, 0.1);
+      border: 1px solid rgba(128, 128, 128, 0.2);
+      color: inherit;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .timer-btn:hover {
+      background: rgba(128, 128, 128, 0.2);
+    }
+
+    .timer-btn.primary {
+      background: var(--w-accent-gradient, var(--color-violet-gradient));
+      border: none;
+      color: #fff;
+    }
+
+    .timer-btn.primary:hover {
+      filter: brightness(1.1);
+    }
+
+    /* --- WIDGET 3: QUICK POLL / REACTION --- */
+    .poll-widget {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .poll-question {
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    .poll-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .poll-option-row {
+      position: relative;
+      width: 100%;
+      background: rgba(128, 128, 128, 0.08);
+      border: 1px solid rgba(128, 128, 128, 0.15);
+      border-radius: 12px;
+      padding: 12px 16px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      font-size: 0.95rem;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .poll-option-row:hover {
+      background: rgba(128, 128, 128, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .poll-bg-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: var(--w-accent, var(--color-violet));
+      opacity: 0.15;
+      width: 0%;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+    }
+
+    .poll-option-label {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .poll-option-percent {
+      position: relative;
+      z-index: 2;
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .poll-widget.voted .poll-option-percent {
+      display: block;
+    }
+
+    .poll-widget.voted .poll-option-row {
+      pointer-events: none;
+    }
+
+    .poll-reset {
+      font-size: 0.75rem;
+      text-align: center;
+      cursor: pointer;
+      opacity: 0.5;
+      margin-top: 5px;
+      text-decoration: underline;
+      display: none;
+    }
+
+    .poll-widget.voted .poll-reset {
+      display: block;
+    }
+
+    /* Custom scrollbar for sidebar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Responsive */
+    @media(max-width: 768px) {
+      .dashboard-container {
+        grid-template-columns: 1fr;
+        height: auto;
+        overflow: visible;
+      }
+      .sidebar {
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .main-workspace {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       DASHBOARD MODE: Widget Builder
+       ========================================================================== -->
+  <div class="dashboard-container">
+    <!-- Sidebar: Controls -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">W</div>
+        <h1 class="brand-title">WidgetCraft</h1>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="widget-select">ウィジェットの種類</label>
+        <select id="widget-select" class="select-input" onchange="updateWidgetType()">
+          <option value="goal">🎯 目標達成メーター (Goal)</option>
+          <option value="pomodoro">⏱️ ポモドーロ・タイマー</option>
+          <option value="poll">💬 3択クイック投票 (Poll)</option>
+        </select>
+      </div>
+
+      <!-- General Customization -->
+      <h3 class="section-title">デザイン設定</h3>
+      
+      <div class="control-group">
+        <label class="control-label" for="theme-select">テーマ</label>
+        <select id="theme-select" class="select-input" onchange="updatePreview()">
+          <option value="glass">半透明ガラスモルフィズム (Glass)</option>
+          <option value="dark" selected>ダークモード (Dark)</option>
+          <option value="light">ライトモード (Light)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label">テーマカラー</label>
+        <div class="color-picker">
+          <button class="color-btn active" style="background: var(--color-violet);" onclick="selectColor('violet', this)"></button>
+          <button class="color-btn" style="background: var(--color-emerald);" onclick="selectColor('emerald', this)"></button>
+          <button class="color-btn" style="background: var(--color-rose);" onclick="selectColor('rose', this)"></button>
+          <button class="color-btn" style="background: var(--color-amber);" onclick="selectColor('amber', this)"></button>
+          <button class="color-btn" style="background: var(--color-sky);" onclick="selectColor('sky', this)"></button>
+        </div>
+      </div>
+
+      <!-- Dynamic Controls based on selected widget -->
+      <h3 class="section-title">コンテンツ設定</h3>
+      
+      <!-- Goal Widget Controls -->
+      <div id="controls-goal" class="widget-controls">
+        <div class="control-group">
+          <label class="control-label" for="goal-title-input">目標のタイトル</label>
+          <input type="text" id="goal-title-input" class="text-input" value="今月の読書量" oninput="updatePreview()" />
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div class="control-group">
+            <label class="control-label" for="goal-target-input">目標値</label>
+            <input type="number" id="goal-target-input" class="text-input" value="10" oninput="updatePreview()" />
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="goal-current-input">初期値</label>
+            <input type="number" id="goal-current-input" class="text-input" value="3" oninput="updatePreview()" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="goal-unit-input">単位</label>
+          <input type="text" id="goal-unit-input" class="text-input" value="冊" oninput="updatePreview()" />
+        </div>
+      </div>
+
+      <!-- Pomodoro Controls -->
+      <div id="controls-pomodoro" class="widget-controls" style="display: none;">
+        <div class="control-group">
+          <label class="control-label" for="pomodoro-duration-input">作業時間（分）</label>
+          <input type="number" id="pomodoro-duration-input" class="text-input" value="25" oninput="updatePreview()" />
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="pomodoro-break-input">休憩時間（分）</label>
+          <input type="number" id="pomodoro-break-input" class="text-input" value="5" oninput="updatePreview()" />
+        </div>
+      </div>
+
+      <!-- Poll Controls -->
+      <div id="controls-poll" class="widget-controls" style="display: none;">
+        <div class="control-group">
+          <label class="control-label" for="poll-question-input">質問内容</label>
+          <input type="text" id="poll-question-input" class="text-input" value="このページは役立ちましたか？" oninput="updatePreview()" />
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="poll-opt1-input">選択肢 1</label>
+          <input type="text" id="poll-opt1-input" class="text-input" value="👍 はい、とても！" oninput="updatePreview()" />
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="poll-opt2-input">選択肢 2</label>
+          <input type="text" id="poll-opt2-input" class="text-input" value="🤔 普通かな" oninput="updatePreview()" />
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="poll-opt3-input">選択肢 3</label>
+          <input type="text" id="poll-opt3-input" class="text-input" value="💤 あまり..." oninput="updatePreview()" />
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main workspace: Preview -->
+    <main class="main-workspace">
+      <div class="preview-container">
+        <div class="preview-header">
+          <div class="preview-title">
+            <span>📺</span> リアルタイムプレビュー
+          </div>
+          <span class="preview-badge">Live View</span>
+        </div>
+        <div class="iframe-wrapper">
+          <iframe id="preview-iframe" src=""></iframe>
+        </div>
+      </div>
+
+      <!-- Export code and links -->
+      <div class="export-panel">
+        <div class="export-tabs">
+          <button id="tab-notion" class="tab-btn active" onclick="switchTab('notion')">Notion / Embed Link</button>
+          <button id="tab-html" class="tab-btn" onclick="switchTab('html')">Iframe HTML Code</button>
+        </div>
+        
+        <div class="code-box">
+          <div id="code-display" class="code-text">生成中...</div>
+        </div>
+
+        <button class="action-btn" onclick="copyCode()">
+          <span>📋</span> コピーする
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- ==========================================================================
+       EMBED MODE: Selected Widget Fullscreen
+       ========================================================================== -->
+  
+  <!-- WIDGET CONTAINER 1: GOAL TRACKER -->
+  <div id="widget-goal" class="widget-container">
+    <div class="goal-widget">
+      <div class="goal-header">
+        <span class="goal-title" id="embed-goal-title">目標タイトル</span>
+        <span class="goal-stats" id="embed-goal-stats">0 / 0</span>
+      </div>
+      <div class="progress-bar-container">
+        <div id="embed-goal-bar" class="progress-bar-fill"></div>
+      </div>
+      <div class="goal-footer">
+        <div class="percentage-text" id="embed-goal-percent">0%</div>
+        <button class="interact-btn" onclick="incrementGoal()">+</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WIDGET CONTAINER 2: POMODORO TIMER -->
+  <div id="widget-pomodoro" class="widget-container">
+    <div class="timer-widget">
+      <div class="timer-circle-container">
+        <svg class="timer-svg">
+          <circle class="timer-bg-circle" cx="70" cy="70" r="60"></circle>
+          <circle id="embed-timer-circle" class="timer-progress-circle" cx="70" cy="70" r="60"></circle>
+        </svg>
+        <div class="timer-text-overlay">
+          <div class="timer-display" id="embed-timer-display">25:00</div>
+          <div class="timer-label" id="embed-timer-label">Focus</div>
+        </div>
+      </div>
+      <div class="timer-controls">
+        <button id="embed-timer-toggle" class="timer-btn primary" onclick="toggleTimer()">スタート</button>
+        <button class="timer-btn" onclick="resetTimer()">リセット</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WIDGET CONTAINER 3: QUICK POLL -->
+  <div id="widget-poll" class="widget-container">
+    <div class="poll-widget" id="embed-poll-container">
+      <div class="poll-question" id="embed-poll-question">質問文</div>
+      <div class="poll-options">
+        <div class="poll-option-row" onclick="votePoll(0)">
+          <div id="embed-poll-bar-0" class="poll-bg-fill"></div>
+          <span class="poll-option-label" id="embed-poll-label-0">選択肢 1</span>
+          <span class="poll-option-percent" id="embed-poll-percent-0">0%</span>
+        </div>
+        <div class="poll-option-row" onclick="votePoll(1)">
+          <div id="embed-poll-bar-1" class="poll-bg-fill"></div>
+          <span class="poll-option-label" id="embed-poll-label-1">選択肢 2</span>
+          <span class="poll-option-percent" id="embed-poll-percent-1">0%</span>
+        </div>
+        <div class="poll-option-row" onclick="votePoll(2)">
+          <div id="embed-poll-bar-2" class="poll-bg-fill"></div>
+          <span class="poll-option-label" id="embed-poll-label-2">選択肢 3</span>
+          <span class="poll-option-percent" id="embed-poll-percent-2">0%</span>
+        </div>
+      </div>
+      <div class="poll-reset" onclick="resetPoll()">投票をやり直す</div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       4. JavaScript Logic (Routing, Configurator, Dynamic States)
+       ========================================================================== -->
+  <script>
+    let activeColor = 'violet';
+    let currentTab = 'notion';
+    let localUrl = '';
+
+    // ==========================================================================
+    // A. INITIALIZATION & ROUTING
+    // ==========================================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const widget = params.get('widget');
+
+      // Setup local URL template (removes query params from current url to get base)
+      localUrl = window.location.origin + window.location.pathname;
+
+      if (widget) {
+        // Embed Mode
+        document.body.classList.add('embed-mode');
+        renderWidget(widget, params);
+      } else {
+        // Dashboard Mode
+        document.body.classList.add('dashboard-mode');
+        updateWidgetType();
+        updatePreview();
+      }
+    });
+
+    // ==========================================================================
+    // B. DASHBOARD CONTROLLER (Settings -> Iframe Preview & Code)
+    // ==========================================================================
+    function selectColor(colorName, btnEl) {
+      activeColor = colorName;
+      document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
+      btnEl.classList.add('active');
+      
+      // Update variables for preview logic
+      document.documentElement.style.setProperty('--accent', `var(--color-${colorName})`);
+      document.documentElement.style.setProperty('--accent-gradient', `var(--color-${colorName}-gradient)`);
+      
+      updatePreview();
+    }
+
+    function updateWidgetType() {
+      const widget = document.getElementById('widget-select').value;
+      
+      // Toggle control panels
+      document.querySelectorAll('.widget-controls').forEach(panel => {
+        panel.style.display = 'none';
+      });
+      document.getElementById(`controls-${widget}`).style.display = 'block';
+
+      updatePreview();
+    }
+
+    function getGeneratedUrl() {
+      const widget = document.getElementById('widget-select').value;
+      const theme = document.getElementById('theme-select').value;
+      
+      let queryParams = `?widget=${widget}&theme=${theme}&color=${activeColor}`;
+
+      if (widget === 'goal') {
+        const title = encodeURIComponent(document.getElementById('goal-title-input').value);
+        const target = document.getElementById('goal-target-input').value;
+        const current = document.getElementById('goal-current-input').value;
+        const unit = encodeURIComponent(document.getElementById('goal-unit-input').value);
+        queryParams += `&title=${title}&target=${target}&current=${current}&unit=${unit}`;
+      } else if (widget === 'pomodoro') {
+        const work = document.getElementById('pomodoro-duration-input').value;
+        const breakTime = document.getElementById('pomodoro-break-input').value;
+        queryParams += `&work=${work}&break=${breakTime}`;
+      } else if (widget === 'poll') {
+        const q = encodeURIComponent(document.getElementById('poll-question-input').value);
+        const o1 = encodeURIComponent(document.getElementById('poll-opt1-input').value);
+        const o2 = encodeURIComponent(document.getElementById('poll-opt2-input').value);
+        const o3 = encodeURIComponent(document.getElementById('poll-opt3-input').value);
+        queryParams += `&q=${q}&o1=${o1}&o2=${o2}&o3=${o3}`;
+      }
+
+      return localUrl + queryParams;
+    }
+
+    function updatePreview() {
+      // Don't execute inside embed mode
+      if (document.body.classList.contains('embed-mode')) return;
+
+      const fullUrl = getGeneratedUrl();
+      const iframe = document.getElementById('preview-iframe');
+      
+      // Update iframe source
+      if (iframe.src !== fullUrl) {
+        iframe.src = fullUrl;
+      }
+
+      // Update code boxes
+      updateExportCode(fullUrl);
+    }
+
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(`tab-${tab}`).classList.add('active');
+      updatePreview();
+    }
+
+    function updateExportCode(url) {
+      const display = document.getElementById('code-display');
+      if (currentTab === 'notion') {
+        display.textContent = url;
+      } else {
+        display.textContent = `<iframe src="${url}" width="100%" height="240" style="border:none; background:transparent;" allowtransparency="true"></iframe>`;
+      }
+    }
+
+    // This is utility helper that allows copying to clipboard in iframe contexts too
+    function copyCode() {
+      const display = document.getElementById('code-display');
+      const textToCopy = display.textContent;
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const btn = document.querySelector('.action-btn');
+        const oldText = btn.innerHTML;
+        btn.innerHTML = '<span>✅</span> コピー完了！';
+        btn.style.background = 'var(--color-emerald-gradient)';
+        setTimeout(() => {
+          btn.innerHTML = oldText;
+          btn.style.background = '';
+        }, 1500);
+      });
+    }
+
+    // ==========================================================================
+    // C. EMBEDDABLE WIDGETS FUNCTIONALITY & DATA PERSISTENCE
+    // ==========================================================================
+    let widgetInstanceKey = ''; // Unique key to save localStorage progress
+    
+    // --- State variables ---
+    // Goal State
+    let goalTarget = 0;
+    let goalCurrent = 0;
+    let goalUnit = '';
+
+    // Timer State
+    let timerDuration = 25 * 60; 
+    let timerBreakDuration = 5 * 60;
+    let timerRemaining = 25 * 60;
+    let timerInterval = null;
+    let isBreak = false;
+
+    // Poll State
+    let pollVotedIndex = -1;
+    let pollVotes = [0, 0, 0];
+
+    function renderWidget(type, params) {
+      // 1. Apply Styles & Customizations
+      const theme = params.get('theme') || 'dark';
+      const color = params.get('color') || 'violet';
+      
+      const activeWidget = document.getElementById(`widget-${type}`);
+      if (!activeWidget) return;
+
+      activeWidget.classList.add(`theme-${theme}`);
+      activeWidget.setAttribute('data-color', color);
+      activeWidget.style.display = 'block';
+
+      // Setup dynamic CSS variables for embed container
+      activeWidget.style.setProperty('--w-accent', `var(--color-${color})`);
+      activeWidget.style.setProperty('--w-accent-gradient', `var(--color-${color}-gradient)`);
+
+      // Create unique state keys using parameters as identifier
+      widgetInstanceKey = `widget_${type}_${params.toString().replace(/&?current=\d+/g, '')}`;
+
+      // 2. Initialize specific widget values
+      if (type === 'goal') {
+        const title = params.get('title') || '目標メーター';
+        goalTarget = parseInt(params.get('target') || '10');
+        goalUnit = params.get('unit') || '回';
+        
+        // Restore from localStorage if exists, otherwise load default
+        const savedCurrent = localStorage.getItem(`${widgetInstanceKey}_current`);
+        goalCurrent = savedCurrent !== null ? parseInt(savedCurrent) : parseInt(params.get('current') || '0');
+
+        document.getElementById('embed-goal-title').textContent = title;
+        updateGoalUI();
+      } 
+      
+      else if (type === 'pomodoro') {
+        const workMin = parseInt(params.get('work') || '25');
+        const breakMin = parseInt(params.get('break') || '5');
+        
+        timerDuration = workMin * 60;
+        timerBreakDuration = breakMin * 60;
+        timerRemaining = timerDuration;
+        
+        updateTimerUI();
+      } 
+      
+      else if (type === 'poll') {
+        const q = params.get('q') || 'アンケート質問';
+        const o1 = params.get('o1') || 'はい';
+        const o2 = params.get('o2') || 'いいえ';
+        const o3 = params.get('o3') || 'わからない';
+
+        document.getElementById('embed-poll-question').textContent = q;
+        document.getElementById('embed-poll-label-0').textContent = o1;
+        document.getElementById('embed-poll-label-1').textContent = o2;
+        document.getElementById('embed-poll-label-2').textContent = o3;
+
+        // Restore votes
+        const savedVoted = localStorage.getItem(`${widgetInstanceKey}_voted`);
+        const savedVotesData = localStorage.getItem(`${widgetInstanceKey}_votes`);
+        
+        if (savedVotesData) {
+          pollVotes = JSON.parse(savedVotesData);
+        } else {
+          // Initialize mock random data to look realistic
+          pollVotes = [Math.floor(Math.random() * 20) + 10, Math.floor(Math.random() * 15) + 5, Math.floor(Math.random() * 8) + 1];
+        }
+
+        if (savedVoted !== null) {
+          pollVotedIndex = parseInt(savedVoted);
+          document.getElementById('embed-poll-container').classList.add('voted');
+        }
+
+        updatePollUI();
+      }
+    }
+
+    // --- Goal Tracker Logic ---
+    function updateGoalUI() {
+      const pct = goalTarget > 0 ? Math.min(Math.round((goalCurrent / goalTarget) * 100), 100) : 0;
+      document.getElementById('embed-goal-stats').textContent = `${goalCurrent} / ${goalTarget} ${goalUnit}`;
+      document.getElementById('embed-goal-bar').style.width = `${pct}%`;
+      document.getElementById('embed-goal-percent').textContent = `${pct}%`;
+    }
+
+    function incrementGoal() {
+      if (goalCurrent < goalTarget) {
+        goalCurrent++;
+        localStorage.setItem(`${widgetInstanceKey}_current`, goalCurrent);
+        updateGoalUI();
+      }
+    }
+
+    // --- Pomodoro Logic ---
+    function updateTimerUI() {
+      const minutes = Math.floor(timerRemaining / 60);
+      const seconds = timerRemaining % 60;
+      
+      // Update text
+      document.getElementById('embed-timer-display').textContent = 
+        `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      
+      document.getElementById('embed-timer-label').textContent = isBreak ? 'Break' : 'Focus';
+
+      // Update SVG circular bar
+      const maxDuration = isBreak ? timerBreakDuration : timerDuration;
+      const fraction = timerRemaining / maxDuration;
+      const offset = 377 * (1 - fraction);
+      document.getElementById('embed-timer-circle').style.strokeDashoffset = offset;
+    }
+
+    function toggleTimer() {
+      const btn = document.getElementById('embed-timer-toggle');
+      if (timerInterval) {
+        // Pause
+        clearInterval(timerInterval);
+        timerInterval = null;
+        btn.textContent = 'スタート';
+      } else {
+        // Start
+        btn.textContent = '一時停止';
+        timerInterval = setInterval(() => {
+          if (timerRemaining > 0) {
+            timerRemaining--;
+            updateTimerUI();
+          } else {
+            // Sound bell using Web Audio API
+            playBeep();
+            
+            // Switch work/break
+            isBreak = !isBreak;
+            timerRemaining = isBreak ? timerBreakDuration : timerDuration;
+            updateTimerUI();
+          }
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      isBreak = false;
+      timerRemaining = timerDuration;
+      document.getElementById('embed-timer-toggle').textContent = 'スタート';
+      updateTimerUI();
+    }
+
+    function playBeep() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); // A5 note
+        gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+        
+        oscillator.start();
+        oscillator.stop(audioCtx.currentTime + 0.3); // beep duration 0.3s
+      } catch (e) {
+        console.log('Audio Context not allowed by browser permissions until user interaction');
+      }
+    }
+
+    // --- Poll Logic ---
+    function updatePollUI() {
+      const totalVotes = pollVotes.reduce((a, b) => a + b, 0);
+      
+      for (let i = 0; i < 3; i++) {
+        const pct = totalVotes > 0 ? Math.round((pollVotes[i] / totalVotes) * 100) : 0;
+        document.getElementById(`embed-poll-percent-${i}`).textContent = `${pct}%`;
+        document.getElementById(`embed-poll-bar-${i}`).style.width = pollVotedIndex !== -1 ? `${pct}%` : '0%';
+      }
+    }
+
+    function votePoll(index) {
+      if (pollVotedIndex === -1) {
+        pollVotedIndex = index;
+        pollVotes[index]++;
+        
+        localStorage.setItem(`${widgetInstanceKey}_voted`, pollVotedIndex);
+        localStorage.setItem(`${widgetInstanceKey}_votes`, JSON.stringify(pollVotes));
+        
+        document.getElementById('embed-poll-container').classList.add('voted');
+        updatePollUI();
+      }
+    }
+
+    // Allow user to reset their vote
+    function resetPoll() {
+      if (pollVotedIndex !== -1) {
+        // Revert local state
+        pollVotes[pollVotedIndex] = Math.max(0, pollVotes[pollVotedIndex] - 1);
+        pollVotedIndex = -1;
+        
+        localStorage.removeItem(`${widgetInstanceKey}_voted`);
+        localStorage.setItem(`${widgetInstanceKey}_votes`, JSON.stringify(pollVotes));
+        
+        document.getElementById('embed-poll-container').classList.remove('voted');
+        updatePollUI();
+      }
+    }
+  </script>
+</body>
+</html>
