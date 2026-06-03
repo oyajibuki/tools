@@ -318,7 +318,6 @@
       font-family: 'Courier New', Courier, monospace;
       font-size: 0.85rem;
       color: #10b981;
-      overflow-x: auto;
       white-space: nowrap;
       margin-bottom: 16px;
       display: flex;
@@ -327,8 +326,10 @@
     }
 
     .code-text {
+      flex: 1;
       overflow-x: auto;
       margin-right: 15px;
+      white-space: nowrap;
     }
 
     .action-btn {
@@ -370,9 +371,7 @@
       box-sizing: border-box;
     }
 
-    body.embed-mode .widget-container {
-      display: block;
-    }
+    /* Remove overlapping display: block trigger */
 
     /* Themes application styles for widgets */
     .theme-light {
@@ -959,27 +958,29 @@
       const widget = document.getElementById('widget-select').value;
       const theme = document.getElementById('theme-select').value;
       
-      let queryParams = `?widget=${widget}&theme=${theme}&color=${activeColor}`;
+      let data = {
+        theme: theme,
+        color: activeColor
+      };
 
       if (widget === 'goal') {
-        const title = encodeURIComponent(document.getElementById('goal-title-input').value);
-        const target = document.getElementById('goal-target-input').value;
-        const current = document.getElementById('goal-current-input').value;
-        const unit = encodeURIComponent(document.getElementById('goal-unit-input').value);
-        queryParams += `&title=${title}&target=${target}&current=${current}&unit=${unit}`;
+        data.title = document.getElementById('goal-title-input').value;
+        data.target = document.getElementById('goal-target-input').value;
+        data.current = document.getElementById('goal-current-input').value;
+        data.unit = document.getElementById('goal-unit-input').value;
       } else if (widget === 'pomodoro') {
-        const work = document.getElementById('pomodoro-duration-input').value;
-        const breakTime = document.getElementById('pomodoro-break-input').value;
-        queryParams += `&work=${work}&break=${breakTime}`;
+        data.work = document.getElementById('pomodoro-duration-input').value;
+        data.break = document.getElementById('pomodoro-break-input').value;
       } else if (widget === 'poll') {
-        const q = encodeURIComponent(document.getElementById('poll-question-input').value);
-        const o1 = encodeURIComponent(document.getElementById('poll-opt1-input').value);
-        const o2 = encodeURIComponent(document.getElementById('poll-opt2-input').value);
-        const o3 = encodeURIComponent(document.getElementById('poll-opt3-input').value);
-        queryParams += `&q=${q}&o1=${o1}&o2=${o2}&o3=${o3}`;
+        data.q = document.getElementById('poll-question-input').value;
+        data.o1 = document.getElementById('poll-opt1-input').value;
+        data.o2 = document.getElementById('poll-opt2-input').value;
+        data.o3 = document.getElementById('poll-opt3-input').value;
       }
 
-      return localUrl + queryParams;
+      // Safe Base64 encoding supporting UTF-8 (emojis and Japanese)
+      const base64Data = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+      return `${localUrl}?widget=${widget}&d=${base64Data}`;
     }
 
     function updatePreview() {
@@ -1054,9 +1055,25 @@
     let pollVotes = [0, 0, 0];
 
     function renderWidget(type, params) {
-      // 1. Apply Styles & Customizations
-      const theme = params.get('theme') || 'dark';
-      const color = params.get('color') || 'violet';
+      // Decode base64 data if available
+      let data = {};
+      const dParam = params.get('d');
+      if (dParam) {
+        try {
+          data = JSON.parse(decodeURIComponent(escape(atob(dParam))));
+        } catch (e) {
+          console.error("Failed to decode base64 data", e);
+        }
+      }
+
+      // Helper to get value from either base64 or legacy parameters
+      const getVal = (key, fallback) => {
+        if (data[key] !== undefined) return data[key];
+        return params.get(key) || fallback;
+      };
+
+      const theme = getVal('theme', 'dark');
+      const color = getVal('color', 'violet');
       
       const activeWidget = document.getElementById(`widget-${type}`);
       if (!activeWidget) return;
@@ -1070,25 +1087,25 @@
       activeWidget.style.setProperty('--w-accent-gradient', `var(--color-${color}-gradient)`);
 
       // Create unique state keys using parameters as identifier
-      widgetInstanceKey = `widget_${type}_${params.toString().replace(/&?current=\d+/g, '')}`;
+      widgetInstanceKey = `widget_${type}_${dParam || params.toString().replace(/&?current=\d+/g, '')}`;
 
       // 2. Initialize specific widget values
       if (type === 'goal') {
-        const title = params.get('title') || '目標メーター';
-        goalTarget = parseInt(params.get('target') || '10');
-        goalUnit = params.get('unit') || '回';
+        const title = getVal('title', '目標メーター');
+        goalTarget = parseInt(getVal('target', '10'));
+        goalUnit = getVal('unit', '回');
         
         // Restore from localStorage if exists, otherwise load default
         const savedCurrent = localStorage.getItem(`${widgetInstanceKey}_current`);
-        goalCurrent = savedCurrent !== null ? parseInt(savedCurrent) : parseInt(params.get('current') || '0');
+        goalCurrent = savedCurrent !== null ? parseInt(savedCurrent) : parseInt(getVal('current', '0'));
 
         document.getElementById('embed-goal-title').textContent = title;
         updateGoalUI();
       } 
       
       else if (type === 'pomodoro') {
-        const workMin = parseInt(params.get('work') || '25');
-        const breakMin = parseInt(params.get('break') || '5');
+        const workMin = parseInt(getVal('work', '25'));
+        const breakMin = parseInt(getVal('break', '5'));
         
         timerDuration = workMin * 60;
         timerBreakDuration = breakMin * 60;
@@ -1098,10 +1115,10 @@
       } 
       
       else if (type === 'poll') {
-        const q = params.get('q') || 'アンケート質問';
-        const o1 = params.get('o1') || 'はい';
-        const o2 = params.get('o2') || 'いいえ';
-        const o3 = params.get('o3') || 'わからない';
+        const q = getVal('q', 'アンケート質問');
+        const o1 = getVal('o1', 'はい');
+        const o2 = getVal('o2', 'いいえ');
+        const o3 = getVal('o3', 'わからない');
 
         document.getElementById('embed-poll-question').textContent = q;
         document.getElementById('embed-poll-label-0').textContent = o1;
